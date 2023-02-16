@@ -7,7 +7,7 @@ Program to find drug-like RNA-ligand binding pockets.
 
     **NOTE: Windows users should install Windows Subsystem for Linux (WSL) and run conda from WSL**
 
-2. Nagivate to or create a directory where you would like to install the fpocket-R and RNAvigate packages.
+2. Navigate to or create a directory where you would like to install the fpocket-R and RNAvigate packages.
 
 3. Download the RNAvigate and fpocket-R packages
 
