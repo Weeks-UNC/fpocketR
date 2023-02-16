@@ -1,0 +1,105 @@
+[
+  { Version:"1.0" Title:Untitled }
+  {
+    Title:""
+    Mode:Standard
+    Flip:true
+    Strands:[
+      {
+        Strand:[
+          { ID:1 Base:g HNum:24 X:54.6 Y:637.3 }
+          { ID:2 Base:G HNum:25 X:54.6 Y:619.7 }
+          { ID:3 Base:G HNum:26 X:54.6 Y:602.1 }
+          { ID:4 Base:A HNum:27 X:54.6 Y:584.5 }
+          { ID:5 Base:U HNum:28 X:54.6 Y:566.9 }
+          { ID:6 Base:C HNum:29 X:54.6 Y:549.3 }
+          { ID:7 Base:U HNum:30 X:54.6 Y:531.7 }
+          { ID:8 Base:G HNum:31 X:54.6 Y:514.1 }
+          { ID:9 Base:U HNum:32 X:54.6 Y:496.5 }
+          { ID:10 Base:C HNum:33 X:54.6 Y:478.9 }
+          { ID:11 Base:A HNum:34 X:54.6 Y:461.3 }
+          { ID:12 Base:C HNum:35 X:54.6 Y:400.3 }
+          { ID:13 Base:C HNum:36 X:54.6 Y:382.7 }
+          { ID:14 Base:C HNum:37 X:54.6 Y:321.9 }
+          { ID:15 Base:C HNum:38 X:54.6 Y:304.3 }
+          { ID:16 Base:A HNum:39 X:54.6 Y:286.7 }
+          { ID:17 Base:U HNum:40 X:42.3 Y:268.3 }
+          { ID:18 Base:U HNum:41 X:42.3 Y:245.7 }
+          { ID:19 Base:G HNum:42 X:54.6 Y:227.3 }
+          { ID:20 Base:A HNum:43 X:54.6 Y:209.7 }
+          { ID:21 Base:U HNum:44 X:54.6 Y:192.1 }
+          { ID:22 Base:C HNum:45 X:54.6 Y:174.5 }
+          { ID:23 Base:G HNum:46 X:54.6 Y:136.2 }
+          { ID:24 Base:C HNum:47 X:54.6 Y:118.6 }
+          { ID:25 Base:C HNum:48 X:54.6 Y:101.0 }
+          { ID:26 Base:G HNum:49 X:39.0 Y:91.7 }
+          { ID:27 Base:A HNum:50 X:28.3 Y:77.0 }
+          { ID:28 Base:G HNum:51 X:24.2 Y:59.3 }
+          { ID:29 Base:A HNum:52 X:27.2 Y:41.4 }
+          { ID:30 Base:n X:37.0 Y:26.1 }
+          { ID:31 Base:n X:52.0 Y:15.9 }
+          { ID:32 Base:n X:69.8 Y:12.3 }
+          { ID:33 Base:n X:87.6 Y:15.9 }
+          { ID:34 Base:n X:102.6 Y:26.1 }
+          { ID:35 Base:n X:112.4 Y:41.4 }
+          { ID:36 Base:n X:115.4 Y:59.3 }
+          { ID:37 Base:n X:111.3 Y:77.0 }
+          { ID:38 Base:n X:100.6 Y:91.7 }
+          { ID:39 Base:G HNum:60 X:85.0 Y:101.0 }
+          { ID:40 Base:G HNum:61 X:85.0 Y:118.6 }
+          { ID:41 Base:C HNum:62 X:85.0 Y:136.2 }
+          { ID:42 Base:U HNum:63 X:88.9 Y:155.3 }
+          { ID:43 Base:G HNum:64 X:85.0 Y:174.5 }
+          { ID:44 Base:A HNum:65 X:85.0 Y:192.1 }
+          { ID:45 Base:U HNum:66 X:85.0 Y:209.7 }
+          { ID:46 Base:C HNum:67 X:85.0 Y:227.3 }
+          { ID:47 Base:U HNum:68 X:85.0 Y:286.7 }
+          { ID:48 Base:G HNum:69 X:85.0 Y:304.3 }
+          { ID:49 Base:G HNum:70 X:85.0 Y:321.9 }
+          { ID:50 Base:C HNum:71 X:97.9 Y:340.8 }
+          { ID:51 Base:U HNum:72 X:97.9 Y:363.8 }
+          { ID:52 Base:G HNum:73 X:85.0 Y:382.7 }
+          { ID:53 Base:G HNum:74 X:85.0 Y:400.3 }
+          { ID:54 Base:C HNum:75 X:97.7 Y:418.6 }
+          { ID:55 Base:U HNum:76 X:97.7 Y:442.9 }
+          { ID:56 Base:A HNum:77 X:85.0 Y:461.3 }
+          { ID:57 Base:G HNum:78 X:85.0 Y:478.9 }
+          { ID:58 Base:G HNum:79 X:85.0 Y:496.5 }
+          { ID:59 Base:C HNum:80 X:85.0 Y:514.1 }
+          { ID:60 Base:G HNum:81 X:85.0 Y:531.7 }
+          { ID:61 Base:G HNum:82 X:85.0 Y:549.3 }
+          { ID:62 Base:G HNum:83 X:85.0 Y:566.9 }
+          { ID:63 Base:U HNum:84 X:85.0 Y:584.5 }
+          { ID:64 Base:C HNum:85 X:85.0 Y:602.1 }
+          { ID:65 Base:C HNum:86 X:85.0 Y:619.7 }
+          { ID:66 Base:C HNum:87 X:85.0 Y:637.3 }
+        ]
+      }
+    ]
+    Pairs:[
+      { Pair:"1:66" Type:BP }
+      { Pair:"2:65" Type:BP }
+      { Pair:"3:64" Type:BP }
+      { Pair:"4:63" Type:BP }
+      { Pair:"5:62" Type:BP }
+      { Pair:"6:61" Type:BP }
+      { Pair:"7:60" Type:BP }
+      { Pair:"8:59" Type:BP }
+      { Pair:"9:58" Type:BP }
+      { Pair:"10:57" Type:BP }
+      { Pair:"11:56" Type:BP }
+      { Pair:"12:53" Type:BP }
+      { Pair:"13:52" Type:BP }
+      { Pair:"14:49" Type:BP }
+      { Pair:"15:48" Type:BP }
+      { Pair:"16:47" Type:BP }
+      { Pair:"19:46" Type:BP }
+      { Pair:"20:45" Type:BP }
+      { Pair:"21:44" Type:BP }
+      { Pair:"22:43" Type:BP }
+      { Pair:"23:41" Type:BP }
+      { Pair:"24:40" Type:BP }
+      { Pair:"25:39" Type:BP }
+    ]
+  }
+]

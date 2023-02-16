@@ -1,0 +1,84 @@
+[
+  { Version:"1.0" Title:Untitled }
+  {
+    Title:""
+    Mode:Standard
+    Flip:true
+    Strands:[
+      {
+        Strand:[
+          { ID:1 Base:G X:204.1 Y:-55.4 Bond:"#888888" NumOffset:0.00441849 }
+          { ID:2 Base:G X:221.8 Y:-55.4 Bond:"#888888" }
+          { ID:3 Base:A X:239.5 Y:-55.4 Bond:"#888888" }
+          { ID:4 Base:G X:257.2 Y:-55.4 Bond:"#888888" }
+          { ID:5 Base:C X:274.9 Y:-55.3 Bond:"#888888" }
+          { ID:6 Base:U X:274.9 Y:-72.9 Bond:"#888888" }
+          { ID:7 Base:C X:274.9 Y:-90.5 Bond:"#888888" }
+          { ID:8 Base:G X:274.9 Y:-108.1 Bond:"#888888" }
+          { ID:9 Base:C X:274.9 Y:-125.7 Bond:"#888888" }
+          { ID:10 Base:C X:274.9 Y:-143.3 Bond:"#888888" }
+          { ID:11 Base:C X:274.9 Y:-160.9 Bond:"#888888" }
+          { ID:12 Base:G X:305.3 Y:-160.9 Bond:"#888888" }
+          { ID:13 Base:G X:305.3 Y:-143.3 Bond:"#888888" }
+          { ID:14 Base:G X:305.3 Y:-125.7 Bond:"#888888" }
+          { ID:15 Base:C X:305.3 Y:-108.1 Bond:"#888888" }
+          { ID:16 Base:G X:305.3 Y:-90.5 Bond:"#888888" }
+          { ID:17 Base:A X:305.3 Y:-72.9 Bond:"#888888" }
+          { ID:18 Base:G X:305.3 Y:-55.3 Bond:"#888888" }
+          { ID:19 Base:G X:327.3 Y:-24.2 Bond:"#888888" }
+          { ID:20 Base:C X:309.7 Y:-24.2 Bond:"#888888" NumOffset:0.50232065 }
+          { ID:21 Base:C X:292.1 Y:-24.2 Bond:"#888888" }
+          { ID:22 Base:G X:274.5 Y:-24.2 Bond:"#888888" }
+          { ID:23 Base:U X:256.9 Y:-24.2 Bond:"#888888" }
+          { ID:24 Base:G X:239.4 Y:-24.2 Bond:"#888888" }
+          { ID:25 Base:C X:221.8 Y:-24.2 Bond:"#888888" }
+          { ID:26 Base:C X:204.2 Y:-24.2 Bond:"#888888" }
+          { ID:27 Base:A X:186.7 Y:-24.2 Bond:"#888888" }
+          { ID:28 Base:G X:169.1 Y:-24.2 Bond:"#888888" }
+          { ID:29 Base:C X:151.5 Y:-24.2 Bond:"#888888" }
+          { ID:30 Base:U X:133.9 Y:-24.2 Bond:"#888888" }
+          { ID:31 Base:C X:116.3 Y:-24.2 Bond:"#888888" }
+          { ID:32 Base:U X:97.9 Y:-30.1 Bond:"#888888" }
+          { ID:33 Base:U X:82.3 Y:-18.7 Bond:"#888888" }
+          { ID:34 Base:C X:82.3 Y:0.7 Bond:"#888888" }
+          { ID:35 Base:G X:97.9 Y:12.1 Bond:"#888888" }
+          { ID:36 Base:G X:116.3 Y:6.2 Bond:"#888888" }
+          { ID:37 Base:A X:133.9 Y:6.2 Bond:"#888888" }
+          { ID:38 Base:G X:151.5 Y:6.2 Bond:"#888888" }
+          { ID:39 Base:C X:169.1 Y:6.2 Bond:"#888888" }
+          { ID:40 Base:A X:179.8 Y:22.9 Bond:"#888888" }
+          { ID:41 Base:A X:194.1 Y:35.8 Bond:"#888888" }
+          { ID:42 Base:U X:212.1 Y:42.8 Bond:"#888888" }
+          { ID:43 Base:A X:231.4 Y:42.8 Bond:"#888888" }
+          { ID:44 Base:C X:249.5 Y:35.8 Bond:"#888888" }
+          { ID:45 Base:U X:263.7 Y:22.9 Bond:"#888888" }
+          { ID:46 Base:C X:274.5 Y:6.2 Bond:"#888888" }
+          { ID:47 Base:G X:292.1 Y:6.2 Bond:"#888888" }
+          { ID:48 Base:G X:309.7 Y:6.2 Bond:"#888888" }
+          { ID:49 Base:C X:327.3 Y:6.2 Bond:"#888888" }
+        ]
+      }
+    ]
+    Pairs:[
+      { Pair:"1:26" Type:PK }
+      { Pair:"2:25" Type:PK }
+      { Pair:"3:45" Type:PK }
+      { Pair:"4:44" Type:PK }
+      { Pair:"5:18" Type:BP }
+      { Pair:"6:17" Type:BP }
+      { Pair:"7:16" Type:BP }
+      { Pair:"8:15" Type:BP }
+      { Pair:"9:14" Type:BP }
+      { Pair:"10:13" Type:BP }
+      { Pair:"11:12" Type:BP }
+      { Pair:"19:49" Type:BP }
+      { Pair:"20:48" Type:BP }
+      { Pair:"21:47" Type:BP }
+      { Pair:"22:46" Type:BP }
+      { Pair:"28:39" Type:BP }
+      { Pair:"29:38" Type:BP }
+      { Pair:"30:37" Type:BP }
+      { Pair:"31:36" Type:BP }
+    ]
+  }
+]
