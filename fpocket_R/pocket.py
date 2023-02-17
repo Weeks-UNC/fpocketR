@@ -84,7 +84,7 @@ def run_fpocket(pdb, c, s, m, M, i, D, A, p):
     pdb_code = os.path.basename(pdb)[0:4]
     print(f'***** POCKET HUNTING {pdb_code} *****')
     # Runs fpocket bash commands
-    bash_command = f'conda run -n pymol fpocket -f {pdb} -k {c} -l {s} -m {m} -M {M} -i {i} -D {D} -A {A} -p {p}'
+    bash_command = f'conda run -n fpocket-R fpocket -f {pdb} -k {c} -l {s} -m {m} -M {M} -i {i} -D {D} -A {A} -p {p}'
     process = subprocess.Popen(bash_command.split(
     ), stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
 

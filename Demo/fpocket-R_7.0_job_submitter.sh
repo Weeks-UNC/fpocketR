@@ -1,0 +1,1 @@
+while read line; do echo "$line"; ../fpocket-R_7.0.py $line; done < fpocket-R_7.0_analysis_list.txt
