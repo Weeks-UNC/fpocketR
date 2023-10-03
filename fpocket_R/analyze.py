@@ -8,15 +8,14 @@
 # Version 0.1.0
 #
 # -----------------------------------------------------------------------------
-
 from re import findall
-import util
 from prody import *
 import numpy as np
 import pandas as pd
+from fpocket_R import util
 
 
-def analyze_pockets(pdb, pdb_out, name, info_txt, pockets_out, pdb_code, c, s, lc, ligand,
+def analyze_pockets(pdb, pdb_out, name, info_txt, pockets_out, pdb_code, chain, state, ligandchain, ligand,
                     m, M, i, D, A, p, distancefilter, qualityfilter, offset,
                     pqr_out, analysis):
 
@@ -27,24 +26,27 @@ def analyze_pockets(pdb, pdb_out, name, info_txt, pockets_out, pdb_code, c, s, l
     # Get offset of pdb_ligand file.
     if offset is None:
         ligand_polymer = parsePDBHeader(pdb, 'polymers')
-        offset = get_offset(ligand_polymer, c)
+        offset = get_offset(ligand_polymer, chain)
 
     # Sets ligand chain to first pdb chain by default.
-    if lc is None:
-        lc = c[0]
+    if ligandchain is None:
+        ligandchain = chain[0]
 
     # Creates a dataframe with pocket characteristics from fpocket info.txt
-    pc_df = get_characteristics(info_txt, pdb_code, m, M, i, D, s)
+    pc_df = get_characteristics(info_txt, pdb_code, m, M, i, D, state)
 
-    rna_coords = out_structure.nucleic.copy()
+    # rna_coords = out_structure.nucleic.copy()
+    rna_coords = out_structure.protein.copy()
 
     # If pockets are detected calculate features and add to pc_df.
     if out_structure.select('resname STP'):
         # Get atomgroup for the ligand and rna.
-        ligand_coords = get_ligand_coords(ligand_structure, ligand, lc, name)
+        ligand_coords = get_ligand_coords(
+            ligand_structure, ligand, ligandchain, name)
         stp_coords = out_structure.select('resname STP').copy()
+
         add_basic_characteristics(stp_coords, pockets_out,
-                                  qualityfilter, pc_df, c)
+                                  qualityfilter, pc_df, chain)
 
         if ligand_coords:
             add_ligand_characteristics(
@@ -53,20 +55,20 @@ def analyze_pockets(pdb, pdb_out, name, info_txt, pockets_out, pdb_code, c, s, l
     return pc_df, rna_coords, offset
 
 
-def get_offset(ligand_polymer, c):
+def get_offset(ligand_polymer, chain):
     """Locates PDB nucleotide offset as documented in the dbrefs section of
     the input .pdb file. NOTE: Can be reported incorrectly.
 
     Args:
         ligand_polymer (object): ProDy parsed PDB header with polymer info.
-        c (str): Desired chain identifier (default='A').
+        chain (str): Desired chain identifier (default='A').
 
     Returns:
         int: Nucleotide offset of PDB chain.
     """
 
     for idx, ch in enumerate(ligand_polymer):
-        if ch.chid == c[0]:
+        if ch.chid == chain[0]:
             ch_idx = idx
     ligand_polymer_chain = ligand_polymer[ch_idx]
     dbref = ligand_polymer_chain.dbrefs[0]
@@ -74,13 +76,13 @@ def get_offset(ligand_polymer, c):
     return offset
 
 
-def get_ligand_coords(ligand_structure, ligand, lc, name):
+def get_ligand_coords(ligand_structure, ligand, ligandchain, name):
     """Gets coordinates for all atoms in a RNA binding ligand.
 
     Args:
         ligand_structure (str): Path to .pdb file with RNA-ligand complex.
         ligand (str): Three character ligand identifier (optional).
-        lc (str): Chain containing ligand.
+        ligandchain (str): Chain containing ligand.
         name (str): name of input pdb file
 
     Returns:
@@ -89,29 +91,29 @@ def get_ligand_coords(ligand_structure, ligand, lc, name):
     if ligand == 'n' or ligand == 'no' or ligand == 'none':
         return None
 
-    elif ligand and len(ligand) == 3:
+    elif ligand and 2 <= len(ligand) <= 3:
         try:
             ligand_coords = ligand_structure.select(
-                f'chain {lc} and resname {ligand}').copy()
+                f'chain {ligandchain} and resname {ligand}').copy()
         except AttributeError:
-            print(f'Chain {lc} of {name}.pdb does not contain a ligand named: '
+            print(f'Chain {ligandchain} of {name}.pdb does not contain a ligand named: '
                   f'{ligand}\n'
                   'Please provide a valid ligand chain (-lc) '
                   'and ligand residue name (-l).')
             exit()
 
     elif ligand_structure.select(
-            f'chain {lc} and hetatm and not ion and not water') is None:
+            f'chain {ligandchain} and hetatm and not ion and not water') is None:
         return None
 
     else:
         ligand_sele = ligand_structure.select(
-            f'chain {lc} and hetatm and not ion and not water').copy()
+            f'chain {ligandchain} and hetatm and not ion and not water').copy()
         hetatm_resn = np.unique(ligand_sele.getResnames()).tolist()
 
         if len(hetatm_resn) == 1 \
-            and len(hetatm_resn[0]) == 3 \
-            and hetatm_resn[0] != 'GTP':
+                and len(hetatm_resn[0]) == 3 \
+                and hetatm_resn[0] != 'GTP':
             ligand_coords = ligand_sele.select(
                 f'resname {hetatm_resn[0]}').copy()
             print(f'Using {hetatm_resn[0]} as ligand for analysis.')
@@ -119,7 +121,7 @@ def get_ligand_coords(ligand_structure, ligand, lc, name):
         elif len(hetatm_resn) == 1 and len(hetatm_resn[0]) < 3:
             print('No ligand detected.\n')
             return None
-        
+
         elif len(hetatm_resn) > 0:
             input_resn = input(
                 f'Detected heteroatoms: {hetatm_resn}.\n'
@@ -145,7 +147,7 @@ def get_ligand_coords(ligand_structure, ligand, lc, name):
     return ligand_coords
 
 
-def get_characteristics(info_txt, pdb_code, m, M, i, D, s):
+def get_characteristics(info_txt, pdb_code, m, M, i, D, state):
     """Creates a dataframe containing characteristics for
         all fpocket generates pockets.
 
@@ -156,6 +158,7 @@ def get_characteristics(info_txt, pdb_code, m, M, i, D, s):
         M (float): Specifies the maximum radius for an a-sphere.
         i (int): Specifies the minimum number of a-spheres per pocket.
         D (float): Specifies the a-sphere clustering distance for pockets.
+        state (int): Structural state to analyze.
 
     Returns:
         DataFrame: Displays the characteristics and properties most relvant
@@ -176,7 +179,7 @@ def get_characteristics(info_txt, pdb_code, m, M, i, D, s):
             if 'Pocket' in row:
                 pc_d['Parameters'].append(f'-m {m} -M {M} -i {i} -D {D}')
                 pc_d['PDB'].append(pdb_code)
-                pc_d['State'].append(s)
+                pc_d['State'].append(state)
                 pc_d['Pocket'].append(int(row.split(' ')[1].strip()))
                 pocket = int(row.split(' ')[1].strip())
             if 'Score :' in row:
@@ -212,7 +215,7 @@ def get_characteristics(info_txt, pdb_code, m, M, i, D, s):
 
 
 def add_basic_characteristics(stp_coords, pockets_out,
-                              qualityfilter, pc_df, c):
+                              qualityfilter, pc_df, chain):
     """Adds characteristics to the pocket characteristics DataFrame that do
         not require a ligand to calculate.
     PocketNT: nucleotides in contact with pocket,
@@ -225,6 +228,8 @@ def add_basic_characteristics(stp_coords, pockets_out,
         distancefilter (float): Distances in angstroms used to determine
                                 RNA nucleotide contacts with pockets.
         pc_df (DataFrame): Characteristics and properities for each pocket.
+        c (str): Chain identifier for desired RNA chain (default='A').
+
     """
     pocket_center_l = []
     pocketNT_l = []
@@ -248,11 +253,10 @@ def add_basic_characteristics(stp_coords, pockets_out,
 
         pdb = parsePDB(x)
 
-        if ',' in c:
-            c = c.replace(',', ' & ')
-
-        chain = pdb.select(f'chain {c}')
-        nt = chain.getResnums().tolist()
+        if ',' in chain:
+            chain = chain.replace(',', ' & ')
+        selection = pdb.select(f'chain {chain}')
+        nt = selection.getResnums().tolist()
         pocketNT_l.append(np.unique(nt).tolist())
 
     # Add pocketNT and geometric center to pc dataframe.

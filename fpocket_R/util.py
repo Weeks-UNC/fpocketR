@@ -8,11 +8,10 @@
 # Version 0.1.0
 #
 # -----------------------------------------------------
-
 import os
-import numpy as np
-from prody import *
 from glob import glob
+from prody import *
+import numpy as np
 
 
 def is_accessible(path, file_name):
@@ -48,29 +47,27 @@ def is_accessible(path, file_name):
         exit()
 
 
-def is_directory(path):
-    if not os.path.isdir(path):
-        raise FileNotFoundError(f'FileNotFoundError: analysis directory does not exist.\n{path}')
+def contains_structure(pdb, chain):
+    print(f"c: {chain}")
+    if chain != "None":
+        print(f"c: {chain}")
+        pdb_structure = parsePDB(pdb)
+        chain = chain.split(',')[0]
+        # if not pdb_structure.numAtoms('nucleic'):
+        #     print(f'\nERROR: The input file {pdb} does not contain an RNA.\n'
+        #           'Input a pdb file containing an RNA using the (-pdb) flag.')
+        #     exit()
+        if not pdb_structure.select(f'chain {chain}'):
+            print(f'\nKeyError: The input file {pdb} does not contain a chain {chain}.\n'
+                  'Input a valid chain id using the (-c) flag')
+        #     exit()
+        # if not pdb_structure.select(f'chain {chain} and nucleic'):
+        #     print(f'\nError: The input file {pdb} does not contain RNA in chain {chain}.\n'
+        #           'Input a chain id containing an RNA using the (-c) flag')
+        #     exit()
 
 
-def contains_structure(pdb, c):
-    pdb_structure = parsePDB(pdb)
-    chain = c.split(',')[0]
-    if not pdb_structure.numAtoms('nucleic'):
-        print(f'\nERROR: The input file {pdb} does not contain an RNA.\n'
-              'Input a pdb file containing an RNA using the (-pdb) flag.')
-        exit()
-    if not pdb_structure.select(f'chain {chain}'):
-        print(f'\nKeyError: The input file {pdb} does not contain a chain {chain}.\n'
-              'Input a valid chain id using the (-c) flag')
-        exit()
-    if not pdb_structure.select(f'chain {chain} and nucleic'):
-        print(f'\nError: The input file {pdb} does not contain RNA in chain {chain}.\n'
-              'Input a chain id containing an RNA using the (-c) flag')
-        exit()
-
-
-def get_file_paths(analysis, name, pdb, s):
+def get_file_paths(analysis, name, pdb, state):
     """Gets paths to required input files and check if they are accessible.
 
     Args:
@@ -118,8 +115,8 @@ def get_file_paths(analysis, name, pdb, s):
     if name is None:
         name = pdb_name
 
-    if s is not None:
-        name = f'{name}_state{s}'
+    if state is not None:
+        name = f'{name}_state{state}'
 
     return pdb, pdb_out, pqr_out, info_txt, pockets_out, pdb_code, name
 

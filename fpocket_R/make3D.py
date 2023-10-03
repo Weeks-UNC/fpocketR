@@ -19,7 +19,7 @@ def load_pdb(pdb: str):
     Args:
         pdb (str): path to pdb file
     """
-    cmd.load(f'{pdb}')
+    cmd.load(f'{pdb}', partial=1)
 
 
 def alignligand(pdb: str, real_sphere_name: str, s: int):

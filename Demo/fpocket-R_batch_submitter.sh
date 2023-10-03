@@ -1,0 +1,1 @@
+while read line; do echo "$line"; python -m fpocket-R $line; done < fpocket-R_analysis_list.txt

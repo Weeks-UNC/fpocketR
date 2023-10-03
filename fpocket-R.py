@@ -9,16 +9,11 @@
 #
 # -----------------------------------------------------
 import argparse
-import os
-import analyze
-import pocket
-import figures
-import make3D
-import util
 import pandas as pd
-from glob import glob
 from pymol import cmd
 from prody import *
+from fpocket_R import (analyze, pocket, figures, util)
+
 
 # -----------------------------------------------------
 
