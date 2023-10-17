@@ -1,0 +1,2 @@
+,Parameters,PDB,State,Pocket,Type,Filter,Score,Drug score,a-sphere,SASA,Volume,Hydrophobic density,Apolar a-sphere proportion,Hydrophobicity score,Polarity score,PocketNT,Pocket npr1,Pocket npr2
+0,-m 3.0 -M 5.7 -i 42 -D 1.65 -A 3 -p 0.0,6MCI,10,1,Novel,Pass,0.42,0.048,48,94,2.3e+02,5,0.12,-6.9,3,"[28, 71, 72, 73, 74, 75, 77]",0.4,0.82

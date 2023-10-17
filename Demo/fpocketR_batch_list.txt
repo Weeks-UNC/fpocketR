@@ -1,0 +1,6 @@
+-pdb 3E5C.pdb -nsd 3E5C.nsd -l SAM
+-pdb 2GDI.pdb -nsd 2GDI.nsd -l TPP -c X 
+-pdb 1YKV.pdb -nsd 1YKV.nsd -l DAI -c A,B -lc A
+-pdb 3E5C.pdb -nsd 3E5C.nsd -l SAM -m 3.4 -M 6.2 -D 2.4 -i 15 -A 3 -p 0
+-pdb 6MCI.pdb -nsd 6MCI.nsd -l no -s 0 -o 7SK_Multistate
+-pdb 7EZ0.pdb -nsd 7EZ0.nsd -l no -c N -cp -o group_I_intron

@@ -36,13 +36,18 @@ fpocket-R is a modified version of [fpocket 4.0](https://github.com/Discngine/fp
 4. Clone the RNAvigate and fpocket-R GitHub repositories. (RNAvigate is a dependancy for fpocket-R)
 
         git clone https://github.com/Weeks-UNC/RNAvigate.git
-        git clone https://github.com/Weeks-UNC/fpocket-R.git
+        git clone https://github.com/Weeks-UNC/fpocketR.git
 
 5. Create fpocket-R conda eviroment and install fpocket-R and RNAvigate.
 
         cd fpocket-R
         conda env create -f env.yml
-        conda activate fpocket-R
+        conda activate fpocketR
         conda develop .
         cd ../RNAvigate
         conda develop .
+
+## Demo
+
+[Demonstration of fpocketR usage](https://github.com/Weeks-UNC/fpocketR/blob/main/Demo/fpocketR_demo.md)
+

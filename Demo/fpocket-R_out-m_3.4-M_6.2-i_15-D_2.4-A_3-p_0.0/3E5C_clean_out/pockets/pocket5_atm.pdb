@@ -1,0 +1,40 @@
+HEADER
+HEADER This is a pdb format file writen by the programm fpocket.                 
+HEADER It represents the atoms contacted by the voronoi vertices of the pocket.  
+HEADER                                                                           
+HEADER Information about the pocket     5:
+HEADER 0  - Pocket Score                      : -0.1458
+HEADER 1  - Drug Score                        : 0.0000
+HEADER 2  - Number of alpha spheres           :    23
+HEADER 3  - Mean alpha-sphere radius          : 4.1756
+HEADER 4  - Mean alpha-sphere Solvent Acc.    : 0.4886
+HEADER 5  - Mean B-factor of pocket residues  : 0.2756
+HEADER 6  - Hydrophobicity Score              : -7.5000
+HEADER 7  - Polarity Score                    :     3
+HEADER 8  - Amino Acid based volume Score     : 3.0000
+HEADER 9  - Pocket volume (Monte Carlo)       : 396.4902
+HEADER 10  -Pocket volume (convex hull)       : 24.3340
+HEADER 11 - Charge Score                      :     0
+HEADER 12 - Local hydrophobic density Score   : 0.0000
+HEADER 13 - Number of apolar alpha sphere     :     0
+HEADER 14 - Proportion of apolar alpha sphere : 0.0000
+ATOM    803  OP2 U   A  37       7.446 -11.437  21.227  0.00  0.00           O 1
+ATOM   1018   N7 G   A  47      12.297 -15.496  22.525  0.54  4.37           N 0
+ATOM   1022  OP2 G   A  47      10.861 -13.027  26.214  0.00  0.00           O 1
+ATOM    995   N7 G   A  46       9.121 -17.831  23.836  0.29  4.37           N 0
+ATOM    996   C8 G   A  46       9.057 -17.671  25.124  0.00  0.00           C 0
+ATOM    999  OP2 G   A  46       5.707 -16.504  26.810  0.00  0.00           O 1
+ATOM    978  C5' G   A  46       8.162 -15.395  28.128  0.00  0.00           C 0
+ATOM    782  OP1 G   A  36       3.517  -8.237  25.900  0.00  0.00           O 0
+ATOM    783  OP2 G   A  36       5.355  -6.689  26.782  0.00  0.00           O 1
+ATOM    766  C3' G   A  36       6.670  -8.612  22.166  0.00  0.00           C 0
+ATOM    998  OP1 G   A  46       4.801 -15.365  28.922  0.00  0.00           O 0
+ATOM    802  OP1 U   A  37       5.168 -10.611  20.416  0.00  0.00           O 0
+ATOM    762  C5' G   A  36       4.531  -7.651  23.164  0.00  0.00           C 0
+ATOM    769  O2' G   A  36       9.067  -8.373  22.590  0.70  8.57           O 0
+ATOM   1021  OP1 G   A  47      12.113 -12.181  28.279  0.00  0.00           O 0
+ATOM    768  C2' G   A  36       7.791  -7.809  22.807  0.00  0.00           C 0
+ATOM    780   C8 G   A  36       8.564  -4.989  23.806  0.00  0.00           C 0
+ATOM    763  O5' G   A  36       5.098  -7.048  24.333  0.00  0.00           O 0
+TER
+END
