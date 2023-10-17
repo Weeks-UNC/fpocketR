@@ -40,7 +40,7 @@ fpocket-R is a modified version of [fpocket 4.0](https://github.com/Discngine/fp
 
 5. Create fpocket-R conda eviroment and install fpocket-R and RNAvigate.
 
-        cd fpocket-R
+        cd fpocketR
         conda env create -f env.yml
         conda activate fpocketR
         conda develop .
