@@ -64,13 +64,7 @@ def clean_pdb(pdb, pdb_clean):
     """
     cmd.load(pdb)
     cmd.remove('not polymer')
-
-    # Fix for use with RNA *************************************************
-    ###
-    # cmd.remove('byres polymer & name CA')
-    ###
-    # **********************************************************************
-
+    cmd.remove('byres polymer & name CA')
     cmd.alter('all', 'type="ATOM"')
     cmd.save(pdb_clean, state='0')
     cmd.reinitialize()

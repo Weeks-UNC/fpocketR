@@ -5,7 +5,7 @@
 # Weeks Lab, UNC-CH
 # 2022
 #
-# Version 0.1.0
+# Version 1.0.0
 #
 # -----------------------------------------------------------------------------
 import os
@@ -19,8 +19,7 @@ from fpocket_R import make3D
 
 
 def make_figures(pdb_code, pdb, state, pc_df, rna_coords, nsd, analysis,
-                 pqr_out, pdb_out, name, chain, dpi, zoom, offset,
-                 connectpocket, alignligand):
+                 name, chain, dpi, zoom, offset, connectpocket, alignligand):
 
     # Get the rna sequnece length from the .pdb file.
     pdb_seq_len = rna_coords.numResidues()
@@ -84,67 +83,20 @@ def make_figures(pdb_code, pdb, state, pc_df, rna_coords, nsd, analysis,
         get_2D_figure(nsd, seq_cmap, nt_group_color_list,
                       analysis, name, connectpocket)
 
-    # Creates real_sphere.pdb.
-    # Encodes a-sphere radii into pdb b-factor column.
-    pqr_to_pdb(pqr_out, pdb_out, analysis, name)
-
     # Get 3D PyMol figures based on the real_sphere.pdb file.
-    get_3D_figure(pdb_code, pdb, state, analysis, name, dpi,
+    get_3D_figure(pdb, state, analysis, name, dpi,
                   chain, zoom, pocket_cmap, alignligand)
 
-
-def pqr_to_pdb(pqr_file, pdb_file, analysis, name):
-    """Encodes fpocket pocket a-sphere radii into a single .pdb output file.
-    a-sphere radii incoded into the B factor column of the output .pdb file.
-
-    Args:
-        pqr_file (string): Path to fpocket *out.pqr file
-                           containing a-spheres radii.
-        pdb_file (string): Path to fpocket *out.pdb file.
-    """
-
-    # Opens .pqr and .pdb inputs and .pdb output.
-    with open(pqr_file, 'r') as pqr_file, open(pdb_file, 'r') as pdb_file, \
-            open(f'{analysis}/{name}_out_real_sphere.pdb', 'a') as out:
-
-        pqr_line = pqr_file.readline()
-        pdb_lines = pdb_file.readlines()
-
-        # Iterates through Header lines in pqr file
-        while pqr_line.startswith("HEADER"):
-            pqr_line = pqr_file.readline()
-
-        # Iternates through each line of the pdb file.
-        for pdb_line in pdb_lines:
-            if pdb_line.startswith("HEADER") or pdb_line.startswith("ATOM"):
-                line_str = pdb_line[0:80]
-            elif pdb_line.startswith("HETATM") and 'APOL' not in pdb_line:
-                line_str = pdb_line[0:80]
-            elif pdb_line.startswith("HETATM") and \
-                    pdb_line[24:55] == pqr_line[24:55]:
-                line_str = pdb_line[0:60] + \
-                    pqr_line[65:71] + pdb_line[66:80]
-                # Advance to next line of pqr file.
-                pqr_line = pqr_file.readline()
-            else:
-                print(f"ERROR: pqr_to_pdb. \n"
-                      f"PDB input file: {pdb_file} \n"
-                      f"PQR input file: {pqr_file}")
-                break
-
-            # Write line to out_real_sphere.pdb file
-            out.write(line_str)
-            out.write('\n')
-
+# -----------------------------------------------------------------------------
 
 def get_pdb_offset(rna_coords, nt, offset, chain):
     """Used for for calculating nucleotide offsets for RNA with 2 chains.
 
     Args:
-        rna_coords (object): prody atom group of RNA coordinates
-        nt (int): index of the nucleotide of interest for calculating an offset
-        offset (int): idex offset of the first chain
-        chain (str): specified chains to analyze
+        rna_coords (object): Prody atom group of RNA coordinates.
+        nt (int): Index of the nucleotide of interest for calculating an offset
+        offset (int): Sequence offset between .pdb and .nsd file (1st chain).
+        chain (str): Chain identifier for RNA chain.
 
     Returns:
         int: 2D structure index for the specified nucleotide
@@ -170,10 +122,14 @@ def get_colorNT(pc_df, rna_seq_len, offset, rna_coords, nsd, chain):
 
     Args:
         pc_df (dataframe): Contains all the characteristics for each pocket.
-        nsd_seq_len (int): Sequence length of the .nsd 2D structure file.
+        rna_seq_len (int): Number of nucleotides in RNA sequence.
+        offset (int): Sequence offset between .pdb and .nsd file (1st chain).
+        rna_coords (object): Prody atom group of RNA coordinates.
+        nsd (str): Path to input secondary structure drawing.
+        chain (str): Chain identifier for RNA chain.
 
     Returns:
-        list: Per nucleotide color map. Index = NT sequence. Value = color.
+        list(tuple): Per nucleotide color map. Index = NT sequence. Value = color.
     """
 
     seq_cmap = [(1, 1, 1, 1)] * rna_seq_len
@@ -271,13 +227,14 @@ def get_2D_figure(nsd, seq_cmap, nt_group_color_list, analysis, name, connectpoc
        saves resulting 2D figure as png and svg.
 
     Args:
-        nsd (str)): Path to input secondary structure drawing.
+        nsd (str): Path to input secondary structure drawing.
         pdb_ligand (str): Path to input .pdb file.
         chain (str): Indicated desired PDB chain (default='A').
         offset (int): Sequence offset between .pdb and .nsd file (default=0).
-        seq_cmap (list of tuples): RGB color codes for each nucleotide.
+        seq_cmap list(tuple): RGB color codes for each nucleotide.
         analysis (str): Path to the analysis output directory.
         name (str): Output file name prefix (default=pdb_name).
+        connectpocket (boolean): Connects pockets in 2D figure (Default=False).
     """
     print('Making 2D figure.\n')
 
@@ -322,23 +279,30 @@ def get_2D_figure(nsd, seq_cmap, nt_group_color_list, analysis, name, connectpoc
                 facecolor='auto', edgecolor='auto', backend=None)
 
 
-def get_3D_figure(pdb_code, pdb, state, analysis, name, dpi,
-                  c, zoom, pocket_cmap, alignligand):
+def get_3D_figure(pdb, state, analysis, name, dpi,
+                  chain, zoom, pocket_cmap, alignligand):
     print('Making 3D figure.\n')
     real_sphere_name = f'{name}_out_real_sphere'
     real_sphere_pdb = os.path.join(analysis, f'{real_sphere_name}.pdb')
-    # cmd.load(f'{real_sphere_pdb}')
     make3D.load_pdb(real_sphere_pdb)
     if alignligand:
         make3D.alignligand(pdb, real_sphere_name, state)
     make3D.set_default()
     if pocket_cmap:
         make3D.color_pockets(pocket_cmap)
-    make3D.save_3D_figure(analysis, name, dpi, c, zoom)
+    make3D.save_3D_figure(analysis, name, dpi, chain, zoom)
 
 
 def get_all_states_3D_figure(out_all, name_all, dpi, chain, zoom):
-    # # Generates a 3D figure and pymol session file with all states.
+    """Generates a 3D figure and pymol session file with all states.
+
+    Args:
+        out_all (_type_): _description_
+        name_all (_type_): _description_
+        dpi (int): Figure resolution in dpi (dots per linear inch).
+        chain (str): Chain identifier for desired RNA chain.
+        zoom (float): Zoom buffer distance (Å) for creating 3D figures.
+    """
     real_sphere_list = glob(f'{out_all}/*out/*out_real_sphere.pdb')
     for real_sphere in real_sphere_list:
         object_name = os.path.basename(real_sphere)[:-4]

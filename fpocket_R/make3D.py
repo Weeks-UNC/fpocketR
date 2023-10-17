@@ -5,7 +5,7 @@
 # Weeks Lab, UNC-CH
 # 2022
 #
-# Version 0.1.0
+# Version 1.0.0
 #
 # -----------------------------------------------------
 import os
@@ -22,19 +22,18 @@ def load_pdb(pdb: str):
     cmd.load(f'{pdb}', partial=1)
 
 
-def alignligand(pdb: str, real_sphere_name: str, s: int):
+def alignligand(pdb: str, real_sphere_name: str, state: int):
     """aligns state specific structure in the output real_sphere.pdb file
     to the structure in the input pdb file.
 
     Args:
-        pdb (str): path to input pdb file (target_object)
-        real_sphere_name (str): path to output real_sphere.pdb file 
-                                (mobile_object)
-        s (int): specific state of structure to align
+        pdb (str): Path to RNA-ligand complex .pdb file (target_object).
+        real_sphere_name (str): Path to output real_sphere.pdb (mobile_object).
+        state (int): State of structure to align.
     """
     pdb_base = os.path.basename(pdb)
     pdb_selection_name = os.path.splitext(pdb_base)[0]
-    if not s:
+    if not state:
         cmd.load(pdb)
 
         # aligns mobile object to target object
@@ -45,8 +44,8 @@ def alignligand(pdb: str, real_sphere_name: str, s: int):
     # the state of the output real_sphere.pdb file.
     else:
         cmd.load(pdb, multiplex='1')
-        s_str = str(s)
-        state_id = s_str.zfill(4)
+        state_str = str(state)
+        state_id = state_str.zfill(4)
         state_object_name = f'{pdb_selection_name}_{state_id}'
         cmd.delete(f'not {state_object_name} and not {real_sphere_name}')
 
@@ -144,10 +143,6 @@ def color_pockets(pocket_cmap: dict):
         cmd.color(f'pocket{str(pocket_num)}_color',
                   f'resn STP and resi {str(pocket_num)}')
 
-        # # creates a selection for each pocket in the structure
-        # cmd.select(f'pocket{str(pocket_num)}',
-        #            f'resn STP and resi {str(pocket_num)}')
-
 
 def transparent_pocket(object_name):
 
@@ -167,17 +162,17 @@ def make_multistate():
     cmd.set('transparency_mode', '3')
 
 
-def save_3D_figure(path: str, name: str, dpi: int, c: str, zoom: int, s=0):
-    """saves pymol session file and raytraced png file
+def save_3D_figure(path: str, name: str, dpi: int, c: str, zoom: int):
+    """Saves pymol session file and raytraced png file.
 
     Args:
         analysis (str): path directory contianing fpocket outputs for analysis
         name (str): name of output pdb structure
-        dpi (int): Sets figure resolution (Dots Per linear Inch).
+        dpi (int): Figure resolution in dpi (dots per linear inch).
         c (str): chain of anzylzed structure
-        zoom (int): Sets zoom distance (angstroms) for creating 3D figures.
+        zoom (float): Sets zoom buffer distance (Å) for creating 3D figures.
     """
-    
+
     if ',' in c:
         c = c.replace(',', '+')
     cmd.remove('hydrogens')
@@ -185,11 +180,10 @@ def save_3D_figure(path: str, name: str, dpi: int, c: str, zoom: int, s=0):
     cmd.orient()
     cmd.rotate('z', '90')
     cmd.zoom(f'chain {c} and (byres polymer & name O2)', f'{zoom}', complete=1)
-    print(path)
-    print(name)
     cmd.save(f'{path}/{name}_out_real_sphere.pse')
     dimension = dpi * 8
     print(f'Ray tracing: {name}...')
     cmd.png(f'{path}/{name}_3D_{dpi}.png',
             width=dimension, height=dimension, dpi=dpi, ray=1)
     cmd.reinitialize()
+    print('\n')

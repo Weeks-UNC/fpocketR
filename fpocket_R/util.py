@@ -5,7 +5,7 @@
 # Weeks Lab, UNC-CH
 # 2022
 #
-# Version 0.1.0
+# Version 1.0.0
 #
 # -----------------------------------------------------
 import os
@@ -48,9 +48,7 @@ def is_accessible(path, file_name):
 
 
 def contains_structure(pdb, chain):
-    print(f"c: {chain}")
     if chain != "None":
-        print(f"c: {chain}")
         pdb_structure = parsePDB(pdb)
         chain = chain.split(',')[0]
         # if not pdb_structure.numAtoms('nucleic'):
@@ -80,6 +78,7 @@ def get_file_paths(analysis, name, pdb, state):
         str: valid path to fpocket generated *_out.pdb file
         str: valid path to fpocket generated *_out.pqr file
         str: valid path to fpocket generated *_info.txt file
+        str: valid paths to pockets/pocket*_atm.pdb files
         str: 4 character pdb code
         str: filename prefix for analysis and figure output files
     """
