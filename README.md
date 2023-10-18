@@ -26,6 +26,8 @@ fpocket-R is a modified version of [fpocket 4.0](https://github.com/Discngine/fp
 
 ### Linux, Unix, MacOS, and WSL users with conda installed:
 
+**NOTE for MacOS users: fpocketR is only compatible with intel (x86) processors (not compatible with (arm) M1 or M2 processors) 
+
 3. Open your terminal and navigate to the directory where you would like to install the fpocket-R and RNAvigate packages (optional).
 
     * **Tip for new Windows (WSL) users:** You can navigate to your Windows file system in the WSL command line by using the following command:
