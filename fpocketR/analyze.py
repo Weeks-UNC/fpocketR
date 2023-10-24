@@ -15,7 +15,6 @@ import pandas as pd
 import requests
 from pymol import cmd
 from rdkit import Chem
-from rdkit.Chem import AllChem
 from rdkit.Chem import QED
 import trimesh
 from fpocketR import util
