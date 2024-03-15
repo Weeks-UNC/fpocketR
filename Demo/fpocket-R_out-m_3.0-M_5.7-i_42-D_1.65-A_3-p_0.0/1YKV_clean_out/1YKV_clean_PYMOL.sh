@@ -1,2 +1,2 @@
 #!/bin/bash
-pymol 1YKV_clean.pml
+pymol 1ykv_clean.pml

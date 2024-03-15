@@ -5,7 +5,7 @@ Pocket 1 :
 	Total SASA : 	98.132
 	Polar SASA : 	69.149
 	Apolar SASA : 	28.983
-	Volume : 	314.689
+	Volume : 	319.373
 	Mean local hydrophobic density : 	4.000
 	Mean alpha sphere radius :	3.368
 	Mean alp. sph. solvent access : 	0.433
@@ -26,7 +26,7 @@ Pocket 2 :
 	Total SASA : 	106.121
 	Polar SASA : 	79.554
 	Apolar SASA : 	26.568
-	Volume : 	290.063
+	Volume : 	286.903
 	Mean local hydrophobic density : 	0.000
 	Mean alpha sphere radius :	3.606
 	Mean alp. sph. solvent access : 	0.437

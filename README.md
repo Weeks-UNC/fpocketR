@@ -13,7 +13,7 @@ fpocketR is a modified version of [fpocket 4.0](https://github.com/Discngine/fpo
 
 2. Follow [guide](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) to install conda.
 
-        * **Windows WSL users:** Use [Linux installation guide](https://conda.io/projects/conda/en/latest/user-guide/install/linux.html).
+   * **Windows WSL users:** Use [Linux installation guide](https://conda.io/projects/conda/en/latest/user-guide/install/linux.html).
 
 ### Install fpocketR and RNAviagte:
 
@@ -34,7 +34,7 @@ fpocketR is a modified version of [fpocket 4.0](https://github.com/Discngine/fpo
 5. Create fpocketR conda environment and install fpocketR and RNAvigate.
 
         cd fpocketR
-        conda env create -f env.yml
+        conda env create --file env.yml
         conda activate fpocketR
         conda develop .
         cd ../RNAvigate

@@ -7,13 +7,13 @@ proc highlighting { colorId representation id selection } {
    mol addrep $id
 }
 
-set id [mol new 2GDI_clean_out.pdb type pdb]
+set id [mol new 2gdi_clean_out.pdb type pdb]
 mol delrep top $id
 highlighting Name "Lines" $id "protein"
 highlighting Name "Licorice" $id "not protein and not resname STP"
 highlighting Element "NewCartoon" $id "protein"
 highlighting "ColorID 7" "VdW 0.4" $id "protein and occupancy>0.95"
-set id [mol new 2GDI_clean_pockets.pqr type pqr]
+set id [mol new 2gdi_clean_pockets.pqr type pqr]
                         mol selection "all" 
                          mol material "Glass3" 
                          mol delrep top $id 

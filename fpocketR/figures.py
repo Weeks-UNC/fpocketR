@@ -5,21 +5,26 @@
 # Weeks Lab, UNC-CH
 # 2022
 #
-# Version 1.0.0
+# Version 1.0.1
 #
 # -----------------------------------------------------------------------------
 import os
 from glob import glob
 from pylab import *
 from prody import *
-import rnavigate as rnav
 import numpy as np
+import pandas as pd
 import seaborn as sns
+import rnavigate as rnav
 from fpocketR import make3D
 
 
-def make_figures(pdb_code, pdb, state, pc_df, rna_coords, nsd, analysis,
-                 name, chain, dpi, zoom, offset, connectpocket, alignligand):
+def make_figures(
+    pdb : str , state : int, pc_df : pd.DataFrame,
+    rna_coords : prody.AtomGroup, nsd :str , analysis : str, name : str,
+    chain : str, dpi : int, zoom : int, offset : int, 
+    connectpocket : bool, alignligand : bool
+    ) -> dict:
 
     # Get the rna sequnece length from the .pdb file.
     pdb_seq_len = rna_coords.numResidues()
@@ -80,18 +85,20 @@ def make_figures(pdb_code, pdb, state, pc_df, rna_coords, nsd, analysis,
 
     # Get 2D figures based on secondary structure in .nsd file.
     if nsd:
-        get_2D_figure(nsd, seq_cmap, nt_group_color_list,
+        make_2D_figure(nsd, seq_cmap, nt_group_color_list,
                       analysis, name, connectpocket)
 
     # Get 3D PyMol figures based on the real_sphere.pdb file.
-    get_3D_figure(pdb, state, analysis, name, dpi,
+    make_3D_figure(pdb, state, analysis, name, dpi,
                   chain, zoom, pocket_cmap, alignligand)
     
     return pocket_cmap
 
 # -----------------------------------------------------------------------------
 
-def get_pdb_offset(rna_coords, nt, offset, chain):
+def get_pdb_offset(
+    rna_coords : prody.AtomGroup, nt : int, offset : int, chain : str
+    ) -> int:
     """Used for for calculating nucleotide offsets for RNA with 2 chains.
 
     Args:
@@ -119,7 +126,10 @@ def get_pdb_offset(rna_coords, nt, offset, chain):
     return cmap_idx
 
 
-def get_colorNT(pc_df, rna_seq_len, offset, rna_coords, nsd, chain):
+def get_colorNT(
+    pc_df : pd.DataFrame, rna_seq_len : int, offset : int,
+    rna_coords : prody.AtomGroup, nsd : str, chain : str
+    ) -> tuple[list[tuple], list[tuple], list[dict]]:
     """Generates a color map of pocket loations throughout the RNA.
 
     Args:
@@ -131,13 +141,14 @@ def get_colorNT(pc_df, rna_seq_len, offset, rna_coords, nsd, chain):
         chain (str): Chain identifier for RNA chain.
 
     Returns:
-        list(tuple): Per nucleotide color map. Index = NT sequence. Value = color.
-        list(tuple): Per pocket color map. Index = pocket residue number. Value = color.
+        list[tuple]: Per nucleotide color map. Index = NT sequence. Value = color.
+        list[tuple]: Per pocket color map. Index = pocket residue number. Value = color.
+        list[dict]: Per site nucleotides and color for RNAvigate annotations.
     """
 
     seq_cmap = [(1, 1, 1, 1)] * rna_seq_len
     pocket_cmap = {}
-    nt_group_color_list = []
+    pocket_nt_color = []
 
     # Cubehelix color map for known nucleotides/pockets.
     known_cmap = sns.color_palette(
@@ -205,8 +216,6 @@ def get_colorNT(pc_df, rna_seq_len, offset, rna_coords, nsd, chain):
                 nsd = None
                 break
 
-            cmap_idx_per_pocket.append(cmap_idx)
-
             if nsd:
                 if nt not in colored_nt_list and \
                         nt not in known_colored_nt_list:
@@ -219,13 +228,17 @@ def get_colorNT(pc_df, rna_seq_len, offset, rna_coords, nsd, chain):
             if poc_type == 'Known':
                 known_colored_nt_list.append(nt)
 
-        nt_group_color_list.append(
-            {'sites': cmap_idx_per_pocket, 'color': color})
+            cmap_idx_per_pocket.append(cmap_idx + 1)
+        pocket_nt_color.append(
+            {'pocket': f'pocket {poc_num}','nucleotides': cmap_idx_per_pocket, 'color': color})
 
-    return seq_cmap, pocket_cmap, nt_group_color_list
+    return seq_cmap, pocket_cmap, pocket_nt_color
 
 
-def get_2D_figure(nsd, seq_cmap, nt_group_color_list, analysis, name, connectpocket):
+def make_2D_figure(
+    nsd : str, seq_cmap : list[tuple], pocket_nt_color : list[dict],
+    analysis : str, name : str, connectpocket : bool
+    ) -> None:
     """Uses RNAvigate to plot pocketNT onto the RNA secondary structure and
        saves resulting 2D figure as png and svg.
 
@@ -240,37 +253,46 @@ def get_2D_figure(nsd, seq_cmap, nt_group_color_list, analysis, name, connectpoc
         connectpocket (boolean): Connects pockets in 2D figure (Default=False).
     """
     print('Making 2D figure.\n')
-
     rna_map = rnav.Sample(sample=name, ss=nsd)
 
     # Makes 2D figures with transparent colored lines
-    # which connect all the nucleotides associated with a pocket.
+    # that connect all the nucleotides associated with a pocket.
     if connectpocket:
-        rna_map.set_data(name="fpocket", filepath=None,
-                         instantiator=rnav.data.Annotation, seq_source="ss",
-                         groups=nt_group_color_list)
+        pocket_annotations = []
+        for d in pocket_nt_color:
+            pocket_annotations.append(d['pocket'])
+            rna_map.set_data(
+                f'{d["pocket"]}', 
+                {
+                    'group': d['nucleotides'],
+                    'sequence': 'ss',
+                    'color': d['color'],
+                    'name': d['pocket']
+                }
+                )
 
-        plot = rnav.plot_ss([rna_map], annotations=["fpocket"], colors=seq_cmap,
-                            apply_color_to='background', sequence=True,
-                            bp_style="line")
+        rnav.plot_ss(
+            samples=[rna_map],
+            structure='ss',
+            annotations=pocket_annotations,
+            colors={
+                "sequence": "contrast",
+                "nucleotides": seq_cmap
+                }, 
+            bp_style="line"
+            )
 
     # Makes 2D figures without connecting nucelotides.
     else:
-        plot = rnav.plot_ss([rna_map], colors=seq_cmap, apply_color_to='background',
-                            sequence=True, bp_style="line")
-
-    ax = plot.axes[0, 0]
-    x0, x1, y0, y1 = ax.axis()
-    ax.axis((x0-1, x1+1, y0-1, y1+1))
-    plot.set_figure_size()
-
-    # Adds colored backgroud to nucleotides associated with the same pockets.
-    colored_nts = [c != 'w' for c in seq_cmap]
-    x = rna_map.data["ss"].xcoordinates[colored_nts]
-    y = rna_map.data["ss"].ycoordinates[colored_nts]
-    seq_cmap_2 = np.array(seq_cmap, dtype=object)[colored_nts]
-    pts = 20
-    plot.axes[0, 0].scatter(x, y, c=seq_cmap_2, s=pts**2, zorder=19)
+        rnav.plot_ss(
+            samples=[rna_map],
+            structure='ss',
+            colors={
+                "sequence": "contrast",
+                "nucleotides": seq_cmap,
+                },
+            bp_style="line"
+            )
 
     # Saves 2D figure was .png file.
     plt.savefig(f'{analysis}/{name}_2D.png', dpi=300, format=None,
@@ -282,8 +304,23 @@ def get_2D_figure(nsd, seq_cmap, nt_group_color_list, analysis, name, connectpoc
                 facecolor='auto', edgecolor='auto', backend=None)
 
 
-def get_3D_figure(pdb, state, analysis, name, dpi,
-                  chain, zoom, pocket_cmap, alignligand):
+def make_3D_figure(
+    pdb : str, state : int, analysis : str, name : str, dpi : int, chain : str,
+    zoom : float, pocket_cmap : list[tuple], alignligand : bool
+    ) -> None:
+    """Generates a 3D figure and pymol session file for a single state.
+
+    Args:
+        pdb (str): Path to input .pdb file.
+        state (int): Structural state to analyze.
+        analysis (str): path to directory containing fpocket outputs.
+        name (str): Output file name prefix (default={pdb_name}).
+        dpi (int): Figure resolution in dpi (dots per linear inch).
+        chain (str): Chain identifier for desired RNA chain.
+        zoom (float): Zoom buffer distance (Å) for creating 3D figures.
+        pocket_cmap list(tuple): Per pocket color map. Index = pocket residue number. Value = color.
+        alignligand (boolean): Align ligand to pymol output (defualt=True).
+    """
     print('Making 3D figure.\n')
     real_sphere_name = f'{name}_out_real_sphere'
     real_sphere_pdb = os.path.join(analysis, f'{real_sphere_name}.pdb')
@@ -296,7 +333,10 @@ def get_3D_figure(pdb, state, analysis, name, dpi,
     make3D.save_3D_figure(analysis, name, dpi, chain, zoom)
 
 
-def get_all_states_3D_figure(pdb_out, pdb_code, pocket_cmap, dpi, chain, zoom):
+def get_all_states_3D_figure(
+    pdb_out : list[str], pdb_code : str, pocket_cmap : list[tuple],
+    dpi : int, chain : str, zoom : float
+    ) -> None:
     """Generates a 3D figure and pymol session file with all states.
 
     Args:
@@ -308,6 +348,7 @@ def get_all_states_3D_figure(pdb_out, pdb_code, pocket_cmap, dpi, chain, zoom):
         zoom (float): Zoom buffer distance (Å) for creating 3D figures.
     """
     real_sphere_list = glob(f'{pdb_out}/*out/*out_real_sphere.pdb')
+    print(f'Making multistate 3D figures.\n')
     for real_sphere in real_sphere_list:
         object_name = os.path.basename(real_sphere)[:-4]
         make3D.load_pdb(real_sphere)

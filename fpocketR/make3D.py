@@ -5,7 +5,7 @@
 # Weeks Lab, UNC-CH
 # 2022
 #
-# Version 1.0.0
+# Version 1.0.1
 #
 # -----------------------------------------------------
 import os
@@ -13,7 +13,7 @@ from pymol import util
 from pymol import cmd
 
 
-def load_pdb(pdb: str):
+def load_pdb(pdb: str) -> None:
     """load the input pdb file into a pymol session
 
     Args:
@@ -22,7 +22,7 @@ def load_pdb(pdb: str):
     cmd.load(f'{pdb}', partial=1)
 
 
-def alignligand(pdb: str, real_sphere_name: str, state: int):
+def alignligand(pdb: str, real_sphere_name: str, state: int) -> None:
     """aligns state specific structure in the output real_sphere.pdb file
     to the structure in the input pdb file.
 
@@ -54,8 +54,8 @@ def alignligand(pdb: str, real_sphere_name: str, state: int):
         cmd.disable(f'{state_object_name}')
 
 
-def set_default():
-    """set default pymol settings in current pymol session:
+def set_default() -> None:
+    """Set default pymol settings in current pymol session:
     -raytracing performance
     -structure style
 
@@ -119,7 +119,7 @@ def set_default():
     cmd.cartoon('automatic', '(byres polymer & name CA)')
 
 
-def color_pockets(pocket_cmap: dict):
+def color_pockets(pocket_cmap: dict) -> None:
     """settings appearance of the a-spheres (STP) that compose pockets:
     -sets a-sphere radius
     -colors a-spheres based on input color map
@@ -144,7 +144,7 @@ def color_pockets(pocket_cmap: dict):
                   f'resn STP and resi {str(pocket_num)}')
 
 
-def transparent_pocket(object_name, pocket_cmap):
+def transparent_pocket(object_name : str, pocket_cmap : dict) -> None:
     cmd.alter(f'{object_name} and resn STP', 'vdw = b - 1.65')
     for pocket_num in pocket_cmap:
         rgb_tuple = pocket_cmap[pocket_num]
@@ -161,7 +161,7 @@ def transparent_pocket(object_name, pocket_cmap):
     cmd.set('transparency', '0.80', f'{object_name}_pockets')
 
 
-def make_multistate():
+def make_multistate() -> None:
 
     cmd.alter('resn STP', 'vdw = b - 1.65')
     cmd.set('cartoon_ring_finder', '0')
@@ -170,7 +170,9 @@ def make_multistate():
     cmd.set('transparency_mode', '3')
 
 
-def save_3D_figure(path: str, name: str, dpi: int, c: str, zoom: int):
+def save_3D_figure(
+    path: str, name: str, dpi: int, chain: str, zoom: int
+    ) -> None:
     """Saves pymol session file and raytraced png file.
 
     Args:
@@ -181,17 +183,16 @@ def save_3D_figure(path: str, name: str, dpi: int, c: str, zoom: int):
         zoom (float): Sets zoom buffer distance (Å) for creating 3D figures.
     """
 
-    if ',' in c:
-        c = c.replace(',', '+')
+    if ',' in chain:
+        chain = chain.replace(',', '+')
     cmd.remove('hydrogens')
     cmd.set('ray_trace_fog', '0')
     cmd.orient()
     cmd.rotate('z', '90')
-    cmd.zoom(f'chain {c} and (byres polymer & name O2)', f'{zoom}', complete=1)
+    cmd.zoom(f'chain {chain} and (byres polymer & name O2)', f'{zoom}', complete=1)
     cmd.save(f'{path}/{name}_out_real_sphere.pse')
     dimension = dpi * 8
-    print(f'Ray tracing: {name}...')
+    print(f'Ray tracing: {name}...\n')
     cmd.png(f'{path}/{name}_3D_{dpi}.png',
             width=dimension, height=dimension, dpi=dpi, ray=1)
     cmd.reinitialize()
-    print('\n')

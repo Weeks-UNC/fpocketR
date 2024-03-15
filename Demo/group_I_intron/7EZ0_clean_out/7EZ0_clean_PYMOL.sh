@@ -1,2 +1,2 @@
 #!/bin/bash
-pymol 7EZ0_clean.pml
+pymol 7ez0_clean.pml

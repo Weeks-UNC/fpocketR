@@ -1,2 +1,2 @@
 #!/bin/bash
-pymol 3E5C_clean.pml
+pymol 3e5c_clean.pml

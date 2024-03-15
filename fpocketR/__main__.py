@@ -17,9 +17,13 @@ confProDy(verbosity='none')
 # -----------------------------------------------------
 
 
-def pipline(pdb, nsd, chain, state, ligandchain, offset, qualityfilter,
-            m, M, i, D, A, p, out, name, dpi, ligand, yes, zoom,
-            connectpocket, alignligand):
+def pipline(
+    pdb : str, nsd : str, chain : str, state : int, ligandchain : str,
+    offset : int, qualityfilter : float, m : float, M : float, i : int,
+    D : float, A : float, p : float, out : str, name : str, dpi : int,
+    ligand : str, yes : bool, zoom : float, connectpocket : bool,
+    alignligand : bool
+    ):
     """Runs pocket finding pipeline
 
     Args:
@@ -28,7 +32,7 @@ def pipline(pdb, nsd, chain, state, ligandchain, offset, qualityfilter,
         chain (str): Chain identifier for desired RNA chain (default='A').
         state (int): Structural state to analyze.
         ligandchain (str): Chain identifier for desired ligand (default=chain).
-        offset (int): Sequence offset between .pdb and .nsd file (default=0).
+        offset (int): Sequence offset between .pdb and .nsd file (default=None).
         qualityfilter (float): Minimum fpocket score filter for pockets.
         m (float): Min. a-sphere radius in angstroms (default=3.0).
         M (float): Max. a-sphere radius in angstroms (default=5.7).
@@ -62,7 +66,11 @@ def pipline(pdb, nsd, chain, state, ligandchain, offset, qualityfilter,
     # Checks if required input files are accessible/exist.
     print('Checking input files.')
     util.is_accessible(pdb, 'pdb')
-    util.contains_structure(pdb, chain)
+
+    if chain is None:
+        chain = util.get_first_rna_chain(pdb)
+    else:
+        util.is_rna_chain(pdb, chain)
 
     # Runs fpocket on input pdb file and manages output files.
     analysis = pocket.find_pockets(
@@ -76,16 +84,21 @@ def pipline(pdb, nsd, chain, state, ligandchain, offset, qualityfilter,
         pdb_code, name) = util.get_file_paths(analysis, name, pdb, state)
 
     # Analyze fpocket data and create pocket characteristics dataframe.
-    (pc_df, rna_coords, offset) = analyze.analyze_pockets(
+    (pc_df, rna_coords) = analyze.analyze_pockets(
                                   pdb, pqr_out, pdb_out, analysis, name,
                                   info_txt, pockets_out, pdb_code, chain,
                                   state, ligandchain, ligand, m, M, i, D, A, p,
-                                  qualityfilter, offset)
+                                  qualityfilter
+                                  )
+    
+    offset = util.get_offset(pdb, chain, offset) if offset is None else None
 
     # Generates 1D (.csv), 2D (.png, .svg), and 3D (.pdb, .pse, .png)
-    pocket_cmap = figures.make_figures(pdb_code, pdb, state, pc_df, rna_coords, nsd, 
-                         analysis, name, chain, dpi, zoom, offset, 
-                         connectpocket, alignligand)
+    pocket_cmap = figures.make_figures(
+                            pdb, state, pc_df, rna_coords, nsd, 
+                            analysis, name, chain, dpi, zoom, offset, 
+                            connectpocket, alignligand
+                            )
 
     return pc_df, out, pdb_code, pocket_cmap
 
@@ -136,10 +149,10 @@ def parseArgs():
     prs.add_argument('-s', '--state', type=int, required=False, default=None,
                      help='Specify which NMR states/model '
                      'you would like to analyze. Set to 0 for all (None).')
-    prs.add_argument('-c', '--chain', type=str, required=False, default='A',
+    prs.add_argument('-c', '--chain', type=str, required=False, default=None,
                      help='Specify a chain from the input .pdb file ("A").')
     prs.add_argument('-l', '--ligand', type=str,
-                     help='Three character residue name of desired ligand.')
+                     help='PDB ligand identification code (≤ 3 characters).' )
     prs.add_argument('-lc', '--ligandchain', type=str, required=False,
                      help='Chain containing ligand the from the '
                      'input .pdb file (--chain input).')
@@ -166,9 +179,14 @@ def parseArgs():
     return args
 
 
-def main(pdb, nsd, chain, state, ligandchain, offset, qualityfilter,
-         m, M, i, D, A, p, out, name, dpi, ligand, yes, zoom,
-         connectpocket, alignligand):
+def main(
+    pdb : str, nsd : str, chain : str, state : int, ligandchain : str,
+    offset : int, qualityfilter : float, m : float, M : float, i : int,
+    D : float, A : float, p : float, out : str, name : str, dpi : int,
+    ligand : str, yes : bool, zoom : float, connectpocket : bool,
+    alignligand : bool
+    ):
+    
     """Runs the fpocket analysis pipeline.
     Pipeline runs once: by default or if provided a user specified state
     is specified using the -s flag.

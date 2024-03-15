@@ -1,2 +1,2 @@
 #!/bin/bash
-vmd 1YKV_clean_out.pdb -e 1YKV_clean.tcl
+vmd 1ykv_clean_out.pdb -e 1ykv_clean.tcl

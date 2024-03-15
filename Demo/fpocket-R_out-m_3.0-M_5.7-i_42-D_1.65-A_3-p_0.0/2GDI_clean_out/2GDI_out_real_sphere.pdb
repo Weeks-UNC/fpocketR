@@ -1,4 +1,4 @@
-REMARK AtomGroup 2GDI_clean_out
+REMARK AtomGroup 2gdi_clean_out
 ATOM      1  PA  GTP X  10     -21.713  -9.328 -22.078  0.00  0.00           P  
 ATOM      2  PB  GTP X  10     -24.259 -10.797 -22.646  0.00  0.00           P  
 ATOM      3  C5' GTP X  10     -19.854 -10.077 -23.753  0.00  0.00           C  

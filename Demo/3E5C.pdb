@@ -1,6 +1,5 @@
 HEADER    RNA                                     13-AUG-08   3E5C              
-TITLE     CRYSTAL STRUCTURE OF THE SMK BOX (SAM-III) RIBOSWITCH WITH            
-TITLE    2 SAM                                                                  
+TITLE     CRYSTAL STRUCTURE OF THE SMK BOX (SAM-III) RIBOSWITCH WITH SAM        
 COMPND    MOL_ID: 1;                                                            
 COMPND   2 MOLECULE: SMK BOX (SAM-III) RIBOSWITCH;                              
 COMPND   3 CHAIN: A;                                                            
@@ -11,26 +10,25 @@ SOURCE   3 OTHER_DETAILS: RNA WAS PREPARED BY IN VITRO TRANSCRIPTION
 KEYWDS    SAM RIBOSWITCH SMK SAM-III TRANSLATION REGULATION SD, RNA             
 EXPDTA    X-RAY DIFFRACTION                                                     
 AUTHOR    C.LU                                                                  
+REVDAT   4   21-FEB-24 3E5C    1       REMARK LINK                              
 REVDAT   3   24-FEB-09 3E5C    1       VERSN                                    
 REVDAT   2   21-OCT-08 3E5C    1       JRNL                                     
 REVDAT   1   07-OCT-08 3E5C    0                                                
-JRNL        AUTH   C.LU,A.M.SMITH,R.T.FUCHS,F.DING,K.RAJASHANKAR,               
-JRNL        AUTH 2 T.M.HENKIN,A.KE                                              
-JRNL        TITL   CRYSTAL STRUCTURES OF THE SAM-III/S(MK) RIBOSWITCH           
-JRNL        TITL 2 REVEAL THE SAM-DEPENDENT TRANSLATION INHIBITION              
-JRNL        TITL 3 MECHANISM.                                                   
+JRNL        AUTH   C.LU,A.M.SMITH,R.T.FUCHS,F.DING,K.RAJASHANKAR,T.M.HENKIN,    
+JRNL        AUTH 2 A.KE                                                         
+JRNL        TITL   CRYSTAL STRUCTURES OF THE SAM-III/S(MK) RIBOSWITCH REVEAL    
+JRNL        TITL 2 THE SAM-DEPENDENT TRANSLATION INHIBITION MECHANISM.          
 JRNL        REF    NAT.STRUCT.MOL.BIOL.          V.  15  1076 2008              
 JRNL        REFN                   ISSN 1545-9993                               
 JRNL        PMID   18806797                                                     
 JRNL        DOI    10.1038/NSMB.1494                                            
-REMARK   1                                                                      
 REMARK   2                                                                      
 REMARK   2 RESOLUTION.    2.25 ANGSTROMS.                                       
 REMARK   3                                                                      
 REMARK   3 REFINEMENT.                                                          
 REMARK   3   PROGRAM     : CNS 1.2                                              
 REMARK   3   AUTHORS     : BRUNGER,ADAMS,CLORE,DELANO,GROS,GROSSE-              
-REMARK   3               : KUNSTLEVE,JIANG,KUSZEWSKI,NILGES, PANNU,             
+REMARK   3               : KUNSTLEVE,JIANG,KUSZEWSKI,NILGES,PANNU,              
 REMARK   3               : READ,RICE,SIMONSON,WARREN                            
 REMARK   3                                                                      
 REMARK   3  REFINEMENT TARGET : NULL                                            
@@ -93,9 +91,9 @@ REMARK   3   ESD FROM C-V SIGMAA          (A) : 0.43
 REMARK   3                                                                      
 REMARK   3  RMS DEVIATIONS FROM IDEAL VALUES.                                   
 REMARK   3   BOND LENGTHS                 (A) : 0.011                           
-REMARK   3   BOND ANGLES            (DEGREES) : 1.70                            
+REMARK   3   BOND ANGLES            (DEGREES) : 1.700                           
 REMARK   3   DIHEDRAL ANGLES        (DEGREES) : 19.20                           
-REMARK   3   IMPROPER ANGLES        (DEGREES) : 1.54                            
+REMARK   3   IMPROPER ANGLES        (DEGREES) : 1.540                           
 REMARK   3                                                                      
 REMARK   3  ISOTROPIC THERMAL MODEL : RESTRAINED                                
 REMARK   3                                                                      
@@ -131,10 +129,10 @@ REMARK   3  TOPOLOGY FILE  6   : NULL
 REMARK   3                                                                      
 REMARK   3  OTHER REFINEMENT REMARKS: BULK SOLVENT MODEL USED                   
 REMARK   4                                                                      
-REMARK   4 3E5C COMPLIES WITH FORMAT V. 3.15, 01-DEC-08                         
+REMARK   4 3E5C COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
 REMARK 100                                                                      
 REMARK 100 THIS ENTRY HAS BEEN PROCESSED BY RCSB ON 21-AUG-08.                  
-REMARK 100 THE RCSB ID CODE IS RCSB048894.                                      
+REMARK 100 THE DEPOSITION ID IS D_1000048894.                                   
 REMARK 200                                                                      
 REMARK 200 EXPERIMENTAL DETAILS                                                 
 REMARK 200  EXPERIMENT TYPE                : X-RAY DIFFRACTION                  
@@ -153,8 +151,8 @@ REMARK 200  MONOCHROMATOR                  : NULL; NULL
 REMARK 200  OPTICS                         : NULL; NULL                         
 REMARK 200                                                                      
 REMARK 200  DETECTOR TYPE                  : CCD; CCD                           
-REMARK 200  DETECTOR MANUFACTURER          : ADSC QUANTUM 315; ADSC             
-REMARK 200                                   QUANTUM 210                        
+REMARK 200  DETECTOR MANUFACTURER          : ADSC QUANTUM 315; ADSC QUANTUM     
+REMARK 200                                   210                                
 REMARK 200  INTENSITY-INTEGRATION SOFTWARE : HKL-2000                           
 REMARK 200  DATA SCALING SOFTWARE          : HKL-2000                           
 REMARK 200                                                                      
@@ -190,9 +188,9 @@ REMARK 280 CRYSTAL
 REMARK 280 SOLVENT CONTENT, VS   (%): 58.91                                     
 REMARK 280 MATTHEWS COEFFICIENT, VM (ANGSTROMS**3/DA): 2.99                     
 REMARK 280                                                                      
-REMARK 280 CRYSTALLIZATION CONDITIONS: 40 MM SODIUM CACODYLATE, 80 MM           
-REMARK 280  SRCL, 15% MPD, 2 MM SPERMINE-HCL, PH 7, VAPOR DIFFUSION,            
-REMARK 280  HANGING DROP, TEMPERATURE 298K                                      
+REMARK 280 CRYSTALLIZATION CONDITIONS: 40 MM SODIUM CACODYLATE, 80 MM SRCL,     
+REMARK 280  15% MPD, 2 MM SPERMINE-HCL, PH 7, VAPOR DIFFUSION, HANGING DROP,    
+REMARK 280  TEMPERATURE 298K                                                    
 REMARK 290                                                                      
 REMARK 290 CRYSTALLOGRAPHIC SYMMETRY                                            
 REMARK 290 SYMMETRY OPERATORS FOR SPACE GROUP: I 41 2 2                         
@@ -307,6 +305,25 @@ REMARK 500
 REMARK 500 REMARK: NULL                                                         
 REMARK 500                                                                      
 REMARK 500 GEOMETRY AND STEREOCHEMISTRY                                         
+REMARK 500 SUBTOPIC: COVALENT BOND LENGTHS                                      
+REMARK 500                                                                      
+REMARK 500 THE STEREOCHEMICAL PARAMETERS OF THE FOLLOWING RESIDUES              
+REMARK 500 HAVE VALUES WHICH DEVIATE FROM EXPECTED VALUES BY MORE               
+REMARK 500 THAN 6*RMSD (M=MODEL NUMBER; RES=RESIDUE NAME; C=CHAIN               
+REMARK 500 IDENTIFIER; SSEQ=SEQUENCE NUMBER; I=INSERTION CODE).                 
+REMARK 500                                                                      
+REMARK 500 STANDARD TABLE:                                                      
+REMARK 500 FORMAT: (10X,I3,1X,2(A3,1X,A1,I4,A1,1X,A4,3X),1X,F6.3)               
+REMARK 500                                                                      
+REMARK 500 EXPECTED VALUES PROTEIN: ENGH AND HUBER, 1999                        
+REMARK 500 EXPECTED VALUES NUCLEIC ACID: CLOWNEY ET AL 1996                     
+REMARK 500                                                                      
+REMARK 500  M RES CSSEQI ATM1   RES CSSEQI ATM2   DEVIATION                     
+REMARK 500    GTP A   1   O3'     U A   2   P       0.093                       
+REMARK 500                                                                      
+REMARK 500 REMARK: NULL                                                         
+REMARK 500                                                                      
+REMARK 500 GEOMETRY AND STEREOCHEMISTRY                                         
 REMARK 500 SUBTOPIC: COVALENT BOND ANGLES                                       
 REMARK 500                                                                      
 REMARK 500 THE STEREOCHEMICAL PARAMETERS OF THE FOLLOWING RESIDUES              
@@ -329,8 +346,8 @@ REMARK 500
 REMARK 500 REMARK: NULL                                                         
 REMARK 620                                                                      
 REMARK 620 METAL COORDINATION                                                   
-REMARK 620  (M=MODEL NUMBER; RES=RESIDUE NAME; C=CHAIN IDENTIFIER;              
-REMARK 620  SSEQ=SEQUENCE NUMBER; I=INSERTION CODE):                            
+REMARK 620 (M=MODEL NUMBER; RES=RESIDUE NAME; C=CHAIN IDENTIFIER;               
+REMARK 620 SSEQ=SEQUENCE NUMBER; I=INSERTION CODE):                             
 REMARK 620                                                                      
 REMARK 620 COORDINATION ANGLES FOR:  M RES CSSEQI METAL                         
 REMARK 620                              SR A 207  SR                            
@@ -343,12 +360,15 @@ REMARK 800 SITE
 REMARK 800 SITE_IDENTIFIER: AC1                                                 
 REMARK 800 EVIDENCE_CODE: SOFTWARE                                              
 REMARK 800 SITE_DESCRIPTION: BINDING SITE FOR RESIDUE SR A 204                  
+REMARK 800                                                                      
 REMARK 800 SITE_IDENTIFIER: AC3                                                 
 REMARK 800 EVIDENCE_CODE: SOFTWARE                                              
 REMARK 800 SITE_DESCRIPTION: BINDING SITE FOR RESIDUE SR A 207                  
+REMARK 800                                                                      
 REMARK 800 SITE_IDENTIFIER: AC4                                                 
 REMARK 800 EVIDENCE_CODE: SOFTWARE                                              
 REMARK 800 SITE_DESCRIPTION: BINDING SITE FOR RESIDUE SR A 208                  
+REMARK 800                                                                      
 REMARK 800 SITE_IDENTIFIER: AC7                                                 
 REMARK 800 EVIDENCE_CODE: SOFTWARE                                              
 REMARK 800 SITE_DESCRIPTION: BINDING SITE FOR RESIDUE SAM A 216                 
@@ -387,13 +407,13 @@ FORMUL   1  GTP    C10 H16 N5 O14 P3
 FORMUL   2   SR    15(SR 2+)                                                    
 FORMUL  17  SAM    C15 H22 N6 O5 S                                              
 FORMUL  18  HOH   *69(H2 O)                                                     
+LINK         O3' GTP A   1                 P     U A   2     1555   1555  1.70  
 LINK         O2A GTP A   1                SR    SR A 212     1555   1555  2.65  
 LINK         OP2   C A   6                SR    SR A 207     1555   1555  2.56  
 LINK         O4    U A  14                SR    SR A 213     1555   1555  2.53  
 LINK         OP2   A A  38                SR    SR A 215     1555   1555  2.41  
 LINK        SR    SR A 207                 O   HOH A 282     1555   1555  2.55  
 LINK        SR    SR A 208                 O   HOH A 224     1555   1555  2.41  
-LINK         O3' GTP A   1                 P     U A   2     1555   1555  1.70  
 SITE     1 AC1  1 HOH A 223                                                     
 SITE     1 AC3  2 HOH A 219  HOH A 282                                          
 SITE     1 AC4  1 HOH A 224                                                     
@@ -1742,5 +1762,5 @@ CONECT 1197 1196 1198
 CONECT 1198 1189 1192 1197                                                      
 CONECT 1206 1164                                                                
 CONECT 1264 1163                                                                
-MASTER      333    0   17    0    0    0    4    6 1266    1   70    5          
+MASTER      354    0   17    0    0    0    4    6 1266    1   70    5          
 END                                                                             

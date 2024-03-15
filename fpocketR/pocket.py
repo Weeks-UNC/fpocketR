@@ -5,7 +5,7 @@
 # Weeks Lab, UNC-CH
 # 2022
 #
-# Version 1.0.0
+# Version 1.0.1
 #
 # -----------------------------------------------------------------------------
 
@@ -15,7 +15,10 @@ import shutil
 from pymol import cmd
 
 
-def find_pockets(pdb, chain, state, m, M, i, D, A, p, out, yes):
+def find_pockets(
+    pdb : str, chain : str, state : int, m : float, M : float, i :int,
+    D : float, A : int, p : float, out : str, yes : bool
+    ) -> str:
     """Pocket finding pipeline:
         - cleans pdb file to generate rna-only file
         - runs pocket prediction using fpocket
@@ -53,7 +56,7 @@ def find_pockets(pdb, chain, state, m, M, i, D, A, p, out, yes):
 # -----------------------------------------------------------------------------
 
 
-def clean_pdb(pdb, pdb_clean):
+def clean_pdb(pdb : str, pdb_clean : str) -> None:
     """Cleans a .pdb file input and saves output as a .pdb file.
        Removes not polymer molecules (ligands) and proteins.
        Preserves modified/heteroatom RNA residues.
@@ -70,7 +73,13 @@ def clean_pdb(pdb, pdb_clean):
     cmd.reinitialize()
 
 
-def run_fpocket(pdb, chain, state, m, M, i, D, A, p):
+class MissingEnvironmentVariable(Exception):
+    pass
+
+def run_fpocket(
+    pdb : str, chain :str, state : int, m : float, M : float, i :int,
+    D : float, A : int, p : float
+    ) -> None:
     """Detects potential binding pockets in RNA structures using fpocket.
 
     Args:
@@ -86,17 +95,24 @@ def run_fpocket(pdb, chain, state, m, M, i, D, A, p):
     pdb_code = os.path.basename(pdb)[0:4]
     print(f'***** POCKET HUNTING {pdb_code} *****')
     # Runs fpocket bash commands
-    bash_command = f'conda run -n fpocket-R fpocket -f {pdb} -k {chain} -l {state} -m {m} -M {M} -i {i} -D {D} -A {A} -p {p} -w p'
+    
+        
+    bash_command = f'conda run -n fpocketR fpocket -f {pdb} -k {chain} -l {state} -m {m} -M {M} -i {i} -D {D} -A {A} -p {p} -w p'
+            
     process = subprocess.Popen(bash_command.split(
     ), stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
 
     # Prints fpocket communications to console.
     result = process.communicate()
+  
     for message in result:
         print(message)
+        if 'EnvironmentLocationNotFound' in message:
+            raise OSError('Unable to run fpocket because the fpocketR conda enviroment does not exist.\n'
+                                   'Install the fpocketR conda enviroment.')
 
 
-def file_fpocket(pdb, state, out, yes):
+def file_fpocket(pdb : str, state : int, out : str, yes : bool) -> str:
     """Moves fpocket outputs into designated output directory.
        Default directory name specifies the fpocket parameters used.
        Manages overwriting files/directories if thet already exist.
@@ -112,6 +128,9 @@ def file_fpocket(pdb, state, out, yes):
     """
     # Moves fpocket output directories into a shared directory.
     source_dir = f'{pdb.rsplit(".")[0]}_out'
+        
+    if not os.path.isdir(source_dir):
+        raise FileNotFoundError(f'fpocket output directory does not exist: {source_dir}.')
 
     if state is None:
         dest_dir = os.path.join(out, f'{pdb.rsplit(".")[0]}_out')
@@ -130,7 +149,6 @@ def file_fpocket(pdb, state, out, yes):
             print()
         if yes or remove in ('y', 'Y', 'yes', 'Yes'):
             shutil.rmtree(dest_dir)
-
             analysis = shutil.move(source_dir, dest_dir)
         else:
             print('Exiting program. \n'

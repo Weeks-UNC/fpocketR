@@ -1,2 +1,2 @@
 #!/bin/bash
-pymol 6MCI_clean.pml
+pymol 6mci_clean.pml

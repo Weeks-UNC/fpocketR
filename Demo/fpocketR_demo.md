@@ -1,26 +1,66 @@
 
 # fpocket Analysis Pipeline Demo
 
-## Preparation
+## Before running fpocketR
+
+Activate the fpocketR virtual enviroment and nagivate directories.
 
     conda activate fpocketR
-    cd ~/Weeks_Lab/fpocket4/fpocketR/demo
+    cd <path_to_github_repo>/fpocketR/demo
 
-Navigate to a working directory that contains a .pdb file(s). Secondary structure drawings such as .nsd file(s) are optional.
 
-## Run from terminal
+## Manually input RNA structure from a .pdb/.cif file
 
-    python -m fpocketR -pdb 7ELR.pdb
+    python -m fpocketR -pdb 7elr.pdb
 
-or
+    >Detected heteroatoms: ['GTP', 'XAN'].
+    >Input the target ligand ID or "None" for no ligand:XAN
 
-    python -m fpocketR -pdb 7ELR
+* The user will be prompted to input a ligand ID since the --ligand option was not used.
+* Input ligand ID: XAN
 
-This argument will run fpocket, analyze pockets, and make 3D figures.
+<p style="text-align: center;"><b>Pocket characteristics</b> (.csv)</p>
 
-The user will be prompted to input ligand name since multiple heteroatoms are detected (input: XAN).
+| PDB  | State | Pocket | Type  | Filter | Score | Drug score | a-sphere | SASA    | Volume  | Hydrophobic density | Apolar a-sphere proportion | Hydrophobicity score | Polarity score | PocketNT                               | Pocket npr1 | Pocket npr2 | Pocket overlap | Ligand overlap | Center criteria | Ligand npr1 | Ligand npr2 | QED score |
+| ---- | ----- | ------ | ----- | ------ | ----- | ---------- | -------- | ------- | ------- | ------------------- | -------------------------- | -------------------- | -------------- | -------------------------------------- | ----------- | ----------- | -------------- | -------------- | --------------- | ----------- | ----------- | --------- |
+| 7elr |       | 1      | Known | Pass   | 0.34  | 0.28       | 89       | 1.2e+02 | 3.6e+02 | 13                  | 0.16                       | -15                  | 8              | [6, 7, 10, 35, 36, 37, 38, 39, 40, 41] | 0.47        | 0.72        | 0.81           | 1              | 0.89            | 0.36        | 0.64        | 0.45      |
 
-## Run batches of files through fpocket-R using a bash script
+
+|                                          Pocket in 3D structure (.pse/.pdb)                                           |
+| :-------------------------------------------------------------------------------------------------------------------: |
+| <img src="fpocket-R_out-m_3.0-M_5.7-i_42-D_1.65-A_3-p_0.0/7ELR_clean_out/7ELR_3D_300.png" alt="drawing" width="300"/> |
+
+
+## Automatically input a structure from a [PDB](https://www.rcsb.org/) code
+
+    python -m fpocketR -pdb 4b5r --ligand SAM
+
+* Requires an internet connection to automatically fetch .pdb/.cif files.
+
+|                                          Pockets in 3D structure (.pse/.pdb)                                          |                                 Pocket legend                                  |
+| :-------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------: |
+| <img src="fpocket-R_out-m_3.0-M_5.7-i_42-D_1.65-A_3-p_0.0/4b5r_clean_out/4b5r_3D_300.png" alt="drawing" width="300"/> | <img src="images/fpocketR_pocket_color_legend.png" alt="drawing" width="300"/> |
+
+
+## Generate 2D figure of pockets in RNA
+
+    python -m fpocketR -pdb 6fz0.pdb -nsd 6FZ0.nsd --ligand SAM
+
+* 2D figures require the input of an RNA structure drawing from: StructureEditor (.nsd), R2DT, VARNA, XRNA, or FORNA.
+* We suggest generating secondary structure files by:
+    1) Converting .pdb to .ct files using [rnapdbee](http://rnapdbee.cs.put.poznan.pl)
+    2) Making .nsd from .ct files using [StructureEditor](https://rna.urmc.rochester.edu/RNAstructureDownload.html)
+
+
+|                                          Pocket in 3D structure (.pse/.pdb)                                           |                                        Pocket in 2D Structure (.png/.svg)                                         |
+| :-------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------: |
+| <img src="fpocket-R_out-m_3.0-M_5.7-i_42-D_1.65-A_3-p_0.0/6fz0_clean_out/6fz0_3D_300.png" alt="drawing" width="300"/> | <img src="fpocket-R_out-m_3.0-M_5.7-i_42-D_1.65-A_3-p_0.0/6fz0_clean_out/6fz0_2D.png" alt="drawing" width="300"/> |
+
+
+
+
+
+## Advanced: run batches of files through fpocket-R using a bash script
 
     bash fpocketR_batch_submitter.sh
 
@@ -31,23 +71,23 @@ The user will be prompted to input ligand name since multiple heteroatoms are de
 > * Specify an nsd file to create 2D figures (-nsd, --nsd).
 > * Specify a three character ligand residue name for holo structure analysis (-l, --ligand). 
 >
->       -pdb 3E5C.pdb -nsd 3E5C.nsd -l SAM
+>       -pdb 3e5c.pdb -nsd 3e5c.nsd -l SAM
 >
 > * Specify the chain id of the RNA, if not chain A (-c, --chain).
 >
->       -pdb 2GDI.pdb -nsd 2GDI.nsd -l TPP -c X 
+>       -pdb 2gdi.pdb -nsd 2gdi.nsd -l TPP -c X 
 >
 > * Specify upto 2 chain ids (eg. A,B) for discontiguous RNAs (-c, --chain).
 > * Specify the chain containing the ligand of interest (-l, --ligand).
 >
->       -pdb 1YKV.pdb -nsd 1YKV.nsd -l DAI -c A,B -lc A
+>       -pdb 1ykv.pdb -nsd 1ykv.nsd -l DAI -c A,B -lc A
 >
-> * Specify *fpocket* parameters to use default parameters (optimized for proteins) or your own parameters (-m, --m; -M, --M, -D, --D; -i, --i; -A, --A; -p, --p).
+> * Specify *fpocket* parameters to use default parameters (optimized for proteins) or your own parameters (-m, -M, -D, -i, -A, -p).
 >
->       -pdb 3E5C.pdb -nsd 3E5C.nsd -l SAM -m 3.4 -M 6.2 -D 2.4 -i 15 -A 3 -p 0
+>       -pdb 3e5c.pdb -nsd 3e5c.nsd -l SAM -m 3.4 -M 6.2 -D 2.4 -i 15 -A 3 -p 0
 >
 > * Specify no ligand for apo structure analysis (-l, --ligand).
-> * Analyze all NMR states (-s, --state).
+> * Analyze multistate structures (-s, --state). (all states = 0)
 >
 >       -pdb 6MCI.pdb -nsd 6MCI.nsd -l no -s 0 -al
 >
@@ -62,7 +102,7 @@ The user will be prompted to input ligand name since multiple heteroatoms are de
 
 | Input options                 | Description                                                                                        |
 | :---------------------------- | :------------------------------------------------------------------------------------------------- |
-| -pdb, --pdb STRING (Required) | Specify a path to a .pdb file, .cif file, or 4 charater PDB indentification code to run fpocketR.  |
+| -pdb, --pdb STRING (Required) | Specify a path to a .pdb/.cif file, or a 4 charater PDB indentification code.                      |
 | -nsd, --nsd STRING            | Specify an .nsd file or other secondary structure file for generating secondary structure figures. |
 
 
@@ -79,21 +119,21 @@ The user will be prompted to input ligand name since multiple heteroatoms are de
 | Output options    | Description                                                                                         |
 | :---------------- | :-------------------------------------------------------------------------------------------------- |
 | -o, --out STRING  | Specify name of fpocket output parent directory name. (Default: fpocket-R_out_{fpocket parameters}) |
-| -n, --name STRING | Specify name prefix for fpocket_out and analysis_out subdirectories.                                |
-| -y, --yes BOOLEAN | Overwrites output files and directories with same name.                                             |
+| -n, --name STRING | Specify name prefix for fpocket_out and analysis_out subdirectories. (Default: None)                |
+| -y, --yes BOOLEAN | Overwrites output files and directories with same name. (Default: False)                            |
 
 | Analysis settings          | Description                                                                                                                                                                |
 | :------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| -s, --state INT            | Specify a particular NMR states/model for analysis. Set to 0 for all. (Default: NONE)                                                                                      |
+| -s, --state INT            | Specify a particular NMR states/model for analysis. Set to 0 for all. (Default: None)                                                                                      |
 | -c, --chain STING          | Specify the chain(s) IDs conatining RNA (case sensitive). List upto 2 chains seperated by a comma (eg. A,B). (Default: A)                                                  |
-| -l, --ligand STRING        | Specify the three character residue name of desired ligand.                                                                                                                |
-| -lc, --ligandchain STRING  | Specify the chain containing the ligand of interest. (Default: same as first RNA chain.)                                                                                   |
+| -l, --ligand STRING        | Specify the PDB ligand identification code (≤ 3 characters).                                                                                                               |
+| -lc, --ligandchain STRING  | Specify the chain containing the ligand of interest. (Default: <first RNA chain>)                                                                                          |
 | -off, -offset INT          | Specify the offset between the structures in the input pdb and nsd files. Manual input is required for use with .cif files. (Default: will gather offset from pdb header.) |
 | -qf, --qualityfilter FLOAT | Specify the minimum fpocket score for a pocket to pass the quality filter. (Default: 0.0)                                                                                  |
 
 | Figure settings              | Description                                                                                 |
 | :--------------------------- | :------------------------------------------------------------------------------------------ |
 | -dpi, --dpi INT              | Specify 3D figure resolution (dots per linear inch). (Default: 300)                         |
-| -zoom, --zoom INT            | Specify zoom buffer distance to set the feild of view for 3D figures. (Default= 10)         |
+| -zoom, --zoom INT            | Specify zoom buffer distance (Å) to set the feild of view for 3D figures. (Default: 10)     |
 | -cp, --connectpocket BOOLEAN | Visually connects pockets in 2D figures. (Default: False)                                   |
 | -al, --alignligand BOOLEAN   | Align output structures to input structure. Useful for multistate analysis. (Default: True) |

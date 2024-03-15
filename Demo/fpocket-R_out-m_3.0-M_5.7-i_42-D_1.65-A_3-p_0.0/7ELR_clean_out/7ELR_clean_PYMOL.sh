@@ -1,2 +1,2 @@
 #!/bin/bash
-pymol 7ELR_clean.pml
+pymol 7elr_clean.pml

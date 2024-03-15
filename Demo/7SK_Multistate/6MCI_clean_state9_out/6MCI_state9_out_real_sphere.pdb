@@ -1,4 +1,4 @@
-REMARK AtomGroup 6MCI_clean_state9_out
+REMARK AtomGroup 6mci_clean_state9_out
 ATOM      1  C5' G   A  24       3.941  -1.319  -1.290  0.00  0.00           C  
 ATOM      2  O5' G   A  24       3.486  -0.171  -0.578  0.00  0.00           O  
 ATOM      3  C4' G   A  24       4.632  -0.966  -2.617  0.00  0.00           C  

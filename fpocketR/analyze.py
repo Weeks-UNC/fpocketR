@@ -5,7 +5,7 @@
 # Weeks Lab, UNC-CH
 # 2022
 #
-# Version 1.0.0
+# Version 1.0.1
 #
 # -----------------------------------------------------------------------------
 from re import findall
@@ -20,26 +20,16 @@ import trimesh
 from fpocketR import util
 
 
-def analyze_pockets(pdb, pqr_out, pdb_out, analysis, name, info_txt,
-                    pockets_out, pdb_code, chain, state, ligandchain, ligand,
-                    m, M, i, D, A, p, qualityfilter, offset):
+def analyze_pockets(
+    pdb : str, pqr_out : str, pdb_out : str, analysis : str, name : str,
+    info_txt : str, pockets_out : list[str], pdb_code : str, chain : str,
+    state, ligandchain : str, ligand : str, m : float, M : float, i : int,
+    D : float, A : int, p : float, qualityfilter : float
+    ) -> tuple[pd.DataFrame, prody.AtomGroup]:
 
     # Parses pdb files and returns prody structure objects.
     ligand_structure = parsePDB(pdb)
     out_structure = parsePDB(pdb_out)
-
-    # Get offset of pdb_ligand file.
-    if offset is None and pdb.endswith('.pdb'):
-        polymer = parsePDBHeader(pdb, 'polymers')
-        offset = get_offset(polymer, chain)
-    elif offset is None: 
-        print('Automated offset is only supported for .pdb files.\n')
-        while True:
-            input_offset = input('Input offset (INT) between the rna sequence '
-                                 'and first nucleotide of the PDB structure:')
-            if input_offset.isdigit():
-                offset = input_offset
-                break
 
     # Sets ligand chain to first pdb chain by default.
     if ligandchain is None:
@@ -73,33 +63,15 @@ def analyze_pockets(pdb, pqr_out, pdb_out, analysis, name, info_txt,
                 add_ligand_characteristics(analysis, stp_coords, ligand_coords,
                                            ligand, pc_df)
 
-    return pc_df, rna_coords, offset
+    return pc_df, rna_coords
 
 
 # -----------------------------------------------------------------------------
 
-def get_offset(polymer, chain):
-    """Locates PDB nucleotide offset as documented in the dbrefs section of
-    the input .pdb file. 
-    NOTE: Offset can be reported incorrectly in some .pdb files.
 
-    Args:
-        polymer (object): ProDy parsed PDB header with polymer info.
-        chain (str): Chain identifier for RNA chain.
-
-    Returns:
-        int: Nucleotide offset of PDB chain.
-    """
-
-    for idx, ch in enumerate(polymer):
-        if ch.chid == chain[0]:
-            polymer_chain = polymer[idx]
-            dbref = polymer_chain.dbrefs[0]
-            offset = dbref.first[0] - 1
-    return offset
-
-
-def get_real_sphere(pqr_file, pdb_file, analysis, name):
+def get_real_sphere(
+    pqr_file : str, pdb_file : str, analysis : str, name : str
+    ) -> None:
     """Gets fpocket pocket a-sphere radii form a pqr file and encodes it into
     into the B factor column of a *real_sphere.pdb output file.
 
@@ -127,7 +99,10 @@ def get_real_sphere(pqr_file, pdb_file, analysis, name):
     writePDB(f'{analysis}/{name}_out_real_sphere.pdb', structure)
 
 
-def get_ligand_coords(ligand_structure, ligand, ligandchain, name):
+def get_ligand_coords(
+    ligand_structure : prody.AtomGroup, ligand : str,
+    ligandchain : str, name : str
+    ) -> tuple[prody.AtomGroup, str]:
     """Gets coordinates and residue name for RNA-binding ligand.
 
     Args:
@@ -200,7 +175,10 @@ def get_ligand_coords(ligand_structure, ligand, ligandchain, name):
         return ligand_coords, ligand
 
 
-def get_characteristics(info_txt, pdb_code, m, M, i, D, A, p, state):
+def get_characteristics(
+    info_txt : str, pdb_code :str, m : float, M : float, i : int, D : float,
+    A : int, p : float, state : int
+    ) -> pd.DataFrame:
     """Creates a dataframe containing characteristics for
         all fpocket generates pockets.
 
@@ -270,8 +248,11 @@ def get_characteristics(info_txt, pdb_code, m, M, i, D, A, p, state):
     return pc_df
 
 
-def add_basic_characteristics(stp_coords, pockets_out,
-                              qualityfilter, pc_df, chain, analysis, name):
+def add_basic_characteristics(
+    stp_coords : prody.AtomGroup, pockets_out : list[str], 
+    qualityfilter : float, pc_df : pd.DataFrame, chain :str,
+    analysis : str, name :str
+    ) -> None:
     """Adds characteristics to the pocket characteristics DataFrame that do
         not require a ligand to calculate.
     PocketNT: nucleotides in contact with pocket,
@@ -280,7 +261,7 @@ def add_basic_characteristics(stp_coords, pockets_out,
     
     Args:
         stp_coords (object): ProDy atom group of a-sphere coordinates.
-        pockets_out list(str): Valid paths to pockets/pocket*_atm.pdb files.
+        pockets_out list[str]: Valid paths to pockets/pocket*_atm.pdb files.
         qualityfilter (float): Minimum fpocket score filter for pockets.
         pc_df (DataFrame): Characteristics and properities for each pocket.
         chain (str): Chain identifier for desired RNA chain (default='A').
@@ -351,8 +332,10 @@ def add_basic_characteristics(stp_coords, pockets_out,
     pc_df.loc[pc_df['Score'] > qualityfilter, 'Filter'] = 'Pass'
 
 
-def add_ligand_characteristics(analysis, stp_coords, ligand_coords,
-                               ligand, pc_df):
+def add_ligand_characteristics(
+    analysis : str, stp_coords : prody.AtomGroup,
+    ligand_coords : prody.AtomGroup, ligand : str, pc_df : pd.DataFrame
+    ) -> None:
     """Adds characteristics to the pocket characteristics DataFrame that
        require the presence of a ligand to calculate.
     Pocket overlap:  Ratio of a-spheres in contact with ligand.

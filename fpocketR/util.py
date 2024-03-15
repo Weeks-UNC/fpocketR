@@ -5,7 +5,7 @@
 # Weeks Lab, UNC-CH
 # 2022
 #
-# Version 1.0.0
+# Version 1.0.1
 #
 # -----------------------------------------------------
 import os
@@ -14,7 +14,7 @@ from prody import *
 import numpy as np
 
 
-def is_accessible(path, file_name):
+def is_accessible(path : str, file_name : str) -> None:
     """Checks if input file is accessible.
        Stops program and displays:
         - FileNotFoundError: if file is not accessible/found.
@@ -25,53 +25,88 @@ def is_accessible(path, file_name):
         file_name (str): name of file being checked for display in error.
 
     Raises:
-        FileNotFoundError: not able to read input file.
+        FileNotFoundError: Not able to read input file.
+        PermissionError: Not able to access {file_name}.')
     """
-    try:
-        if not os.access(path, os.R_OK):
-            raise FileNotFoundError(f'FileNotFoundError: Unable to access/find '
-                                    f'a valid {file_name} file.\n{path}\n')
-
-    except FileNotFoundError as error:
-        print(f'{error}')
-        if file_name in ['pdb', 'nsd']:
-            print(f'Provide path to the input {file_name} file using the '
-                  f'-{file_name} flag.')
-        raise error
-
-    except TypeError:
-        print(f'TypeError: no path provided for the {file_name} file.\n')
-        if file_name in ['pdb', 'nsd']:
-            print(f'Provide path to the input {file_name} file using the '
-                  f'-{file_name} flag.')
-        exit()
+    if not os.path.exists(path):
+        print(f'FileNotFoundError: The file {file_name} does not exist: {path}')
+        raise FileNotFoundError(f'The file {file_name} does not exist at: {path}.')
 
 
-def contains_structure(pdb, chain):
-    if chain != "None":
-        pdb_structure = parsePDB(pdb)
-        chain = chain.split(',')[0]
-        # if not pdb_structure.numAtoms('nucleic'):
-        #     print(f'\nERROR: The input file {pdb} does not contain an RNA.\n'
-        #           'Input a pdb file containing an RNA using the (-pdb) flag.')
-        #     exit()
-        if not pdb_structure.select(f'chain {chain}'):
-            print(f'\nKeyError: The input file {pdb} does not contain a chain {chain}.\n'
-                  'Input a valid chain id using the (-c) flag')
-        #     exit()
-        # if not pdb_structure.select(f'chain {chain} and nucleic'):
-        #     print(f'\nError: The input file {pdb} does not contain RNA in chain {chain}.\n'
-        #           'Input a chain id containing an RNA using the (-c) flag')
-        #     exit()
+    if not os.access(path, os.R_OK):
+        print(f'PermissionError: Not able to access {file_name}.')
+        raise PermissionError(f'Not able to access {file_name}.')
 
 
-def get_file_paths(analysis, name, pdb, state):
+def get_first_rna_chain(pdb : str) -> str:
+    """Identifies first RNA chain in .pdb/.cif file.
+
+    Args:
+        pdb (str): Path to input .pdb/.cif file.
+
+    Returns:
+        str: Chain identifier of the first chain containing RNA.
+    """
+
+    structure = prody.parsePDB(pdb)
+        
+    for ch in structure.getHierView():
+        chid = ch.getChid()
+        if structure.select(f'chain {chid} nucleic'):
+            return chid
+        else:
+            print(f'No RNA chain found in {pdb}.\n'
+                         'Verify that your pdb structure contains RNA.\n'
+                         'Or manually set an RNA chain with (--chain) option.')
+            raise ValueError(f'No RNA chain found in {pdb}.\n'
+                         'Verify that your pdb structure contains RNA.\n'
+                         'Or manually set an RNA chain with (--chain) option.')
+
+
+def is_rna_chain(pdb : str, chain : str) -> None:
+    """Identifies if a chain an a .pdb/.cif file contains rna.
+
+    Args:
+        pdb (str): Path to input .pdb/.cif file.
+        chain (str): Chain identifier for RNA chain.
+
+    Returns:
+        None
+    """
+    structure = prody.parsePDB(pdb)
+    chains = chain.split(',')
+    hv = structure.getHierView()
+    chids = list(hv)
+
+    for chain in chains:
+        if not structure.select(f'chain {chain}'):
+            print(f'KeyError: The input {pdb} does not contain the chain: {chain}.\n'
+            'Input a valid chain id using the (--chain) option.\n'
+            'NOTE: Chain identifiers are case sensitive.\n'
+            f'Chain(s) present in {pdb}:\n{chids}')
+            raise KeyError(f'The input {pdb} does not contain the chain: {chain}.'
+            'Input a valid chain id using the (--chain) option.'
+            'NOTE: Chain identifiers are case sensitive.')
+        elif not structure.select(f'chain {chain} nucleic'):
+            print(f'KeyError: Chain {chain} of {pdb} does not contain rna.\n'
+            'Input a valid RNA chain id using the (--chain) option.\n'
+            'NOTE: Chain identifiers are case sensitive.'
+            f'Chain(s) present in {pdb}:\n{chids}')
+            raise KeyError(f'Chain {chain} of {pdb} does not contain rna.'
+            'Input a valid RNA chain id using the (--chain) option.\n'
+            'NOTE: Chain identifiers are case sensitive.')
+
+
+def get_file_paths(
+    analysis : str, name :str , pdb : str, state : int
+    )-> tuple[str, str, str, str, list[str], str, str]:
     """Gets paths to required input files and check if they are accessible.
 
     Args:
-        analysis (str): path directory contianing fpocket outputs for analysis
-        name (str): user specified filename prefix for analysis outputs
+        analysis (str): path to directory containing fpocket outputs.
+        name (str): user specified filename prefix for analysis outputs.
         pdb (str): Path to input .pdb file.
+        state (int): Structural state to analyze.
 
     Returns:
         str: valid path to *.pdb file
@@ -120,7 +155,7 @@ def get_file_paths(analysis, name, pdb, state):
     return pdb, pdb_out, pqr_out, info_txt, pockets_out, pdb_code, name
 
 
-def calc_npr(atom_group: object):
+def calc_npr(atom_group: object) -> tuple[float, float]:
     """Generates the normalized PMI ratio for an input object.
 
     Args:
@@ -146,14 +181,14 @@ def calc_npr(atom_group: object):
     return npr1, npr2
 
 
-def calc_inertia_tensor(atom_group: object):
+def calc_inertia_tensor(atom_group: object) -> np.array:
     """Generates an interia tensor for a prody atomgroup object.
 
     Args:
         atomgroup (object): prody atomgroup
 
     Returns:
-        np.array: inertia tensor
+        np.array: 3x3 inertia tensor
     """
     # Calculate center of mass
     totmass = 0.0
@@ -211,7 +246,7 @@ def calc_inertia_tensor(atom_group: object):
     return inertia_tensor
 
 
-def calc_pmi(inertia_tensor):
+def calc_pmi(inertia_tensor : np.array) -> list:
     """Calaculates sorted eigen values (principle moments of inertia) 
     for an imput inertia tensor.
 
@@ -230,3 +265,38 @@ def calc_pmi(inertia_tensor):
     sorted_eigvals = eigvals[eig_ord]
 
     return sorted_eigvals
+
+
+def get_offset(pdb : str, chain : str, offset : int) -> int:
+    """Locates PDB nucleotide offset as documented in the dbrefs section of
+    the input .pdb file. 
+    NOTE: Offset can be reported incorrectly in some .pdb files.
+
+    Args:
+        pdb (str): Path to input .pdb file.
+        chain (str): Chain identifier for RNA chain.
+        offset (int): Sequence offset between .pdb and .nsd file (default=None).
+
+    Returns:
+        int: Nucleotide offset of PDB chain.
+    """
+ 
+    if pdb.endswith('.pdb'):
+        polymer = parsePDBHeader(pdb, 'polymers')
+        
+        for idx, ch in enumerate(polymer):
+            if ch.chid == chain[0]:
+                polymer_chain = polymer[idx]
+                dbref = polymer_chain.dbrefs[0]
+                offset = dbref.first[0] - 1
+            
+    else: 
+        print('Automated offset is only supported for .pdb files.\n')
+        while True:
+            input_offset = input('Input offset (INT) between the rna sequence '
+                                'and first nucleotide of the PDB structure:')
+            if input_offset.isdigit():
+                offset = input_offset
+                break
+    
+    return offset

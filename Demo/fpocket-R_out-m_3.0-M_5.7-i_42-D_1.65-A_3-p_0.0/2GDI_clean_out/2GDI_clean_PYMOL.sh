@@ -1,2 +1,2 @@
 #!/bin/bash
-pymol 2GDI_clean.pml
+pymol 2gdi_clean.pml

@@ -1,5 +1,5 @@
 from pymol import cmd,stored
-load 3E5C_clean_out.pdb
+load 3e5c_clean_out.pdb
 #select pockets, resn STP
 stored.list=[]
 cmd.iterate("(resn STP)","stored.list.append(resi)")	#read info about residues STP
