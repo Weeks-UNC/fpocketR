@@ -40,7 +40,7 @@ fpocketR is a modified version of [fpocket 4.0](https://github.com/Discngine/fpo
         cd ../RNAvigate
         conda develop .
 
-## Demo
+## fpocketR demonstration and instructions
 
 [Demonstration of fpocketR usage](https://github.com/Weeks-UNC/fpocketR/blob/main/Demo/fpocketR_demo.md)
 
