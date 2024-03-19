@@ -1,8 +1,8 @@
 name: fpocketR
 channels:
   - conda-forge
-  - bioconda
   - defaults
+  - bioconda
 dependencies:
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=2_gnu
@@ -36,7 +36,7 @@ dependencies:
   - fonts-conda-ecosystem=1=0
   - fonts-conda-forge=1=0
   - fonttools=4.49.0=py311h459d7ec_0
-  - fpocket=4.1.4=h965ee13_0
+  - fpocket=4.0.3=h6e1de20_2
   - freetype=2.12.1=h267a509_2
   - freetype-py=2.3.0=pyhd8ed1ab_0
   - gettext=0.21.1=h27087fc_0
@@ -129,7 +129,7 @@ dependencies:
   - nss=3.98=h1d7d5a4_0
   - numpy=1.26.4=py311h64a7726_0
   - openjpeg=2.5.2=h488ebb8_0
-  - openssl=3.2.1=hd590300_0
+  - openssl=3.2.1=hd590300_1
   - packaging=24.0=pyhd8ed1ab_0
   - pandas=2.2.1=py311h320fe9a_0
   - parso=0.8.3=pyhd8ed1ab_0
@@ -209,3 +209,4 @@ dependencies:
   - xz=5.2.6=h166bdaf_0
   - zlib=1.2.13=hd590300_5
   - zstd=1.5.5=hfc55251_0
+prefix: /home/sethv/anaconda3/envs/fpocketR
