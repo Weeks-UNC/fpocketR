@@ -82,8 +82,12 @@ def get_real_sphere(
         analysis (str): Path directory contianing fpocket outputs for analysis.
         name (str): User specified filename prefix for analysis outputs.
     """
+    print(f'pqrfile: {pqr_file}')
     structure = parsePDB(pdb_file)
     pockets = parsePQR(pqr_file)
+    print(f'pocket: {pockets}')
+    print(f'pocket: {len(pockets)}')
+
     for residue in structure.iterResidues():
         resnum = residue.getResnum()
         resname = residue.getResname()
@@ -128,7 +132,7 @@ def get_ligand_coords(
 
     elif ligand_structure.select(f'chain {ligandchain} and hetatm '
                                  'and not ion and not water') is None:
-        return None, None
+        return (None, None)
 
     else:
         ligand_sele = ligand_structure.select(
@@ -144,7 +148,7 @@ def get_ligand_coords(
 
         elif len(hetatm_resn) == 1 and 2 > len(hetatm_resn[0]) > 3:
             print('No ligand detected.\n')
-            return None
+            return (None, None)
 
         elif len(hetatm_resn) > 0:
             while True:
@@ -154,7 +158,7 @@ def get_ligand_coords(
                 print('\n')
 
                 if input_resn in ('n', 'N', 'no', 'No', 'none', 'None'):
-                    return None
+                    return (None, None)
                 elif input_resn in hetatm_resn:
                     ligand_coords = ligand_sele.select(
                         f'chain {ligandchain} and resname {input_resn}').copy()
@@ -168,9 +172,9 @@ def get_ligand_coords(
 
         else:
             print('No ligand detected.\n')
-            return None
+            return (None, None)
     if ligand_coords is None:
-        return None, None
+        return (None, None)
     else:
         return ligand_coords, ligand
 
