@@ -430,4 +430,10 @@ def add_ligand_characteristics(
     pc_df['QED score'] = np.nan
     pc_df.loc[(pc_df['Type'] == 'Known'), 'Ligand npr1'] = ligand_npr1
     pc_df.loc[(pc_df['Type'] == 'Known'), 'Ligand npr2'] = ligand_npr2
+    pc_df['Geometry'] = 'Balanced'
+    pc_df.loc[pc_df.eval('NPR1 - NPR2 + 0.5 < 0'), 'Geometry'] = 'Rod-like'
+    pc_df.loc[pc_df.eval('- NPR1 - NPR2 + 1.5 < 0'), 'Geometry'] = 'Sphere-like'
+    pc_df.loc[pc_df.eval('NPR2 - 0.75 < 0'), 'Geometry'] = 'Disc-like'
     pc_df.loc[(pc_df['Type'] == 'Known'), 'QED score'] = qed
+
+

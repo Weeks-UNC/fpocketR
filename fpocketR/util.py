@@ -53,6 +53,8 @@ def get_first_rna_chain(pdb : str) -> str:
     for ch in structure.getHierView():
         chid = ch.getChid()
         if structure.select(f'chain {chid} nucleic'):
+            print(f'\nAutomatically selecting chain: {chid}\n'
+                  'Use --chain to manually specify an RNA chain.\n')
             return chid
         else:
             print(f'No RNA chain found in {pdb}.\n'
