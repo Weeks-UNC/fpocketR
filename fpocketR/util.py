@@ -283,6 +283,20 @@ def get_offset(pdb : str, chain : str, offset : int) -> int:
  
     if pdb.endswith('.pdb'):
         polymer = parsePDBHeader(pdb, 'polymers')
+
+        if not polymer:
+            print('\n\nTypeError: Unable to read PDB header to automatically generate offset.\n\n'
+                            'You must manually enter a nucleotide offset (--offset <int>) if:\n'
+                            '1) Your PDB does not have a DBREF header.\n'
+                            '2) You are inputting a .cif file.\n\n'
+                            'offset (usually) = starting index of the PDB sequence - 1\n'
+                            'offset is typically: 0')
+            raise TypeError('\n\nUnable to read PDB header to automatically generate offset.\n\n'
+                            'You must manually enter a nucleotide offset (--offset <int>) if:\n'
+                            '1) Your PDB does not have a DBREF header.\n'
+                            '2) You are inputting a .cif file.\n\n'
+                            'offset (usually) = starting index of the PDB sequence - 1\n'
+                            'offset is typically: 0')
         
         for idx, ch in enumerate(polymer):
             if ch.chid == chain[0]:

@@ -91,7 +91,7 @@ def pipline(
                                   qualityfilter
                                   )
     
-    offset = util.get_offset(pdb, chain, offset) if offset is None else None
+    offset = util.get_offset(pdb, chain, offset) if offset is None else offset
 
     # Generates 1D (.csv), 2D (.png, .svg), and 3D (.pdb, .pse, .png)
     pocket_cmap = figures.make_figures(
@@ -151,14 +151,20 @@ def parseArgs():
                      'you would like to analyze. Set to 0 for all (None).')
     prs.add_argument('-c', '--chain', type=str, required=False, default=None,
                      help='Specify a chain from the input .pdb file ("A").')
-    prs.add_argument('-l', '--ligand', type=str,
+    prs.add_argument('-l', '--ligand', type=str, required=False, default=None,
                      help='PDB ligand identification code (≤ 3 characters).' )
     prs.add_argument('-lc', '--ligandchain', type=str, required=False,
                      help='Chain containing ligand the from the '
                      'input .pdb file (--chain input).')
-    prs.add_argument('-off', '--offset', type=int, required=False,
-                     help='Specify an offset between the rna sequence and '
-                     'starting nucleotide of the PDB structure.')
+    prs.add_argument('-off', '--offset', type=int, required=False, 
+                     default=None, help='Specify an offset between the '
+                     'starting nucleotide of the rna sequence and '
+                     'starting nucleotide of the PDB structure (usually = 0).\n'
+                     'You must manually enter a nucleotide offset if:\n'
+                     '1) Your PDB does not have a DBREF header.\n'
+                     '2) You are inputting a .cif file.\n'
+                     'offset (usually) = starting index of the PDB sequence - 1\n'
+                     'offset is typically: 0')
     prs.add_argument('-qf', '--qualityfilter', type=float, default=0.0, 
                      required=False, help='Specify minimum fpocket score for '
                      'pocket to pass the quality filter (0.0).')

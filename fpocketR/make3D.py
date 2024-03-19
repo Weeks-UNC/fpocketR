@@ -192,7 +192,7 @@ def save_3D_figure(
     cmd.zoom(f'chain {chain} and (byres polymer & name O2)', f'{zoom}', complete=1)
     cmd.save(f'{path}/{name}_out_real_sphere.pse')
     dimension = dpi * 8
-    print(f'Ray tracing: {name}...\n')
+    print(f'Ray tracing: {name}...')
     cmd.png(f'{path}/{name}_3D_{dpi}.png',
             width=dimension, height=dimension, dpi=dpi, ray=1)
     cmd.reinitialize()

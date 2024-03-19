@@ -43,7 +43,7 @@ def make_figures(
         pass
 
     except Exception:
-        print('An valid .nsd file is required to make 2D figures.\n'
+        print('\n ERROR: An valid .nsd file is required to make 2D figures.\n'
               'We suggest generating secondary structure files by:\n'
               '1) Converting .pdb to .ct files at:\n'
               'http://rnapdbee.cs.put.poznan.pl\n'
@@ -72,7 +72,7 @@ def make_figures(
 
     # Generates csv output containing pocket characteristics.
     if 'Pocket' in pc_df.columns:
-        print(f'\nNumber of pockets detected: {pc_df["Pocket"].max()}')
+        print(f'\nNumber of pockets detected: {pc_df["Pocket"].max()}\n')
     if 'Known' in pc_df:
         print(
             f'Number of known pockets: {pc_df["Type"].value_counts()["Known"]}\n')
@@ -255,6 +255,7 @@ def make_2D_figure(
     print('Making 2D figure.\n')
     rna_map = rnav.Sample(sample=name, ss=nsd)
 
+    rnav.styles.settings["ss"]["nucleotides"]["s"] = 7**2
     # Makes 2D figures with transparent colored lines
     # that connect all the nucleotides associated with a pocket.
     if connectpocket:

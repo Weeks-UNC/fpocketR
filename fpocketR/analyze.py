@@ -122,13 +122,13 @@ def get_ligand_coords(
         except AttributeError:
             print(f'Chain {ligandchain} of {name}.pdb does not contain a '
                   f'ligand named: {ligand}\n'
-                  'Please provide a valid ligand chain (-lc) '
-                  'and ligand residue name (-l).')
+                  'Please provide a valid ligand chain (--ligandchain) '
+                  'and ligand residue name (--ligand).')
             exit()
 
     elif ligand_structure.select(f'chain {ligandchain} and hetatm '
                                  'and not ion and not water') is None:
-        return None
+        return None, None
 
     else:
         ligand_sele = ligand_structure.select(
@@ -149,8 +149,8 @@ def get_ligand_coords(
         elif len(hetatm_resn) > 0:
             while True:
                 input_resn = input(
-                    f'Detected heteroatoms: {hetatm_resn}.\n'
-                    'Input the target ligand ID or "None" for no ligand:')
+                    f'Detected heteroatoms: {hetatm_resn}.\n\n'
+                    'Input the target ligand ID (case-sensitive; "none" for no ligand): ')
                 print('\n')
 
                 if input_resn in ('n', 'N', 'no', 'No', 'none', 'None'):
