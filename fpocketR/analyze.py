@@ -8,7 +8,7 @@
 # Version 1.0.1
 #
 # -----------------------------------------------------------------------------
-from re import findall
+from re import findall, sub
 from prody import *
 import numpy as np
 import pandas as pd
@@ -69,6 +69,16 @@ def analyze_pockets(
 # -----------------------------------------------------------------------------
 
 
+def replacetext(file_path : str, search_text : str,replace_text : str): 
+  
+    with open(file_path,'r+') as f: 
+        file = f.read() 
+        file = sub(search_text, replace_text, file) 
+        f.seek(0) 
+        f.write(file) 
+        f.truncate()
+
+
 def get_real_sphere(
     pqr_file : str, pdb_file : str, analysis : str, name : str
     ) -> None:
@@ -82,11 +92,19 @@ def get_real_sphere(
         analysis (str): Path directory contianing fpocket outputs for analysis.
         name (str): User specified filename prefix for analysis outputs.
     """
-    print(f'pqrfile: {pqr_file}')
     structure = parsePDB(pdb_file)
     pockets = parsePQR(pqr_file)
-    print(f'pocket: {pockets}')
-    print(f'pocket: {len(pockets)}')
+
+    # Some PQR file with negative 3 digit corrdinates do not have a space between fields.
+    # Reformat PQR files by adding spaces before '-' symbols
+    if not pockets:
+        print(f'\nFAIL to parse PQR file {pqr_file}. Modifying PQR file and retrying...')
+        replacetext(pqr_file, search_text='-', replace_text=' -')
+        pockets = parsePQR(pqr_file)
+    if not pockets:
+        raise TypeError(f'PQR file {pqr_file} is not formated correctly.')
+    else:
+        print(f'Successfully corrected PQR file!\n')
 
     for residue in structure.iterResidues():
         resnum = residue.getResnum()
