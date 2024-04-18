@@ -1,5 +1,5 @@
 # fpocketR
-fpocketR is a modified version of [fpocket 4.0](https://github.com/Discngine/fpocket) and is optimized for finding, characterizing, and visulizing drug-like RNA-ligand binding pockets.
+fpocketR is a modified version of [fpocket 4.0](https://github.com/Discngine/fpocket) and is optimized for finding, characterizing, and visualizing drug-like RNA-ligand binding pockets.
 
 ## Installation with Conda
 
