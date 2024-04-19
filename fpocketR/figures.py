@@ -72,10 +72,15 @@ def make_figures(
 
     # Generates csv output containing pocket characteristics.
     if 'Pocket' in pc_df.columns:
-        print(f'\nNumber of pockets detected: {pc_df["Pocket"].max()}\n')
+        print(f'\nTotal pockets: {pc_df["Pocket"].max()}\n')
+    else: 
+        print('\nTotal pockets: 0')
     if 'Known' in pc_df:
         print(
-            f'Number of known pockets: {pc_df["Type"].value_counts()["Known"]}\n')
+            f'Known pockets: {pc_df["Type"].value_counts()["Known"]}\n')
+    else:
+        print('Known pockets: 0\n')
+
     pc_df.to_csv(f'{analysis}/{name}_out_pocket_characteristics.csv',
                  index=True, float_format='%.2g')
 

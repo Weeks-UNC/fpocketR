@@ -97,14 +97,14 @@ def get_real_sphere(
 
     # Some PQR file with negative 3 digit corrdinates do not have a space between fields.
     # Reformat PQR files by adding spaces before '-' symbols
-    if not pockets:
-        print(f'\nFAIL to parse PQR file {pqr_file}. Modifying PQR file and retrying...')
-        replacetext(pqr_file, search_text='-', replace_text=' -')
-        pockets = parsePQR(pqr_file)
-    if not pockets:
-        raise TypeError(f'PQR file {pqr_file} is not formated correctly.')
-    else:
-        print(f'Successfully corrected PQR file!\n')
+    # if not pockets:
+    #     print(f'\nFAIL to parse PQR file {pqr_file}. Modifying PQR file and retrying...')
+    #     replacetext(pqr_file, search_text='-', replace_text=' -')
+    #     pockets = parsePQR(pqr_file)
+    # if not pockets:
+    #     raise TypeError(f'PQR file {pqr_file} is not formated correctly.')
+    # else:
+    #     print(f'Successfully corrected PQR file!\n')
 
     for residue in structure.iterResidues():
         resnum = residue.getResnum()
@@ -140,7 +140,7 @@ def get_ligand_coords(
     if ligand and 2 <= len(ligand) <= 3:
         try:
             ligand_coords = ligand_structure.select(
-                f'chain {ligandchain} and resname {ligand}').copy()
+                f'resname {ligand}').copy()
         except AttributeError:
             print(f'Chain {ligandchain} of {name}.pdb does not contain a '
                   f'ligand named: {ligand}\n'
