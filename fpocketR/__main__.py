@@ -17,7 +17,7 @@ confProDy(verbosity='none')
 # -----------------------------------------------------
 
 
-def pipline(
+def pipeline(
     pdb : str, nsd : str, chain : str, state : int, ligandchain : str,
     offset : int, qualityfilter : float, m : float, M : float, i : int,
     D : float, A : float, p : float, out : str, name : str, dpi : int,
@@ -100,7 +100,7 @@ def pipline(
                             connectpocket, alignligand
                             )
 
-    return pc_df, out, pdb_code, pocket_cmap
+    return pc_df, out, pdb_code, pocket_cmap, chain
 
 
 # -----------------------------------------------------
@@ -205,7 +205,7 @@ def main(
     if state != 0:
         if out is None:
             out = f'fpocket-R_out-m_{m}-M_{M}-i_{i}-D_{D}-A_{A}-p_{p}'
-        (_, _, _, _) = pipline(
+        (_, _, _, _, _) = pipeline(
             pdb, nsd, chain, state, ligandchain, offset, qualityfilter,
             m, M, i, D, A, p, out, name, dpi, ligand, yes, zoom,
             connectpocket, alignligand)
@@ -216,7 +216,8 @@ def main(
             out = f'Multistate_{pdb.split(".")[0]}'
 
         try:
-            num_states = parsePDBHeader(pdb, 'n_models')+1
+            structure = parsePDB(pdb)
+            num_states = structure.numCoordsets() + 1
         except:
             print('ERROR: Unable to perform multisate analysis.\n'
                   f'The header for {pdb} does not contain state information.\n')
@@ -226,7 +227,7 @@ def main(
         for state in range(1, num_states):
             print(f'\nAnalyzing state {state}/{num_states-1}...\n')
 
-            (pc_df, pdb_out, pdb_code, pocket_cmap) = pipline(
+            (pc_df, pdb_out, pdb_code, pocket_cmap, chain) = pipeline(
                 pdb, nsd, chain, state, ligandchain, offset, qualityfilter,
                 m, M, i, D, A, p, out, name, dpi, ligand, yes, zoom, 
                 connectpocket, alignligand)
@@ -247,5 +248,4 @@ def main(
 
 
 if __name__ == "__main__":
-    print('test')
     main(**vars(parseArgs()))

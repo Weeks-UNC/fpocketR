@@ -71,11 +71,11 @@ def make_figures(
         rna_seq_len = nsd_seq_len
 
     # Generates csv output containing pocket characteristics.
-    if 'Pocket' in pc_df.columns:
-        print(f'\nTotal pockets: {pc_df["Pocket"].max()}\n')
+    if 1 in pc_df["Pocket"].to_list():
+        print(f'\nTotal pockets: {pc_df["Pocket"].max()}')
     else: 
         print('\nTotal pockets: 0')
-    if 'Known' in pc_df:
+    if 'Known' in pc_df["Type"].to_list():
         print(
             f'Known pockets: {pc_df["Type"].value_counts()["Known"]}\n')
     else:

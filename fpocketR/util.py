@@ -52,17 +52,17 @@ def get_first_rna_chain(pdb : str) -> str:
         
     for ch in structure.getHierView():
         chid = ch.getChid()
-        if structure.select(f'chain {chid} nucleic'):
+        if structure.select(f'chain {chid} and nucleotide'):
             print(f'\nAutomatically selecting chain: {chid}\n'
                   'Use --chain to manually specify an RNA chain.\n')
             return chid
-        else:
-            print(f'No RNA chain found in {pdb}.\n'
-                         'Verify that your pdb structure contains RNA.\n'
-                         'Or manually set an RNA chain with (--chain) option.')
-            raise ValueError(f'No RNA chain found in {pdb}.\n'
-                         'Verify that your pdb structure contains RNA.\n'
-                         'Or manually set an RNA chain with (--chain) option.')
+        
+    print(f'No RNA chain found in {pdb}.\n'
+                    'Verify that your pdb structure contains RNA.\n'
+                    'Or manually set an RNA chain with (--chain) option.')
+    raise ValueError(f'No RNA chain found in {pdb}.\n'
+                    'Verify that your pdb structure contains RNA.\n'
+                    'Or manually set an RNA chain with (--chain) option.')
 
 
 def is_rna_chain(pdb : str, chain : str) -> None:
@@ -270,9 +270,8 @@ def calc_pmi(inertia_tensor : np.array) -> list:
 
 
 def get_offset(pdb : str, chain : str, offset : int) -> int:
-    """Locates PDB nucleotide offset as documented in the dbrefs section of
-    the input .pdb file. 
-    NOTE: Offset can be reported incorrectly in some .pdb files.
+    """Calculates offset (or difference) between the nucleotide index (start at 1)
+    and residue number for the first nucleotide in the first chain.
 
     Args:
         pdb (str): Path to input .pdb file.
@@ -282,32 +281,25 @@ def get_offset(pdb : str, chain : str, offset : int) -> int:
     Returns:
         int: Nucleotide offset of PDB chain.
     """
- 
-    if pdb.endswith('.pdb'):
-        polymer = parsePDBHeader(pdb, 'polymers')
 
-        if not polymer:
-            print('\n\nTypeError: Unable to read PDB header to automatically generate offset.\n\n'
-                            'You must manually enter a nucleotide offset (--offset <int>) if:\n'
-                            '1) Your PDB does not have a DBREF header.\n'
-                            '2) You are inputting a .cif file.\n\n'
-                            'offset (usually) = starting index of the PDB sequence - 1\n'
-                            'offset is typically: 0')
-            raise TypeError('\n\nUnable to read PDB header to automatically generate offset.\n\n'
-                            'You must manually enter a nucleotide offset (--offset <int>) if:\n'
-                            '1) Your PDB does not have a DBREF header.\n'
-                            '2) You are inputting a .cif file.\n\n'
-                            'offset (usually) = starting index of the PDB sequence - 1\n'
-                            'offset is typically: 0')
-        
-        for idx, ch in enumerate(polymer):
-            if ch.chid == chain[0]:
-                polymer_chain = polymer[idx]
-                dbref = polymer_chain.dbrefs[0]
-                offset = dbref.first[0] - 1
+    if ',' in chain:
+        chain = chain.split(',')[0]
+
+    if pdb.endswith('.pdb'):
+        structure = parsePDB(pdb)
+    elif pdb.endswith('.cif'):
+        structure = parsePDB(pdb)
+
+    if structure:
+        hv = structure.getHierView()
+        ch = hv[chain]
+        resn = ch.getResnums()[0]
+        offset = resn - 1
             
     else: 
-        print('Automated offset is only supported for .pdb files.\n')
+        print('Automated offset is only supported for this file.\n'
+              'offset = starting index of the PDB sequence - 1\n'
+              'offset is typically: 0\n\n')
         while True:
             input_offset = input('Input offset (INT) between the rna sequence '
                                 'and first nucleotide of the PDB structure:')

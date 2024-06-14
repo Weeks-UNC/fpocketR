@@ -66,9 +66,10 @@ def clean_pdb(pdb : str, pdb_clean : str) -> None:
         pdb_clean (str): path to output (cleaned) .pdb file.
     """
     cmd.load(pdb)
+    cmd.alter('polymer', 'type="ATOM"')
+    cmd.save(pdb, state='0')
     cmd.remove('not polymer')
     cmd.remove('byres polymer & name CA')
-    cmd.alter('all', 'type="ATOM"')
     cmd.save(pdb_clean, state='0')
     cmd.reinitialize()
 
@@ -92,8 +93,8 @@ def run_fpocket(
         D (float): a-sphere clustering distance in angstroms (default=1.65).
     """
     # Prints announcement that fpocket is searching for pockets.
-    pdb_code = os.path.basename(pdb)[0:4]
-    print(f'***** POCKET HUNTING {pdb_code} *****')
+    pdb_name = os.path.basename(pdb)[0:-4]
+    print(f'***** POCKET HUNTING {pdb_name} *****')
     # Runs fpocket bash commands
     
         

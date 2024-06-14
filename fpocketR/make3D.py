@@ -182,7 +182,6 @@ def save_3D_figure(
         c (str): chain of anzylzed structure
         zoom (float): Sets zoom buffer distance (Å) for creating 3D figures.
     """
-
     if ',' in chain:
         chain = chain.replace(',', '+')
     cmd.remove('hydrogens')

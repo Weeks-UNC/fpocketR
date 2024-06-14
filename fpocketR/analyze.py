@@ -8,6 +8,8 @@
 # Version 1.0.1
 #
 # -----------------------------------------------------------------------------
+import os
+import math
 from re import findall, sub
 from prody import *
 import numpy as np
@@ -39,7 +41,7 @@ def analyze_pockets(
     get_real_sphere(pqr_out, pdb_out, analysis, name)
 
     # Creates a dataframe with pocket characteristics from fpocket info.txt
-    pc_df = get_characteristics(info_txt, pdb_code, m, M, i, D, A, p, state)
+    pc_df = get_characteristics(info_txt, pdb_code, name, m, M, i, D, A, p, state)
 
     rna_coords = out_structure.copy()
 
@@ -58,7 +60,7 @@ def analyze_pockets(
             ligand = None
         else:
             ligand_coords, ligand = get_ligand_coords(
-                ligand_structure, ligand, ligandchain, name)
+                ligand_structure, ligand, ligandchain, analysis, name)
             if ligand_coords:
                 add_ligand_characteristics(analysis, stp_coords, ligand_coords,
                                            ligand, pc_df)
@@ -67,16 +69,6 @@ def analyze_pockets(
 
 
 # -----------------------------------------------------------------------------
-
-
-def replacetext(file_path : str, search_text : str,replace_text : str): 
-  
-    with open(file_path,'r+') as f: 
-        file = f.read() 
-        file = sub(search_text, replace_text, file) 
-        f.seek(0) 
-        f.write(file) 
-        f.truncate()
 
 
 def get_real_sphere(
@@ -95,17 +87,6 @@ def get_real_sphere(
     structure = parsePDB(pdb_file)
     pockets = parsePQR(pqr_file)
 
-    # Some PQR file with negative 3 digit corrdinates do not have a space between fields.
-    # Reformat PQR files by adding spaces before '-' symbols
-    # if not pockets:
-    #     print(f'\nFAIL to parse PQR file {pqr_file}. Modifying PQR file and retrying...')
-    #     replacetext(pqr_file, search_text='-', replace_text=' -')
-    #     pockets = parsePQR(pqr_file)
-    # if not pockets:
-    #     raise TypeError(f'PQR file {pqr_file} is not formated correctly.')
-    # else:
-    #     print(f'Successfully corrected PQR file!\n')
-
     for residue in structure.iterResidues():
         resnum = residue.getResnum()
         resname = residue.getResname()
@@ -122,8 +103,11 @@ def get_real_sphere(
 
 
 def get_ligand_coords(
-    ligand_structure : prody.AtomGroup, ligand : str,
-    ligandchain : str, name : str
+    ligand_structure : prody.AtomGroup,
+    ligand : str,
+    ligandchain : str,
+    analysis : str,
+    name : str
     ) -> tuple[prody.AtomGroup, str]:
     """Gets coordinates and residue name for RNA-binding ligand.
 
@@ -131,6 +115,7 @@ def get_ligand_coords(
         ligand_structure (object): Prody structure of RNA-ligand complex.
         ligand (str): Ligand residue name (usually a 3-letter code).
         ligandchain (str): Chain identifier for desired ligand.
+        analysis (str): Path directory contianing fpocket outputs for analysis.
         name (str): Name of input pdb file.
 
     Returns:
@@ -155,7 +140,39 @@ def get_ligand_coords(
     else:
         ligand_sele = ligand_structure.select(
             f'chain {ligandchain} and hetatm and not ion and not water').copy()
-        hetatm_resn = np.unique(ligand_sele.getResnames()).tolist()
+        hetatm_resn : list = np.unique(ligand_sele.getResnames()).tolist()
+        
+        if len(hetatm_resn) > 1:
+                resnames_qeds : dict = {}
+                for resname in hetatm_resn:
+                    try:
+                        response = requests.get(
+                            f'https://files.rcsb.org/ligands/download/{resname}_model.sdf')
+                        
+                        with open(f'{analysis}/{resname}_model.sdf', 'wb') as f:
+                            f.write(response.content)
+                        mol = Chem.MolFromMolFile(f'{analysis}/{resname}_model.sdf')
+                        qed = QED.default(mol)
+                        mw : float = Chem.rdMolDescriptors.CalcExactMolWt(mol)
+                        pat = Chem.MolFromSmarts("[#6]")
+                        num_of_carbon : int =len(mol.GetSubstructMatches(pat))
+                        print(f'# of C: {num_of_carbon}')
+                        if mw < 100.0 or num_of_carbon < 2:
+                            qed = 0
+                            continue
+                         
+                    except:
+                        print(f'Error: Not able to calculate QED score for {resname}.\n')
+                        qed = 0
+                    
+                    resnames_qeds[resname] = qed
+
+                # Remove heteroatoms with nan qed scores
+                # filtered = {k: v for k, v in resnames_qeds.items() if v is not np.nan}
+                # resnames_qeds.clear()
+                # resnames_qeds.update(filtered)
+
+                hetatm_resn = [max(resnames_qeds, key=resnames_qeds.get)]
 
         if len(hetatm_resn) == 1 \
                 and 2 <= len(hetatm_resn[0]) <= 3:
@@ -163,6 +180,7 @@ def get_ligand_coords(
                 f'chain {ligandchain} and resname {hetatm_resn[0]}').copy()
             print(f'Using {hetatm_resn[0]} as ligand for analysis.')
             ligand = hetatm_resn[0]
+            return (ligand_coords, ligand)
 
         elif len(hetatm_resn) == 1 and 2 > len(hetatm_resn[0]) > 3:
             print('No ligand detected.\n')
@@ -194,12 +212,12 @@ def get_ligand_coords(
     if ligand_coords is None:
         return (None, None)
     else:
-        return ligand_coords, ligand
+        return (ligand_coords, ligand)
 
 
 def get_characteristics(
-    info_txt : str, pdb_code :str, m : float, M : float, i : int, D : float,
-    A : int, p : float, state : int
+    info_txt : str, pdb_code :str, name : str, m : float, M : float,
+    i : int, D : float, A : int, p : float, state : int
     ) -> pd.DataFrame:
     """Creates a dataframe containing characteristics for
         all fpocket generates pockets.
@@ -234,7 +252,7 @@ def get_characteristics(
             if 'Pocket' in row:
                 pc_d['Parameters'].append(f'-m {m} -M {M} -i {i} -D {D} '
                                           f'-A {A} -p {p}')
-                pc_d['PDB'].append(pdb_code)
+                pc_d['PDB'].append(name)
                 pc_d['State'].append(state)
                 pc_d['Pocket'].append(int(row.split(' ')[1].strip()))
                 pocket = int(row.split(' ')[1].strip())
@@ -382,16 +400,22 @@ def add_ligand_characteristics(
     ligand_npr1, ligand_npr2 = util.calc_npr(ligand_coords)
 
     #Calculate ligand QED score.
-    try:
-        response = requests.get(
-            f'https://files.rcsb.org/ligands/download/{ligand}_model.sdf')
-         
-        with open(f'{analysis}/{ligand}_model.sdf', 'wb') as f:
-            f.write(response.content)
+    if not os.path.isfile(f'{analysis}/{ligand}_model.sdf'):
+        try:
+            response = requests.get(
+                f'https://files.rcsb.org/ligands/download/{ligand}_model.sdf')
+                
+            with open(f'{analysis}/{ligand}_model.sdf', 'wb') as f:
+                f.write(response.content)
+        except:
+            print(f'Error: Not able downlaod ligand model for {ligand}.\n')
+            qed = np.nan
+    
+    try:        
         mol = Chem.MolFromMolFile(f'{analysis}/{ligand}_model.sdf')
         qed = QED.default(mol)
     except:
-        print(f'Error: Not able to calculate QED score for {ligand}.\n')
+        print(f'Error: Not able calculate qed score for ligand {ligand}.\n')
         qed = np.nan
 
     # Iterates through each pocket (residue).
