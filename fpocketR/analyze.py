@@ -130,11 +130,13 @@ def reformat_pqr(filename : str):
     lines = pqr.readlines()
     pqr.close()
     reformat=[]
+    atom = False
 
     for line in lines:
         startswith = line[0:6].strip()
 
         if startswith == 'ATOM' or startswith == 'HETATM':
+            atom = True
             fields = line.split()
             if fields[5].find('.') != -1:
             # coords too early as no chid
@@ -163,12 +165,14 @@ def reformat_pqr(filename : str):
             new_line = line
 
         reformat.append(new_line)
-
-    prody_pqr = f'{filename[:-4]}_prody.pqr'
-    with open(prody_pqr, 'w') as f:
-        for new_line in reformat:
-            f.write(f"{new_line}\n")
-    return prody_pqr
+    if atom is True:
+        prody_pqr = f'{filename[:-4]}_prody.pqr'
+        with open(prody_pqr, 'w') as f:
+            for new_line in reformat:
+                f.write(f"{new_line}\n")
+        return prody_pqr
+    else: 
+        return None
 
 
 def get_real_sphere(
@@ -190,16 +194,22 @@ def get_real_sphere(
     # PRODY 2.4 can't read PQR files with 4 digit corrdinates.
     # reformat_pqr() adding whitespaces between all fields so they can be read. 
     if not pockets:
-        print(f'\nFAIL to parse PQR file {pqr_file}. Modifying PQR file and retrying...\n')
         pqr_file = reformat_pqr(pqr_file)
-        pockets = parsePQR(pqr_file)
-
+        if not pqr_file:
+            # PQR file contains no ATOM entries (OK).
+            writePDB(f'{analysis}/{name}_out_real_sphere.pdb', structure)
+            return None
+        else:
+            pockets = parsePQR(pqr_file)
+            
         if not pockets:
+            # PQR file contains ATOM entries but is not parsed correctly (BAD).
             print(f'\nFAIL unable to reformat PQR file {pqr_file}.')
-            writePDB(f'{analysis}/{name}_out_real_sphere.pdb', None)
+            writePDB(f'{analysis}/{name}_out_real_sphere.pdb', structure)
             return None
 
         else:
+            # PQR file successfully reformated and parsed by Prody 2.4 (OK).
             print(f'Successfully corrected PQR file!\n')
 
     for residue in structure.iterResidues():
