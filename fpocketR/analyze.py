@@ -20,6 +20,7 @@ from rdkit import Chem
 from rdkit.Chem import QED
 import trimesh
 from fpocketR import util
+from prody.utilities import openFile
 
 
 def analyze_pockets(
@@ -71,6 +72,105 @@ def analyze_pockets(
 # -----------------------------------------------------------------------------
 
 
+# def reformat_pqr(filename : str):
+#     pqr = openFile(filename, 'rt')
+#     lines = pqr.readlines()
+#     pqr.close()
+#     reformat=[]
+
+#     for line in lines:
+#         print(line)
+#         fields = line.split()
+#         if len(fields) == 10:
+#             fields.insert(4, '')
+#         elif len(fields) == 11:
+#             new_line = line
+#             continue
+
+#         startswith = fields[0]
+#         print(f'startswith: {startswith}')
+
+#         if startswith == 'ATOM' or startswith == 'HETATM':
+#             serial_str = fields[1]
+#             atomname= fields[2]
+#             resname = fields[3]
+#             chid = fields[4]
+#             alt = ' '
+#             coordinates_x = fields[6]
+#             coordinates_y = fields[7]
+#             coordinates_z = fields[8]
+#             charges = fields[9]
+#             radii = fields[10]
+
+#             new_line = (f'{startswith} {serial_str} {atomname} {resname} {chid}'
+#                         f'{alt} {coordinates_x} {coordinates_y} {coordinates_z}'
+#                         f'{charges} {radii}')
+#         else:
+#              new_line = line
+#         reformat.append(new_line)
+
+    
+#     with open('new.pqr', 'w') as f:
+#         for new_line in reformat:
+#             f.write(f"{new_line}\n")
+
+
+def reformat_pqr(filename : str):
+    """Reformats PQR files to add whitespace between all data fields.
+    This is required for Prody 2.4 to properly parse PQR files.
+    NOTE: reformated PQR files will not be read properly by PyMol 2.5.
+
+    Args:
+        filename (str): Path to PQR file.
+
+    Returns:
+        str: Path to reformated PQR file. <filename>_prody.pqr
+    """
+    pqr = openFile(filename, 'rt')
+    lines = pqr.readlines()
+    pqr.close()
+    reformat=[]
+
+    for line in lines:
+        startswith = line[0:6].strip()
+
+        if startswith == 'ATOM' or startswith == 'HETATM':
+            fields = line.split()
+            if fields[5].find('.') != -1:
+            # coords too early as no chid
+                fields.insert(4, '')
+            if len(fields) != 11:
+                try:
+                    fields = fields[:6] + [line[30:38].strip(), line[38:46].strip(), line[46:54].strip()] + line[54:].split()
+                except:
+                    continue
+            
+            serial_str = fields[1]
+            atomname= fields[2]
+            resname = fields[3]
+            chid = fields[5]
+            alt = ' '
+            coordinates_x = fields[6]
+            coordinates_y = fields[7]
+            coordinates_z = fields[8]
+            charges = fields[9]
+            radii = fields[10]
+
+            new_line = (f'{startswith} {serial_str} {atomname} {resname} '
+                        f'{chid} {alt} {coordinates_x} {coordinates_y} '
+                        f'{coordinates_z} {charges} {radii}')
+        else:
+            new_line = line
+
+        reformat.append(new_line)
+
+    prody_pqr = f'{filename[:-4]}_prody.pqr'
+    with open(prody_pqr, 'w') as f:
+        for new_line in reformat:
+            f.write(f"{new_line}\n")
+    return prody_pqr
+
+
 def get_real_sphere(
     pqr_file : str, pdb_file : str, analysis : str, name : str
     ) -> None:
@@ -86,6 +186,21 @@ def get_real_sphere(
     """
     structure = parsePDB(pdb_file)
     pockets = parsePQR(pqr_file)
+
+    # PRODY 2.4 can't read PQR files with 4 digit corrdinates.
+    # reformat_pqr() adding whitespaces between all fields so they can be read. 
+    if not pockets:
+        print(f'\nFAIL to parse PQR file {pqr_file}. Modifying PQR file and retrying...\n')
+        pqr_file = reformat_pqr(pqr_file)
+        pockets = parsePQR(pqr_file)
+
+        if not pockets:
+            print(f'\nFAIL unable to reformat PQR file {pqr_file}.')
+            writePDB(f'{analysis}/{name}_out_real_sphere.pdb', None)
+            return None
+
+        else:
+            print(f'Successfully corrected PQR file!\n')
 
     for residue in structure.iterResidues():
         resnum = residue.getResnum()
