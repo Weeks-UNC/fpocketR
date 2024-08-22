@@ -12,12 +12,23 @@
 import os
 import subprocess
 import shutil
+import time
 from pymol import cmd
 
 
 def find_pockets(
-    pdb : str, chain : str, state : int, m : float, M : float, i :int,
-    D : float, A : int, p : float, out : str, yes : bool
+    pdb : str,
+    chain : str,
+    state : int,
+    m : float,
+    M : float,
+    i :int,
+    D : float,
+    A : int,
+    p : float,
+    out : str,
+    name : str,
+    yes : bool,
     ) -> str:
     """Pocket finding pipeline:
         - cleans pdb file to generate rna-only file
@@ -40,18 +51,18 @@ def find_pockets(
     """
 
     # Path to clean (ligand-free) pdb file
-    pdb_clean = f'{os.path.basename(pdb).rsplit(".")[0]}_clean.pdb'
+    pdb_clean = f'{name}_clean.pdb'
 
     # Makes pdb_clean if it is not already a file
     if not os.path.isfile(pdb_clean):
         clean_pdb(pdb, pdb_clean)
 
     # Runs fpocket on cleaned pdb file.
-    run_fpocket(pdb_clean, chain, state, m, M, i, D, A, p)
+    run_fpocket(pdb_clean, name, chain, state, m, M, i, D, A, p)
 
     # Files fpocket outputs into directories and manages overwriting.
-    analysis = file_fpocket(pdb_clean, state, out, yes)
-    return analysis
+    analysis, yes = file_fpocket(pdb_clean, state, out, yes)
+    return analysis.strip('/'), yes
 
 # -----------------------------------------------------------------------------
 
@@ -68,9 +79,11 @@ def clean_pdb(pdb : str, pdb_clean : str) -> None:
     cmd.load(pdb)
     cmd.alter('polymer', 'type="ATOM"')
     cmd.save(pdb, state='0')
+    time.sleep(1)
     cmd.remove('not polymer')
     cmd.remove('byres polymer & name CA')
     cmd.save(pdb_clean, state='0')
+    time.sleep(1)
     cmd.reinitialize()
 
 
@@ -78,8 +91,16 @@ class MissingEnvironmentVariable(Exception):
     pass
 
 def run_fpocket(
-    pdb : str, chain :str, state : int, m : float, M : float, i :int,
-    D : float, A : int, p : float
+    pdb : str,
+    name : str,
+    chain :str,
+    state : int,
+    m : float,
+    M : float,
+    i :int,
+    D : float,
+    A : int,
+    p : float,
     ) -> None:
     """Detects potential binding pockets in RNA structures using fpocket.
 
@@ -93,8 +114,8 @@ def run_fpocket(
         D (float): a-sphere clustering distance in angstroms (default=1.65).
     """
     # Prints announcement that fpocket is searching for pockets.
-    pdb_name = os.path.basename(pdb)[0:-4]
-    print(f'***** POCKET HUNTING {pdb_name} *****')
+    name = os.path.basename(pdb)[0:-4]
+    print(f'***** POCKET HUNTING {name} *****')
     # Runs fpocket bash commands
     
         
@@ -138,23 +159,31 @@ def file_fpocket(pdb : str, state : int, out : str, yes : bool) -> str:
     else:
         dest_dir = os.path.join(out, f'{pdb.rsplit(".")[0]}_state{state}_out')
 
-    if not os.path.isdir(dest_dir):
+    if source_dir == dest_dir:
+        analysis = source_dir
+
+    elif not os.path.isdir(dest_dir):
         analysis = shutil.move(source_dir, dest_dir)
 
     # Prompts user to overwrite an existing file with same name.
     elif os.path.isdir(dest_dir):
         if not yes:
-            remove = input('A directory already exists with this name.\n'
-                           f'{dest_dir}\n\n'
-                           'Overwrite directory? [y/n]: ')
+            remove = input(
+                'A directory already exists with this name.\n'
+                f'{dest_dir}\n\n'
+                'Overwrite directory? [y/n]: '
+            )
             print()
         if yes or remove in ('y', 'Y', 'yes', 'Yes'):
+            yes = True
             shutil.rmtree(dest_dir)
             analysis = shutil.move(source_dir, dest_dir)
         else:
-            print('Exiting program. \n'
-                  'The name of the output directory can '
-                  'be changed with the --name flag.')
+            print(
+                'Exiting program. \n'
+                'The name of the output directory can '
+                'be changed with the --name flag.'
+            )
             exit()
 
     # Adds state identifier number to file names.
@@ -174,4 +203,4 @@ def file_fpocket(pdb : str, state : int, out : str, yes : bool) -> str:
             if not os.path.exists(dst):
                 os.rename(src, dst)
 
-    return analysis
+    return analysis, yes

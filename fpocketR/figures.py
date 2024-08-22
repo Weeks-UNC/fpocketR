@@ -17,13 +17,14 @@ import pandas as pd
 import seaborn as sns
 import rnavigate as rnav
 from fpocketR import make3D
+from pymol import cmd
 
 
 def make_figures(
     pdb : str , state : int, pc_df : pd.DataFrame,
     rna_coords : prody.AtomGroup, nsd :str , analysis : str, name : str,
     chain : str, dpi : int, zoom : int, offset : int, 
-    connectpocket : bool, alignligand : bool
+    connectpocket : bool, alignligand : str
     ) -> dict:
 
     # Get the rna sequnece length from the .pdb file.
@@ -312,7 +313,7 @@ def make_2D_figure(
 
 def make_3D_figure(
     pdb : str, state : int, analysis : str, name : str, dpi : int, chain : str,
-    zoom : float, pocket_cmap : list[tuple], alignligand : bool
+    zoom : float, pocket_cmap : list[tuple], alignligand : str
     ) -> None:
     """Generates a 3D figure and pymol session file for a single state.
 
@@ -325,14 +326,15 @@ def make_3D_figure(
         chain (str): Chain identifier for desired RNA chain.
         zoom (float): Zoom buffer distance (Å) for creating 3D figures.
         pocket_cmap list(tuple): Per pocket color map. Index = pocket residue number. Value = color.
-        alignligand (boolean): Align ligand to pymol output (defualt=True).
+        alignligand (str): Align ligand to pymol output (defualt=True).
     """
     print('Making 3D figure.\n')
     real_sphere_name = f'{name}_out_real_sphere'
     real_sphere_pdb = os.path.join(analysis, f'{real_sphere_name}.pdb')
     make3D.load_pdb(real_sphere_pdb)
     if alignligand:
-        make3D.alignligand(pdb, real_sphere_name, state)
+        make3D.alignligand(real_sphere_name, alignligand, state)
+        cmd.save(real_sphere_pdb)
     make3D.set_default()
     if pocket_cmap:
         make3D.color_pockets(pocket_cmap)
@@ -340,26 +342,37 @@ def make_3D_figure(
 
 
 def get_all_states_3D_figure(
-    pdb_out : list[str], pdb_code : str, pocket_cmap : list[tuple],
-    dpi : int, chain : str, zoom : float
+        num_states : int,
+        pdb_out : list[str],
+        name : str,
+        multistate_pocket_cmap : dict,
+        alignligand : str,
+        dpi : int,
+        chain : str,
+        zoom : float,
     ) -> None:
     """Generates a 3D figure and pymol session file with all states.
 
     Args:
         pdb_out (str): File name for .pdb file.
-        name_out (str): PDB identification code for output .pdb file.
-        pocket_cmap list(tuple): Per pocket color map. Index = pocket residue number. Value = color.
+        name (str): PDB identification code for output .pdb file.
+        multistate_pocket_cmap (dict): Per pocket color map. Index = pocket residue number. Value = color.
         dpi (int): Figure resolution in dpi (dots per linear inch).
         chain (str): Chain identifier for desired RNA chain.
         zoom (float): Zoom buffer distance (Å) for creating 3D figures.
     """
-    real_sphere_list = glob(f'{pdb_out}/*out/*out_real_sphere.pdb')
     print(f'Making multistate 3D figures.\n')
-    for real_sphere in real_sphere_list:
-        object_name = os.path.basename(real_sphere)[:-4]
-        make3D.load_pdb(real_sphere)
-        make3D.transparent_pocket(object_name, pocket_cmap)
+    for state in range(1, num_states+1):
+        real_sphere = f'{pdb_out}/{name}_clean_state{state}_out/{name}_state{state}_out_real_sphere.pdb'
+        cmd.load(f'{real_sphere}', f'state{state}', partial=1)
+        if alignligand:
+            make3D.alignligand(f'state{state}', alignligand, state=None)
+        elif (state > 1):
+            cmd.align(f'state{state}', f'state1')
+        make3D.color_multistate_pockets(f'state{state}', multistate_pocket_cmap[state])
+        make3D.transparent_pocket(f'state{state}')
 
     make3D.set_default()
     make3D.make_multistate()
-    make3D.save_3D_figure(pdb_out, f'{pdb_code}_all', dpi, chain, zoom)
+    cmd.refresh()
+    make3D.save_3D_figure(pdb_out, f'{name}_all_states', dpi, chain, zoom)

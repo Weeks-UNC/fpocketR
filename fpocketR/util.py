@@ -14,6 +14,14 @@ from prody import *
 import numpy as np
 
 
+def fetch_pdb(pdb : str) -> str:
+    # Fetch PDB ID from the PDB. Fetchs .pdb files then .cif.
+    pdb_id_lower = pdb.lower()
+    filename = fetchPDBs(f'{pdb_id_lower}', compressed=False, quiet=True)
+    pdb = filename[0]
+    return pdb
+
+
 def is_accessible(path : str, file_name : str) -> None:
     """Checks if input file is accessible.
        Stops program and displays:
@@ -145,13 +153,8 @@ def get_file_paths(
     # Get PDB identifiers from the path to the fpocket out.pdb.
     pdb_basename = os.path.basename(pdb)
     pdb_code = pdb_basename[0:4]
-    pdb_name = pdb_basename[0:-4]
 
-    # Creates default name varible for naming output files.
-    if name is None:
-        name = pdb_name
-
-    if state is not None:
+    if state:
         name = f'{name}_state{state}'
 
     return pdb, pdb_out, pqr_out, info_txt, pockets_out, pdb_code, name

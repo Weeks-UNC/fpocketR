@@ -24,10 +24,26 @@ from prody.utilities import openFile
 
 
 def analyze_pockets(
-    pdb : str, pqr_out : str, pdb_out : str, analysis : str, name : str,
-    info_txt : str, pockets_out : list[str], pdb_code : str, chain : str,
-    state, ligandchain : str, ligand : str, m : float, M : float, i : int,
-    D : float, A : int, p : float, qualityfilter : float
+    pdb : str,
+    pqr_out : str,
+    pdb_out : str,
+    analysis : str,
+    name : str,
+    info_txt : str,
+    pockets_out : list[str],
+    pdb_code : str,
+    chain : str,
+    state,
+    ligandchain : str,
+    ligand : str,
+    m : float,
+    M : float,
+    i : int,
+    D : float,
+    A : int,
+    p : float,
+    qualityfilter : float,
+    knownnt : list[int],
     ) -> tuple[pd.DataFrame, prody.AtomGroup]:
 
     # Parses pdb files and returns prody structure objects.
@@ -42,7 +58,18 @@ def analyze_pockets(
     get_real_sphere(pqr_out, pdb_out, analysis, name)
 
     # Creates a dataframe with pocket characteristics from fpocket info.txt
-    pc_df = get_characteristics(info_txt, pdb_code, name, m, M, i, D, A, p, state)
+    pc_df = get_characteristics(
+        info_txt,
+        pdb_code,
+        name,
+        m,
+        M,
+        i,
+        D,
+        A,
+        p,
+        state,
+    )
 
     rna_coords = out_structure.copy()
 
@@ -52,8 +79,16 @@ def analyze_pockets(
         # Get atomgroup for rna and add pocket characteristics.
         stp_coords = out_structure.select('resname STP').copy()
 
-        add_basic_characteristics(stp_coords, pockets_out, qualityfilter,
-                                  pc_df, chain, analysis, name)
+        add_basic_characteristics(
+            stp_coords,
+            pockets_out,
+            qualityfilter,
+            pc_df,
+            chain,
+            analysis,
+            name,
+            knownnt,
+        )
         
         # Get atomgroup for ligand and add ligand characteristics.
         if ligand in ('n', 'N', 'no', 'No', 'none', 'None'):
@@ -61,58 +96,26 @@ def analyze_pockets(
             ligand = None
         else:
             ligand_coords, ligand = get_ligand_coords(
-                ligand_structure, ligand, ligandchain, analysis, name)
+                ligand_structure,
+                ligand,
+                ligandchain,
+                analysis,
+                name,
+            )
             if ligand_coords:
-                add_ligand_characteristics(analysis, stp_coords, ligand_coords,
-                                           ligand, pc_df)
+                add_ligand_characteristics(
+                    analysis,
+                    stp_coords,
+                    ligand_coords,
+                    ligand,
+                    pc_df,
+                    knownnt,
+                )
 
     return pc_df, rna_coords
 
 
 # -----------------------------------------------------------------------------
-
-
-# def reformat_pqr(filename : str):
-#     pqr = openFile(filename, 'rt')
-#     lines = pqr.readlines()
-#     pqr.close()
-#     reformat=[]
-
-#     for line in lines:
-#         print(line)
-#         fields = line.split()
-#         if len(fields) == 10:
-#             fields.insert(4, '')
-#         elif len(fields) == 11:
-#             new_line = line
-#             continue
-
-#         startswith = fields[0]
-#         print(f'startswith: {startswith}')
-
-#         if startswith == 'ATOM' or startswith == 'HETATM':
-#             serial_str = fields[1]
-#             atomname= fields[2]
-#             resname = fields[3]
-#             chid = fields[4]
-#             alt = ' '
-#             coordinates_x = fields[6]
-#             coordinates_y = fields[7]
-#             coordinates_z = fields[8]
-#             charges = fields[9]
-#             radii = fields[10]
-
-#             new_line = (f'{startswith} {serial_str} {atomname} {resname} {chid}'
-#                         f'{alt} {coordinates_x} {coordinates_y} {coordinates_z}'
-#                         f'{charges} {radii}')
-#         else:
-#              new_line = line
-#         reformat.append(new_line)
-
-    
-#     with open('new.pqr', 'w') as f:
-#         for new_line in reformat:
-#             f.write(f"{new_line}\n")
 
 
 def reformat_pqr(filename : str):
@@ -176,8 +179,11 @@ def reformat_pqr(filename : str):
 
 
 def get_real_sphere(
-    pqr_file : str, pdb_file : str, analysis : str, name : str
-    ) -> None:
+    pqr_file : str,
+    pdb_file : str,
+    analysis : str,
+    name : str,
+) -> None:
     """Gets fpocket pocket a-sphere radii form a pqr file and encodes it into
     into the B factor column of a *real_sphere.pdb output file.
 
@@ -232,8 +238,8 @@ def get_ligand_coords(
     ligand : str,
     ligandchain : str,
     analysis : str,
-    name : str
-    ) -> tuple[prody.AtomGroup, str]:
+    name : str,
+) -> tuple[prody.AtomGroup, str]:
     """Gets coordinates and residue name for RNA-binding ligand.
 
     Args:
@@ -341,9 +347,17 @@ def get_ligand_coords(
 
 
 def get_characteristics(
-    info_txt : str, pdb_code :str, name : str, m : float, M : float,
-    i : int, D : float, A : int, p : float, state : int
-    ) -> pd.DataFrame:
+    info_txt : str,
+    pdb_code :str,
+    name : str,
+    m : float,
+    M : float,
+    i : int,
+    D : float,
+    A : int,
+    p : float,
+    state : int,
+) -> pd.DataFrame:
     """Creates a dataframe containing characteristics for
         all fpocket generates pockets.
 
@@ -363,7 +377,7 @@ def get_characteristics(
         to scoring each pocket.
     """
 
-    pc_d = {'Parameters': [], 'PDB': [], 'State': [], 'Pocket': [],
+    pc_d = {'Parameters': [], 'Name': [], 'PDB': [], 'State': [], 'Pocket': [],
             'Score': [], 'Drug score': [], 'a-sphere': [],
             'SASA': [], 'Volume': [], 'Hydrophobic density': [],
             'Apolar a-sphere proportion': [],
@@ -377,7 +391,8 @@ def get_characteristics(
             if 'Pocket' in row:
                 pc_d['Parameters'].append(f'-m {m} -M {M} -i {i} -D {D} '
                                           f'-A {A} -p {p}')
-                pc_d['PDB'].append(name)
+                pc_d['Name'].append(name)
+                pc_d['PDB'].append(pdb_code)
                 pc_d['State'].append(state)
                 pc_d['Pocket'].append(int(row.split(' ')[1].strip()))
                 pocket = int(row.split(' ')[1].strip())
@@ -414,9 +429,14 @@ def get_characteristics(
 
 
 def add_basic_characteristics(
-    stp_coords : prody.AtomGroup, pockets_out : list[str], 
-    qualityfilter : float, pc_df : pd.DataFrame, chain :str,
-    analysis : str, name :str
+    stp_coords : prody.AtomGroup,
+    pockets_out : list[str],
+    qualityfilter : float,
+    pc_df : pd.DataFrame,
+    chain :str,
+    analysis : str,
+    name :str,
+    knownnt : list[int],
     ) -> None:
     """Adds characteristics to the pocket characteristics DataFrame that do
         not require a ligand to calculate.
@@ -433,9 +453,9 @@ def add_basic_characteristics(
         analysis (str): path directory contianing fpocket outputs for analysis.
         name (str): Name of input pdb file.
     """
-    pocketNT_l = []
-    pocket_npr1_l = []
-    pocket_npr2_l = []
+    pocketNT = []
+    pocket_npr1 = []
+    pocket_npr2 = []
 
     for i, _ in enumerate(stp_coords.iterResidues()):
         # Export surface obj files for each pocket.
@@ -467,8 +487,8 @@ def add_basic_characteristics(
         I3 = sorted_eigvals[2]
         npr1 = I1/I3
         npr2 = I2/I3
-        pocket_npr1_l.append(npr1)
-        pocket_npr2_l.append(npr2)
+        pocket_npr1.append(npr1)
+        pocket_npr2.append(npr2)
 
         # Calculate pocketNT (nucleotides near each pocket).
         x = pockets_out[i]
@@ -486,21 +506,32 @@ def add_basic_characteristics(
             chain = chain.replace(',', ' & ')
         selection = structure.select(f'chain {chain}')
         nt = selection.getResnums().tolist()
-        pocketNT_l.append(np.unique(nt).tolist())
+        pocketNT.append(np.unique(nt).tolist())
 
     # Add pocketNT and pocket npr data to pc dataframe.
-    pc_df['PocketNT'] = pocketNT_l
-    pc_df['Pocket npr1'] = pocket_npr1_l
-    pc_df['Pocket npr2'] = pocket_npr2_l
+    pc_df['PocketNT'] = pocketNT
+    pc_df['Pocket npr1'] = pocket_npr1
+    pc_df['Pocket npr2'] = pocket_npr2
 
     # Add pocket filter (Pass or Fail) to pc dataframe.
     pc_df.loc[pc_df['Score'] > qualityfilter, 'Filter'] = 'Pass'
 
+    # Check if pocketNT matches knownNT
+    if isinstance(knownnt, list):
+        pc_df['Type'] = pc_df.apply(
+            lambda row: 'Known' if sum(nt in knownnt for nt in row['PocketNT']) >= 3 else row['Type'],
+            axis=1
+        )
+
 
 def add_ligand_characteristics(
-    analysis : str, stp_coords : prody.AtomGroup,
-    ligand_coords : prody.AtomGroup, ligand : str, pc_df : pd.DataFrame
-    ) -> None:
+    analysis : str,
+    stp_coords : prody.AtomGroup,
+    ligand_coords : prody.AtomGroup,
+    ligand : str,
+    pc_df : pd.DataFrame,
+    knownnt : list[int],
+) -> None:
     """Adds characteristics to the pocket characteristics DataFrame that
        require the presence of a ligand to calculate.
     Pocket overlap:  Ratio of a-spheres in contact with ligand.
@@ -591,9 +622,10 @@ def add_ligand_characteristics(
     pc_df['Center criteria'] = center_criteria_l
 
     # Add pocket type (Known or Novel) to pc_df.
-    pc_df.loc[(pc_df['Ligand overlap'] >= 0.33) &
-              (pc_df['Pocket overlap'] >= 0.33) &
-              (pc_df['Center criteria'] <= 4), 'Type'] = 'Known'
+    if knownnt is None:
+        pc_df.loc[(pc_df['Ligand overlap'] >= 0.33) &
+                (pc_df['Pocket overlap'] >= 0.33) &
+                (pc_df['Center criteria'] <= 4), 'Type'] = 'Known'
 
     # Add ligand NPR and QED score to pc_df.
     pc_df['NPR1'] = np.nan
@@ -606,5 +638,3 @@ def add_ligand_characteristics(
     pc_df.loc[pc_df.eval('- NPR1 - NPR2 + 1.5 < 0'), 'Geometry'] = 'Sphere-like'
     pc_df.loc[pc_df.eval('NPR2 - 0.75 < 0'), 'Geometry'] = 'Disc-like'
     pc_df.loc[(pc_df['Type'] == 'Known'), 'QED score'] = qed
-
-
