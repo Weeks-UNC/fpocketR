@@ -148,7 +148,7 @@ def get_file_paths(
     is_accessible(info_txt, 'info_txt')
 
     pockets_dir = os.path.join(cwd, analysis, 'pockets')
-    pockets_out = glob(f'{pockets_dir}/pocket*_atm.pdb')
+    pockets_out = sorted(glob(f'{pockets_dir}/pocket*_atm.pdb'))
 
     # Get PDB identifiers from the path to the fpocket out.pdb.
     pdb_basename = os.path.basename(pdb)
