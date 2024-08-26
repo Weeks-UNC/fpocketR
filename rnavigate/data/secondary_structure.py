@@ -211,7 +211,7 @@ class SecondaryStructure(data.Sequence):
         # extract sequence, y and x coordinates
         sequence, xcoords, ycoords = "", [], []
         for nt in root.findall("./RNA/bases/nt"):
-            base = nt.find("base").text
+            base = nt.find("base").text.strip()
             sequence += base
             for i in nt:
                 if i.get("r") == "pos":
