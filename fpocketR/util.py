@@ -3,12 +3,13 @@
 # Utilities functions for fpocket-R
 # Seth Veenbaas
 # Weeks Lab, UNC-CH
-# 2022
+# 2024
 #
-# Version 1.0.1
+# Version 1.0.2
 #
 # -----------------------------------------------------
 import os
+import re
 from glob import glob
 from prody import *
 import numpy as np
@@ -21,6 +22,24 @@ def fetch_pdb(pdb : str) -> str:
     pdb = filename[0]
     return pdb
 
+def natsorted(items : list) -> list:
+    """ Sorts filenames by digits in the filenames.
+    Supports multiple numbers in a filename.
+    Natsorted example: [
+        'pocket1_atm.pdb',
+        'pocket2_atm.pdb',
+        '2pocket11_atm.pdb',
+        'pocket10_atm.pdb',
+        'pocket11_atm.pdb',
+        'pocket11_atm5.pdb',
+        'pocket20_atm.pdb'
+    ]
+    Args:
+        items (list): List of strings to be sorted by digits.
+    Returns:
+        list: Sorted list, ordered by digits.
+    """
+    return sorted(items, key=lambda x: int(re.search(r'\d+', x).group()))
 
 def is_accessible(path : str, file_name : str) -> None:
     """Checks if input file is accessible.
@@ -150,8 +169,7 @@ def get_file_paths(
     pockets_dir = os.path.join(cwd, analysis, 'pockets')
     
     # Sort pockets_out filenames naturally (eg: 1,2,3...10,11....20,21)
-    natsort = lambda s: [int(t) if t.isdigit() else t.lower() for t in re.split(r'(\d+)', s)]
-    pockets_out = sorted(glob(f'{pockets_dir}/pocket*_atm.pdb'), key=natsort)
+    pockets_out = natsorted(glob(f'{pockets_dir}/pocket*_atm.pdb'))
 
     # Get PDB identifiers from the path to the fpocket out.pdb.
     pdb_basename = os.path.basename(pdb)
