@@ -234,7 +234,7 @@ def get_colorNT(
             if poc_type == 'Known':
                 known_colored_nt_list.append(nt)
 
-            cmap_idx_per_pocket.append(cmap_idx + 1)
+            cmap_idx_per_pocket.append(int(cmap_idx + 1))
         pocket_nt_color.append(
             {'pocket': f'pocket {poc_num}','nucleotides': cmap_idx_per_pocket, 'color': color})
 
@@ -266,7 +266,7 @@ def make_2D_figure(
     # that connect all the nucleotides associated with a pocket.
     if connectpocket:
         pocket_annotations = []
-        for d in pocket_nt_color:
+        for d in pocket_nt_color:            
             pocket_annotations.append(d['pocket'])
             rna_map.set_data(
                 f'{d["pocket"]}', 
