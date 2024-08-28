@@ -22,3 +22,5 @@ var/
 .installed.cfg
 *.egg
 
+fpocketR/__pycache__/figures.cpython-311.pyc
+/fpocketR/__pycache__
