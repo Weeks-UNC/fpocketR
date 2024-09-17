@@ -313,22 +313,24 @@ def get_offset(pdb : str, chain : str, offset : int) -> int:
         structure = parsePDB(pdb)
     elif pdb.endswith('.cif'):
         structure = parsePDB(pdb)
+    else:
+        print(f'Could not parse structure: {pdb}')
+        return None
 
     if structure:
         hv = structure.getHierView()
         ch = hv[chain]
+
+    else:
+        print(f'Could not parse structure: {pdb}')
+        return None
+    
+    if ch:
         resn = ch.getResnums()[0]
         offset = resn - 1
-            
-    else: 
-        print('Automated offset is only supported for this file.\n'
-              'offset = starting index of the PDB sequence - 1\n'
-              'offset is typically: 0\n\n')
-        while True:
-            input_offset = input('Input offset (INT) between the rna sequence '
-                                'and first nucleotide of the PDB structure:')
-            if input_offset.isdigit():
-                offset = input_offset
-                break
+    
+    else:
+        print(f'Chain {chain} not found in structure: {pdb}')
+        return None
     
     return offset
