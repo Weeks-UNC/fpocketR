@@ -21,17 +21,25 @@ from pymol import cmd
 
 
 def make_figures(
-    pdb : str , state : int, pc_df : pd.DataFrame,
-    rna_coords : prody.AtomGroup, nsd :str , analysis : str, name : str,
-    chain : str, dpi : int, zoom : int, offset : int, 
-    connectpocket : bool, alignligand : str
+        pdb : str,
+        state : int,
+        pc_df : pd.DataFrame,
+        rna_coords : prody.AtomGroup,
+        nsd :str ,
+        analysis : str,
+        name : str,
+        chain : str,
+        dpi : int,
+        zoom : int,
+        offset : int,
+        connectpocket : bool,
+        alignligand : str,
     ) -> dict:
 
-    # Get the rna sequnece length from the .pdb file.
-    pdb_seq_len = rna_coords.numResidues()
+    # Get the rna sequnece length from the .pdb file.    
+    pdb_seq_len = len(rna_coords.select("name O2'"))
 
     # Gets secondary structure input file required for making figures.
-
     try:
         if os.path.isfile(nsd) is False:
             raise Exception
@@ -103,7 +111,10 @@ def make_figures(
 # -----------------------------------------------------------------------------
 
 def get_pdb_offset(
-    rna_coords : prody.AtomGroup, nt : int, offset : int, chain : str
+        rna_coords : prody.AtomGroup,
+        nt : int,
+        offset : int,
+        chain : str
     ) -> int:
     """Used for for calculating nucleotide offsets for RNA with 2 chains.
 
@@ -133,8 +144,12 @@ def get_pdb_offset(
 
 
 def get_colorNT(
-    pc_df : pd.DataFrame, rna_seq_len : int, offset : int,
-    rna_coords : prody.AtomGroup, nsd : str, chain : str
+        pc_df : pd.DataFrame,
+        rna_seq_len : int,
+        offset : int,
+        rna_coords : prody.AtomGroup,
+        nsd : str,
+        chain : str,
     ) -> tuple[list[tuple], list[tuple], list[dict]]:
     """Generates a color map of pocket loations throughout the RNA.
 
@@ -242,8 +257,12 @@ def get_colorNT(
 
 
 def make_2D_figure(
-    nsd : str, seq_cmap : list[tuple], pocket_nt_color : list[dict],
-    analysis : str, name : str, connectpocket : bool
+        nsd : str,
+        seq_cmap : list[tuple],
+        pocket_nt_color : list[dict],
+        analysis : str,
+        name : str,
+        connectpocket : bool,
     ) -> None:
     """Uses RNAvigate to plot pocketNT onto the RNA secondary structure and
        saves resulting 2D figure as png and svg.
@@ -312,8 +331,15 @@ def make_2D_figure(
 
 
 def make_3D_figure(
-    pdb : str, state : int, analysis : str, name : str, dpi : int, chain : str,
-    zoom : float, pocket_cmap : list[tuple], alignligand : str
+        pdb : str,
+        state : int,
+        analysis : str,
+        name : str,
+        dpi : int,
+        chain : str,
+        zoom : float,
+        pocket_cmap : list[tuple],
+        alignligand : str,
     ) -> None:
     """Generates a 3D figure and pymol session file for a single state.
 

@@ -326,7 +326,7 @@ def get_offset(pdb : str, chain : str, offset : int) -> int:
         return None
     
     if ch:
-        resn = ch.getResnums()[0]
+        resn = ch.getResnums().min()
         offset = resn - 1
     
     else:
