@@ -47,15 +47,16 @@ def analyze_pockets(
     ) -> tuple[pd.DataFrame, prody.AtomGroup]:
 
     # Parses pdb files and returns prody structure objects.
-    ligand_structure = parsePDB(pdb)
-    out_structure = parsePDB(pdb_out)
+    ligand_rna_structure = parsePDB(pdb)
+    out_rna_structure = parsePDB(pdb_out)
+    pocket_structure = parsePQR(pqr_out)
 
     # Sets ligand chain to first pdb chain by default.
     if ligandchain is None:
         ligandchain = chain[0]
 
     # Create real_sphere.pdb ouput be combinding the pqr_out and pdb_out.
-    get_real_sphere(pqr_out, pdb_out, analysis, name)
+    get_real_sphere(out_rna_structure, pocket_structure, analysis, name, pqr_out)
 
     # Creates a dataframe with pocket characteristics from fpocket info.txt
     pc_df = get_characteristics(
@@ -71,13 +72,13 @@ def analyze_pockets(
         state,
     )
 
-    rna_coords = out_structure.copy()
+    rna_coords = out_rna_structure.copy()
 
     # If pockets are detected calculate features and add to pc_df.
-    if out_structure.select('resname STP'):
+    if out_rna_structure.select('resname STP'):
 
         # Get atomgroup for rna and add pocket characteristics.
-        stp_coords = out_structure.select('resname STP').copy()
+        stp_coords = out_rna_structure.select('resname STP').copy()
 
         add_basic_characteristics(
             stp_coords,
@@ -96,7 +97,7 @@ def analyze_pockets(
             ligand = None
         else:
             ligand_coords, ligand = get_ligand_coords(
-                ligand_structure,
+                ligand_rna_structure,
                 ligand,
                 ligandchain,
                 analysis,
@@ -179,62 +180,61 @@ def reformat_pqr(filename : str):
 
 
 def get_real_sphere(
-    pqr_file : str,
-    pdb_file : str,
+    out_rna_structure : prody.AtomGroup,
+    pocket_structure : prody.AtomGroup,
     analysis : str,
     name : str,
+    pqr_out : str,
 ) -> None:
     """Gets fpocket pocket a-sphere radii form a pqr file and encodes it into
     into the B factor column of a *real_sphere.pdb output file.
 
     Args:
-        pqr_file (string): Path to fpocket *out.pqr file
+        pqr_out (string): Path to fpocket *out.pqr file
                            containing a-spheres radii.
         pdb_file (string): Path to fpocket *out.pdb file.
-        analysis (str): Path directory contianing fpocket outputs for analysis.
+        analysis (str): Path directory containing fpocket outputs for analysis.
         name (str): User specified filename prefix for analysis outputs.
     """
-    structure = parsePDB(pdb_file)
-    pockets = parsePQR(pqr_file)
-
-    # PRODY 2.4 can't read PQR files with 4 digit corrdinates.
-    # reformat_pqr() adding whitespaces between all fields so they can be read. 
-    if not pockets:
-        pqr_file = reformat_pqr(pqr_file)
-        if not pqr_file:
+    # PRODY 2.4 can't read PQR files with 4 digit coordinates.
+    # reformat_pqr() adds whitespaces between all fields so they can be read. 
+    
+    if not pocket_structure:
+        pqr_out = reformat_pqr(pqr_out)
+        if not pqr_out:
             # PQR file contains no ATOM entries (OK).
-            writePDB(f'{analysis}/{name}_out_real_sphere.pdb', structure)
+            writePDB(f'{analysis}/{name}_out_real_sphere.pdb', out_rna_structure)
             return None
         else:
-            pockets = parsePQR(pqr_file)
+            pocket_structure = parsePQR(pqr_out)
             
-        if not pockets:
+        if not pocket_structure:
             # PQR file contains ATOM entries but is not parsed correctly (BAD).
-            print(f'\nFAIL unable to reformat PQR file {pqr_file}.')
-            writePDB(f'{analysis}/{name}_out_real_sphere.pdb', structure)
+            print(f'\nFAIL unable to reformat PQR file {pqr_out}.')
+            writePDB(f'{analysis}/{name}_out_real_sphere.pdb', out_rna_structure)
             return None
 
         else:
             # PQR file successfully reformated and parsed by Prody 2.4 (OK).
             print(f'Successfully corrected PQR file!\n')
 
-    for residue in structure.iterResidues():
+    for residue in out_rna_structure.iterResidues():
         resnum = residue.getResnum()
         resname = residue.getResname()
         if resname == 'STP':
             for atom in residue.iterAtoms():
                 coords = atom.getCoords()
-                for pqr_atom in pockets.iterAtoms():
+                for pqr_atom in pocket_structure.iterAtoms():
                     pqr_resnum = pqr_atom.getResnum()
                     pqr_coords = pqr_atom.getCoords()
                     if resnum == pqr_resnum and (coords == pqr_coords).all():
                         radius = pqr_atom.getRadius()
                         atom.setBeta(radius)
-    writePDB(f'{analysis}/{name}_out_real_sphere.pdb', structure)
+    writePDB(f'{analysis}/{name}_out_real_sphere.pdb', out_rna_structure)
 
 
 def get_ligand_coords(
-    ligand_structure : prody.AtomGroup,
+    ligand_rna_structure : prody.AtomGroup,
     ligand : str,
     ligandchain : str,
     analysis : str,
@@ -243,7 +243,7 @@ def get_ligand_coords(
     """Gets coordinates and residue name for RNA-binding ligand.
 
     Args:
-        ligand_structure (object): Prody structure of RNA-ligand complex.
+        ligand_rna_structure (object): Prody structure of RNA-ligand complex.
         ligand (str): Ligand residue name (usually a 3-letter code).
         ligandchain (str): Chain identifier for desired ligand.
         analysis (str): Path directory contianing fpocket outputs for analysis.
@@ -255,7 +255,7 @@ def get_ligand_coords(
     """
     if ligand and 2 <= len(ligand) <= 3:
         try:
-            ligand_coords = ligand_structure.select(
+            ligand_coords = ligand_rna_structure.select(
                 f'resname {ligand}').copy()
         except AttributeError:
             print(f'Chain {ligandchain} of {name}.pdb does not contain a '
@@ -264,46 +264,41 @@ def get_ligand_coords(
                   'and ligand residue name (--ligand).')
             exit()
 
-    elif ligand_structure.select(f'chain {ligandchain} and hetatm '
+    elif ligand_rna_structure.select(f'chain {ligandchain} and hetatm '
                                  'and not ion and not water') is None:
         return (None, None)
 
     else:
-        ligand_sele = ligand_structure.select(
+        ligand_sele = ligand_rna_structure.select(
             f'chain {ligandchain} and hetatm and not ion and not water').copy()
         hetatm_resn : list = np.unique(ligand_sele.getResnames()).tolist()
-        
+    
         if len(hetatm_resn) > 1:
-                resnames_qeds : dict = {}
-                for resname in hetatm_resn:
-                    try:
-                        response = requests.get(
-                            f'https://files.rcsb.org/ligands/download/{resname}_model.sdf')
-                        
-                        with open(f'{analysis}/{resname}_model.sdf', 'wb') as f:
-                            f.write(response.content)
-                        mol = Chem.MolFromMolFile(f'{analysis}/{resname}_model.sdf')
-                        qed = QED.default(mol)
-                        mw : float = Chem.rdMolDescriptors.CalcExactMolWt(mol)
-                        pat = Chem.MolFromSmarts("[#6]")
-                        num_of_carbon : int =len(mol.GetSubstructMatches(pat))
-                        print(f'# of C: {num_of_carbon}')
-                        if mw < 100.0 or num_of_carbon < 2:
-                            qed = 0
-                            continue
-                         
-                    except:
-                        print(f'Error: Not able to calculate QED score for {resname}.\n')
-                        qed = 0
+            resnames_qeds : dict = {}
+            for resname in hetatm_resn:
+                try:
+                    response = requests.get(
+                        f'https://files.rcsb.org/ligands/download/{resname}_model.sdf')
                     
-                    resnames_qeds[resname] = qed
-
-                # Remove heteroatoms with nan qed scores
-                # filtered = {k: v for k, v in resnames_qeds.items() if v is not np.nan}
-                # resnames_qeds.clear()
-                # resnames_qeds.update(filtered)
-
-                hetatm_resn = [max(resnames_qeds, key=resnames_qeds.get)]
+                    with open(f'{analysis}/{resname}_model.sdf', 'wb') as f:
+                        f.write(response.content)
+                    mol = Chem.MolFromMolFile(f'{analysis}/{resname}_model.sdf')
+                    qed = QED.default(mol)
+                    mw : float = Chem.rdMolDescriptors.CalcExactMolWt(mol)
+                    pat = Chem.MolFromSmarts("[#6]")
+                    num_of_carbon : int =len(mol.GetSubstructMatches(pat))
+                    if mw < 100.0 or num_of_carbon <= 2:
+                        qed = 0
+                        continue
+                        
+                except:
+                    print(f'Error: Not able to calculate QED score for {resname}.\n')
+                    qed = 0
+                
+                resnames_qeds[resname] = qed
+                
+            # Get ligand with the highest qed score
+            hetatm_resn = [max(resnames_qeds, key=resnames_qeds.get)]
 
         if len(hetatm_resn) == 1 \
                 and 2 <= len(hetatm_resn[0]) <= 3:
@@ -340,10 +335,6 @@ def get_ligand_coords(
         else:
             print('No ligand detected.\n')
             return (None, None)
-    if ligand_coords is None:
-        return (None, None)
-    else:
-        return (ligand_coords, ligand)
 
 
 def get_characteristics(
@@ -464,8 +455,10 @@ def add_basic_characteristics(
         cmd.hide('spheres')
         cmd.show('surface')
         cmd.set('surface_quality', 1)
-        cmd.save(f'{analysis}/pockets/pocket{i+1}_surf.obj',
-                 f'pocket_{i+1}_surface')
+        cmd.save(
+            f'{analysis}/pockets/pocket{i+1}_surf.obj',
+            f'pocket_{i+1}_surface'
+        )
         cmd.reinitialize()
 
         # Create mesh object for each pocket.
@@ -548,9 +541,9 @@ def add_ligand_characteristics(
         pc_df (DataFrame): Characteristics and properities for each pocket.
     """
 
-    pocket_overlap_l = []
-    ligand_overlap_l = []
-    center_criteria_l = []
+    pocket_overlap = []
+    ligand_overlap = []
+    center_criteria = []
 
     # Calculate the normalize PMI ratios for the ligand.
     ligand_npr1, ligand_npr2 = util.calc_npr(ligand_coords)
@@ -582,7 +575,7 @@ def add_ligand_characteristics(
         pocket_overlap_sele = residue.select(
             f'within 3 of ligand', ligand=ligand_coords)
         if pocket_overlap_sele is None:
-            pocket_overlap_l.append(0)
+            pocket_overlap.append(0)
         else:
             # Calculates total number of a-spheres in pocket.
             _, pocket_stp_count = np.unique(
@@ -592,14 +585,14 @@ def add_ligand_characteristics(
             _, pocket_overlap_stp_count = np.unique(
                 pocket_overlap_sele.getResnums(), return_counts=True)
 
-            pocket_overlap_l.append(float(
+            pocket_overlap.append(float(
                 pocket_overlap_stp_count / pocket_stp_count))
 
         # Calculate ratio of a-spheres in each pocket that is near the ligand.
         ligand_overlap_sele = ligand_coords.select(
             f'within 3 of pocket', pocket=residue)
         if ligand_overlap_sele is None:
-            ligand_overlap_l.append(0)
+            ligand_overlap.append(0)
         else:
             # Calculates total number of atoms in ligand.
             ligand_atom_count = ligand_coords.numAtoms()
@@ -607,25 +600,26 @@ def add_ligand_characteristics(
             # Calculates number of overlapped atoms in ligand.
             ligand_overlap_atom_count = ligand_overlap_sele.numAtoms()
 
-            ligand_overlap_l.append(
+            ligand_overlap.append(
                 ligand_overlap_atom_count / ligand_atom_count)
         
         # Calculate minimum distance between pocket center and ligand atoms.
         pocket_center = calcCenter(pocket)
         center_distance_l = calcDistance(pocket_center, ligand_coords)
         center_distance = min(center_distance_l)
-        center_criteria_l.append(center_distance)
+        center_criteria.append(center_distance)
 
     # Add Ligand overlap and Center criteria to pc dataframe.
-    pc_df['Pocket overlap'] = pocket_overlap_l
-    pc_df['Ligand overlap'] = ligand_overlap_l
-    pc_df['Center criteria'] = center_criteria_l
+    pc_df['Pocket overlap'] = pocket_overlap
+    pc_df['Ligand overlap'] = ligand_overlap
+    pc_df['Center criteria'] = center_criteria
 
     # Add pocket type (Known or Novel) to pc_df.
-    if knownnt is None:
-        pc_df.loc[(pc_df['Ligand overlap'] >= 0.33) &
-                (pc_df['Pocket overlap'] >= 0.33) &
-                (pc_df['Center criteria'] <= 4), 'Type'] = 'Known'
+    pc_df.loc[
+        (pc_df['Ligand overlap'] >= 0.33) &
+        (pc_df['Pocket overlap'] >= 0.33) &
+        (pc_df['Center criteria'] <= 4), 'Type'
+    ] = 'Known'
 
     # Add ligand NPR and QED score to pc_df.
     pc_df['NPR1'] = np.nan

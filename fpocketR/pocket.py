@@ -87,8 +87,8 @@ def clean_pdb(pdb : str, pdb_clean : str) -> None:
     cmd.reinitialize()
 
 
-class MissingEnvironmentVariable(Exception):
-    pass
+# class MissingEnvironmentVariable(Exception):
+#     pass
 
 def run_fpocket(
     pdb : str,

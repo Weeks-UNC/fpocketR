@@ -15,14 +15,19 @@ from prody import *
 import numpy as np
 
 
-def fetch_pdb(pdb : str) -> str:
-    # Fetch PDB ID from the PDB. Fetchs .pdb files then .cif.
-    pdb_id_lower = pdb.lower()
-    filename = fetchPDBs(f'{pdb_id_lower}', compressed=False, quiet=True)
-    pdb = filename[0]
-    return pdb
+def fetch_pdb(pdb_id : str) -> str:
+    ''' Downloads structure from the PDB.
+    Fetches .pdb format or .cif format if the .pdb is unavailable.
+    Args:
+        pdb_id: 4-character alphanumeric PDB identifier
+    Returns:
+        str: path to .pdb (or .cif) file
+    '''
+    pdb_id_lower = pdb_id.lower()
+    pdb_filename = fetchPDB(f'{pdb_id_lower}', compressed=False, quiet=False)
+    return pdb_filename
 
-def natsorted(items : list) -> list:
+def natsorted(filenames : list) -> list:
     """ Sorts filenames by digits in the filenames.
     Supports multiple numbers in a filename.
     Natsorted example: [
@@ -35,11 +40,19 @@ def natsorted(items : list) -> list:
         'pocket20_atm.pdb'
     ]
     Args:
-        items (list): List of strings to be sorted by digits.
+        filenames (list): List of strings to be sorted by digits.
     Returns:
         list: Sorted list, ordered by digits.
     """
-    return sorted(items, key=lambda x: int(re.search(r'\d+', x).group()))
+    # return sorted(filenames, key=lambda x: int(re.search(r'\d+', x).group()))
+    
+    def extract_sort_key(filename):
+        # Extract all numbers in the filename as integers, or return the filename as-is for non-numeric parts
+        return [int(num) if num.isdigit() else num.lower() 
+                for num in re.split(r'(\d+)', filename)]
+    
+    return sorted(filenames, key=extract_sort_key)
+
 
 def is_accessible(path : str, file_name : str) -> None:
     """Checks if input file is accessible.
@@ -334,3 +347,17 @@ def get_offset(pdb : str, chain : str, offset : int) -> int:
         return None
     
     return offset
+
+# Function to get the last processed state
+def get_last_processed_state(state_tracker_filename):
+    if os.path.exists(state_tracker_filename):
+        with open(state_tracker_filename, 'r') as f:
+            return int(f.read().strip())  # Read the last state
+    else:
+        return 0  # If no tracker file, start from state 1
+
+# Function to update the state tracker
+def update_last_processed_state(state_tracker_filename, state):
+    with open(state_tracker_filename, 'w') as f:
+        f.write(str(state))  # Write the current state to the file
+        

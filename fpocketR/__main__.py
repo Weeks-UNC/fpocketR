@@ -10,17 +10,19 @@
 # -----------------------------------------------------
 import argparse
 import os
+import glob
+import pickle
 import pandas as pd
 from pymol import cmd
 from prody import *
-from fpocketR import (analyze, pocket, figures, util)
+from fpocketR import analyze, pocket, figures, util
 confProDy(verbosity='none')
 # -----------------------------------------------------
 
 
 def pipeline(
     pdb : str,
-    nsd : str,
+    ss : str,
     chain : str,
     state : int,
     ligand : str,
@@ -46,11 +48,11 @@ def pipeline(
 
     Args:
         pdb (str): Path to input .pdb file.
-        nsd (str)): Path to input secondary structure drawing.
+        ss (str)): Path to input secondary structure drawing.
         chain (str): Chain identifier for desired RNA chain (default='A').
         state (int): Structural state to analyze.
         ligandchain (str): Chain identifier for desired ligand (default=chain).
-        offset (int): Sequence offset between .pdb and .nsd file (default=None).
+        offset (int): Sequence offset between .pdb and .ss file (default=None).
         qualityfilter (float): Minimum fpocket score filter for pockets.
         m (float): Min. a-sphere radius in angstroms (default=3.0).
         M (float): Max. a-sphere radius in angstroms (default=5.7).
@@ -103,8 +105,15 @@ def pipeline(
     util.is_accessible(analysis, 'analysis directory')
 
     # Get paths to fpocket input and output file.
-    (pdb, pdb_out, pqr_out, info_txt, pockets_out,
-        pdb_code, name) = util.get_file_paths(analysis, name, pdb, state)
+    (
+        pdb,
+        pdb_out,
+        pqr_out,
+        info_txt,
+        pockets_out,
+        pdb_code,
+        name,
+        ) = util.get_file_paths(analysis, name, pdb, state)
 
     # Analyze fpocket data and create pocket characteristics dataframe.
     (pc_df, rna_coords) = analyze.analyze_pockets(
@@ -138,7 +147,7 @@ def pipeline(
         state,
         pc_df,
         rna_coords,
-        nsd,
+        ss,
         analysis,
         name,
         chain,
@@ -168,12 +177,12 @@ def parseArgs():
         'indentification code.',
     )
     prs.add_argument(
-        '-nsd',
-        '--nsd',
+        '-ss',
+        '--ss',
         type=str,
         required=False,
         default=None,
-        help='Path to an .nsd or other secondary structure file '
+        help='Path to an .ss or other secondary structure file '
         'for generating secondary structure figures.',
     )
     
@@ -239,7 +248,7 @@ def parseArgs():
         type=str,
         required=False,
         default=None,
-        help='Specify name of fpocket output parent directory name.',
+        help='Specify name of fpocket output parent directory.',
     )
     prs.add_argument(
         '-n',
@@ -247,7 +256,7 @@ def parseArgs():
         type=str,
         required=False,
         default=None,
-        help='Specify name prefix for fpocket_out and analysis_out subdirectories.',
+        help='Specify output filename prefix and output subdirectory name.',
     )
     prs.add_argument(
         '-y',
@@ -257,7 +266,7 @@ def parseArgs():
         help='Answers yes to user prompts for overwriting files (False).',
     )
 
-# Analysis optiopns
+# Analysis options
     prs.add_argument(
         '-s',
         '--state',
@@ -306,12 +315,9 @@ def parseArgs():
         default=None,
         help='Specify an offset between the '
         'starting nucleotide of the rna sequence and '
-        'starting nucleotide of the PDB structure (usually = 0).\n'
-        'You must manually enter a nucleotide offset if:\n'
-        '1) Your PDB does not have a DBREF header.\n'
-        '2) You are inputting a .cif file.\n'
-        'offset (usually) = starting index of the PDB sequence - 1\n'
-        'offset is typically: 0',
+        'starting nucleotide of the PDB structure.\n'
+        'offset = starting index of the PDB sequence - 1\n'
+        '(automatic)'
     )
     prs.add_argument(
         '-qf',
@@ -352,7 +358,7 @@ def parseArgs():
         type=str,
         required=False,
         # action='store_false',
-        help='Aligns ligand to the output structure with pockets (input pdb).',
+        help='Aligned RNA structure to output .pse file (<input pdb>).',
     )
 
     args = prs.parse_args()
@@ -368,7 +374,7 @@ def parse_int(string : str) -> list[int]:
 
 def main(
     pdb : str,
-    nsd : str,
+    ss : str,
     chain : str,
     state : int,
     ligand : str,
@@ -402,15 +408,18 @@ def main(
     # Check if pdb contains a file extension.
     if len(pdb.split('.')) < 2:
         pdb = util.fetch_pdb(pdb)
-    
+
     # Set pdb name
     if name is None:
         name = os.path.basename(pdb)[0:-4]
 
-    if alignligand is None or True:
+    # Set structure to align to.
+    if alignligand == 'False':
+        alignligand = None
+    elif alignligand is None or alignligand == 'True':
         alignligand = pdb
     elif len(alignligand.split('.')) < 2:
-        alignligand = util.fetch_pdb(pdb)
+        alignligand = util.fetch_pdb(alignligand)
     elif not os.path.isfile(alignligand):
         alignligand = None
 
@@ -420,7 +429,7 @@ def main(
             out = f'fpocketR_out-m_{m}-M_{M}-i_{i}-D_{D}-A_{A}-p_{p}'
         (_, _, _, _, _) = pipeline(
             pdb,
-            nsd,
+            ss,
             chain,
             state,
             ligand,
@@ -456,14 +465,17 @@ def main(
                   f'The header for {pdb} does not contain state information.\n')
             exit() 
 
-        pc_all_states_df = pd.DataFrame()
-        multistate_pocket_cmap = {}
-        for state in range(1, num_states+1):
-            print(f'\nAnalyzing state {state}/{num_states}...\n')
-
-            (pc_df, pdb_out, pocket_cmap, chain, yes) = pipeline(
+        state_tracker_filename = f"{out}/state_tracker.txt"
+        last_state = util.get_last_processed_state(state_tracker_filename)  # Get the last processed state
+        if last_state > 0:
+            start_state = last_state
+        else:
+            start_state = 1
+        for state in range(start_state, num_states + 1):
+            print(f'\nFinding pockets in state {state}/{num_states}...\n')
+            (pc_df, out, pocket_cmap, chain, yes) = pipeline(
                 pdb,
-                nsd,
+                ss,
                 chain,
                 state,
                 ligand,
@@ -486,20 +498,55 @@ def main(
                 alignligand,
             )
             yes = yes
-            pc_all_states_df = pd.concat([pc_all_states_df, pc_df])
-            multistate_pocket_cmap[state]=pocket_cmap
-
+            util.update_last_processed_state(state_tracker_filename, state)
+            # pc_all_states = pd.concat([pc_all_states, pc_df])
+            # multistate_pocket_cmap[state]=pocket_cmap
+                
 
         # Generates csv output containing pocket characteristics for all states.
-        pc_all_states_df.to_csv(
-            f'{pdb_out}/{name}_all_states_pocket_characteristics.csv',
-            index=True, float_format='%.2g')
+        pc_files = glob.glob(f"{out}/*/*_out_pocket_characteristics.csv")
+        pc_files = util.natsorted(pc_files)
+
+        # Check if any files match
+        if not pc_files:
+            raise FileNotFoundError(f"No files matching '*_out_pocket_characteristics.csv' found in {out}")
+        # Read and concatenate all matching CSV files into a single DataFrame
+        pc_all_states = pd.concat((pd.read_csv(file) for file in pc_files), ignore_index=True)
+        pc_all_states.to_csv(
+            f'{out}/{name}_all_states_pocket_characteristics.csv',
+            index=False, float_format='%.2g')
+        
+        pocket_cmap_files = glob.glob(f"{out}/*/*_maps.pkl")
+        multistate_pocket_cmap = {}
+        multistate_pocket_nt_color = {}
+        # Loop through all files and load the dictionaries
+        for file_path in pocket_cmap_files:
+            with open(file_path, 'rb') as file:
+                # Load the JSON data (assumed to be a dictionary)
+                data = pickle.load(file)
+                # Merge the current dictionary into the combined dictionary
+                multistate_pocket_cmap.update(data[0])
+                multistate_pocket_nt_color.update(data[1])
+        # Sort the combined dictionary by keys (ascending order)
+        multistate_pocket_cmap = dict(sorted(multistate_pocket_cmap.items()))
+        
+        if ss:
+            # Generates a 2D for pockets in all states.
+            print(f'Making all states 2D figure...')
+            figures.get_all_states_2D_figure(
+                name,
+                out,
+                ss,
+                num_states,
+                multistate_pocket_nt_color,
+            )
 
         # Generates a 3D for pockets in all states.
         print(f'Making all states 3D figure...')
+        
         figures.get_all_states_3D_figure(
             num_states,
-            pdb_out,
+            out,
             name,
             multistate_pocket_cmap,
             alignligand,
