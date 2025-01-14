@@ -1,4 +1,4 @@
-name: fpocketR2
+name: fpocketR
 channels:
   - conda-forge
   - bioconda
