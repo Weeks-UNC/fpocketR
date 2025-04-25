@@ -56,7 +56,7 @@ def analyze_pockets(
         ligandchain = chain[0]
 
     # Create real_sphere.pdb ouput be combinding the pqr_out and pdb_out.
-    get_real_sphere(out_rna_structure, pocket_structure, analysis, name, pqr_out)
+    get_real_sphere(pqr_out, pdb_out, analysis, name)
 
     # Creates a dataframe with pocket characteristics from fpocket info.txt
     pc_df = get_characteristics(
@@ -110,7 +110,6 @@ def analyze_pockets(
                     ligand_coords,
                     ligand,
                     pc_df,
-                    knownnt,
                 )
 
     return pc_df, rna_coords
@@ -177,60 +176,44 @@ def reformat_pqr(filename : str):
         return prody_pqr
     else: 
         return None
-
-
-def get_real_sphere(
-    out_rna_structure : prody.AtomGroup,
-    pocket_structure : prody.AtomGroup,
-    analysis : str,
-    name : str,
-    pqr_out : str,
-) -> None:
-    """Gets fpocket pocket a-sphere radii form a pqr file and encodes it into
-    into the B factor column of a *real_sphere.pdb output file.
-
+    
+    
+def get_real_sphere(pqr_file, pdb_file, analysis, name):
+    """Encodes fpocket pocket a-sphere radii into a single .pdb output file.
+    a-sphere radii incoded into the B factor column of the output .pdb file.
     Args:
-        pqr_out (string): Path to fpocket *out.pqr file
+        pqr_file (string): Path to fpocket *out.pqr file
                            containing a-spheres radii.
         pdb_file (string): Path to fpocket *out.pdb file.
-        analysis (str): Path directory containing fpocket outputs for analysis.
-        name (str): User specified filename prefix for analysis outputs.
     """
-    # PRODY 2.4 can't read PQR files with 4 digit coordinates.
-    # reformat_pqr() adds whitespaces between all fields so they can be read. 
-    
-    if not pocket_structure:
-        pqr_out = reformat_pqr(pqr_out)
-        if not pqr_out:
-            # PQR file contains no ATOM entries (OK).
-            writePDB(f'{analysis}/{name}_out_real_sphere.pdb', out_rna_structure)
-            return None
-        else:
-            pocket_structure = parsePQR(pqr_out)
-            
-        if not pocket_structure:
-            # PQR file contains ATOM entries but is not parsed correctly (BAD).
-            print(f'\nFAIL unable to reformat PQR file {pqr_out}.')
-            writePDB(f'{analysis}/{name}_out_real_sphere.pdb', out_rna_structure)
-            return None
-
-        else:
-            # PQR file successfully reformated and parsed by Prody 2.4 (OK).
-            print(f'Successfully corrected PQR file!\n')
-
-    for residue in out_rna_structure.iterResidues():
-        resnum = residue.getResnum()
-        resname = residue.getResname()
-        if resname == 'STP':
-            for atom in residue.iterAtoms():
-                coords = atom.getCoords()
-                for pqr_atom in pocket_structure.iterAtoms():
-                    pqr_resnum = pqr_atom.getResnum()
-                    pqr_coords = pqr_atom.getCoords()
-                    if resnum == pqr_resnum and (coords == pqr_coords).all():
-                        radius = pqr_atom.getRadius()
-                        atom.setBeta(radius)
-    writePDB(f'{analysis}/{name}_out_real_sphere.pdb', out_rna_structure)
+    # Opens .pqr and .pdb inputs and .pdb output.
+    with open(pqr_file, 'r') as pqr_file, open(pdb_file, 'r') as pdb_file, \
+            open(f'{analysis}/{name}_out_real_sphere.pdb', 'a') as out:
+        pqr_line = pqr_file.readline()
+        pdb_lines = pdb_file.readlines()
+        # Iterates through Header lines in pqr file
+        while pqr_line.startswith("HEADER"):
+            pqr_line = pqr_file.readline()
+        # Iternates through each line of the pdb file.
+        for pdb_line in pdb_lines:
+            if pdb_line.startswith("HEADER") or pdb_line.startswith("ATOM"):
+                line_str = pdb_line[0:80]
+            elif pdb_line.startswith("HETATM") and 'APOL' not in pdb_line:
+                line_str = pdb_line[0:80]
+            elif pdb_line.startswith("HETATM") and \
+                    pdb_line[24:55] == pqr_line[24:55]:
+                line_str = pdb_line[0:60] + \
+                    pqr_line[65:71] + pdb_line[66:80]
+                # Advance to next line of pqr file.
+                pqr_line = pqr_file.readline()
+            else:
+                print(f"ERROR: pqr_to_pdb. \n"
+                      f"PDB input file: {pdb_file} \n"
+                      f"PQR input file: {pqr_file}")
+                break
+            # Write line to out_real_sphere.pdb file
+            out.write(line_str)
+            out.write('\n')
 
 
 def get_ligand_coords(
@@ -274,7 +257,7 @@ def get_ligand_coords(
         hetatm_resn : list = np.unique(ligand_sele.getResnames()).tolist()
     
         if len(hetatm_resn) > 1:
-            resnames_qeds : dict = {}
+            resnames_qeds: dict = {}
             for resname in hetatm_resn:
                 try:
                     response = requests.get(
@@ -287,7 +270,7 @@ def get_ligand_coords(
                     mw : float = Chem.rdMolDescriptors.CalcExactMolWt(mol)
                     pat = Chem.MolFromSmarts("[#6]")
                     num_of_carbon : int =len(mol.GetSubstructMatches(pat))
-                    if mw < 100.0 or num_of_carbon <= 2:
+                    if mw < 100.0 or num_of_carbon <= 3:
                         qed = 0
                         continue
                         
@@ -368,11 +351,16 @@ def get_characteristics(
         to scoring each pocket.
     """
 
-    pc_d = {'Parameters': [], 'Name': [], 'PDB': [], 'State': [], 'Pocket': [],
-            'Score': [], 'Drug score': [], 'a-sphere': [],
-            'SASA': [], 'Volume': [], 'Hydrophobic density': [],
-            'Apolar a-sphere proportion': [],
-            'Hydrophobicity score': [], 'Polarity score': []}
+    columns = [
+        'Parameters', 'Name', 'PDB', 'State', 'Type', 'Filter', 'Pocket', 'Score',
+        'Drug_score', 'a-sphere', 'SASA', 'Volume', 'Hydrophobic_density',
+        'Apolar_a-sphere_proportion', 'Hydrophobicity_score', 'Polarity_score',
+        'PocketNT', 'Pocket_NPR1', 'Pocket_NPR2', 'Pocket_shape', 'Ligand_ID',
+        'Pocket_overlap', 'Ligand_overlap', 'Center_criteria', 'QED_score',
+        'Ligand_NPR1', 'Ligand_NPR2', 'Ligand_shape'
+    ]
+
+    pc_d = {col: [] for col in columns}
 
     with open(info_txt, 'r') as f:
 
@@ -391,7 +379,7 @@ def get_characteristics(
                 if 'Druggability' not in row:
                     pc_d['Score'].append(float(row.split(':')[1].strip()))
             if 'Druggability Score :' in row:
-                pc_d['Drug score'].append(float(row.split(':')[1].strip()))
+                pc_d['Drug_score'].append(float(row.split(':')[1].strip()))
             if 'Number of Alpha Spheres :' in row:
                 pc_d['a-sphere'].append(int(row.split(':')[1].strip()))
             if 'Total SASA :' in row:
@@ -399,36 +387,42 @@ def get_characteristics(
             if 'Volume :' in row:
                 pc_d['Volume'].append(float(row.split(':')[1].strip()))
             if 'Mean local hydrophobic density' in row:
-                pc_d['Hydrophobic density'].append(
+                pc_d['Hydrophobic_density'].append(
                     float(row.split(':')[1].strip()))
             if 'Apolar alpha sphere proportion' in row:
-                pc_d['Apolar a-sphere proportion'].append(
+                pc_d['Apolar_a-sphere_proportion'].append(
                     float(row.split(':')[1].strip()))
             if 'Hydrophobicity score' in row:
-                pc_d['Hydrophobicity score'].append(
+                pc_d['Hydrophobicity_score'].append(
                     float(row.split(':')[1].strip()))
             if 'Polarity score:' in row:
-                pc_d['Polarity score'].append(float(row.split(':')[1].strip()))
+                pc_d['Polarity_score'].append(float(row.split(':')[1].strip()))
             if 'Flexibility' in row and poc_count == pocket:
                 poc_count += 1
 
-        pc_df = pd.DataFrame.from_dict(pc_d)
-        pc_df.insert(loc=4, column='Filter', value='Fail')
-        pc_df.insert(loc=4, column='Type', value='Novel')
+    # Ensure all columns have the same length
+    max_len = max(len(v) for v in pc_d.values())
+    for col in columns:
+        while len(pc_d[col]) < max_len:
+            pc_d[col].append(None)
+
+    pc_df = pd.DataFrame.from_dict(pc_d)
+    pc_df['Filter'] = 'Fail'
+    pc_df['Type'] = 'Novel'
 
     return pc_df
 
 
 def add_basic_characteristics(
-    stp_coords : prody.AtomGroup,
-    pockets_out : list[str],
-    qualityfilter : float,
-    pc_df : pd.DataFrame,
-    chain :str,
-    analysis : str,
-    name :str,
-    knownnt : list[int],
-    ) -> None:
+    stp_coords: prody.AtomGroup,
+    pockets_out: list[str],
+    qualityfilter: float,
+    pc_df: pd.DataFrame,
+    chain: str,
+    analysis: str,
+    name: str,
+    knownnt: list[int],
+) -> None:
     """Adds characteristics to the pocket characteristics DataFrame that do
         not require a ligand to calculate.
     PocketNT: nucleotides in contact with pocket,
@@ -449,40 +443,7 @@ def add_basic_characteristics(
     pocket_npr2 = []
 
     for i, _ in enumerate(stp_coords.iterResidues()):
-        # Export surface obj files for each pocket.
-        cmd.load(f'{analysis}/{name}_out_real_sphere.pdb')
-        cmd.remove(f'not resn STP or not resi {i+1}')
-        cmd.hide('spheres')
-        cmd.show('surface')
-        cmd.set('surface_quality', 1)
-        cmd.save(
-            f'{analysis}/pockets/pocket{i+1}_surf.obj',
-            f'pocket_{i+1}_surface'
-        )
-        cmd.reinitialize()
-
-        # Create mesh object for each pocket.
-        mesh = trimesh.load(f'{analysis}/pockets/pocket{i+1}_surf.obj')
-
-        # Calc inertia tensor for each pocket.
-        inertia = mesh.moment_inertia
-
-        # calculate eigen values and eigen vectors.
-        eigvals, _ = np.linalg.eig(inertia)
-
-        # sort eigen values > (I1, I2, I3)
-        eig_ord = np.argsort(eigvals)
-
-        # Calculate the normalize PMI ratios for each pocket.
-        sorted_eigvals = eigvals[eig_ord]
-        I1 = sorted_eigvals[0]
-        I2 = sorted_eigvals[1]
-        I3 = sorted_eigvals[2]
-        npr1 = I1/I3
-        npr2 = I2/I3
-        pocket_npr1.append(npr1)
-        pocket_npr2.append(npr2)
-
+        
         # Calculate pocketNT (nucleotides near each pocket).
         x = pockets_out[i]
         with open(x, 'r') as f:
@@ -500,11 +461,75 @@ def add_basic_characteristics(
         selection = structure.select(f'chain {chain}')
         nt = selection.getResnums().tolist()
         pocketNT.append(np.unique(nt).tolist())
+        
+        # Export surface obj files for each pocket.
+        cmd.load(f'{analysis}/{name}_out_real_sphere.pdb')
+        cmd.hide('everything')
+        cmd.remove(f'not resn STP or not resi {i+1}')
+        cmd.alter('resn STP', 'vdw = b - 1.65')
+        cmd.rebuild('all')
+        cmd.set('surface_quality', 1)
+        cmd.show('surface')
+        cmd.save(
+            f'{analysis}/pockets/pocket{i+1}_surf.obj',
+            f'pocket_{i+1}_surface'
+        )
+        cmd.reinitialize()
+
+        # Create mesh object for each pocket.
+        try:
+            mesh = trimesh.load(f'{analysis}/pockets/pocket{i+1}_surf.obj')
+        except Exception as e:
+            print(f"Error loading mesh for pocket {i+1}: {e}")
+            pocket_npr1.append(np.nan)
+            pocket_npr2.append(np.nan)
+            continue
+
+        # Calc inertia tensor for each pocket.
+        try:
+            inertia = mesh.moment_inertia
+            if inertia.ndim != 2:
+                raise ValueError("Inertia tensor is not 2-dimensional")
+        except Exception as e:
+            print(f"Error calculating inertia tensor for pocket {i+1}: {e}")
+            pocket_npr1.append(np.nan)
+            pocket_npr2.append(np.nan)
+            continue
+
+        # calculate eigen values and eigen vectors.
+        try:
+            eigvals, _ = np.linalg.eig(inertia)
+        except Exception as e:
+            print(f"Error calculating eigenvalues for pocket {i+1}: {e}")
+            pocket_npr1.append(np.nan)
+            pocket_npr2.append(np.nan)
+            continue
+
+        # sort eigen values > (I1, I2, I3)
+        eig_ord = np.argsort(eigvals)
+
+        # Calculate the normalize PMI ratios for each pocket.
+        sorted_eigvals = eigvals[eig_ord]
+        I1 = sorted_eigvals[0]
+        I2 = sorted_eigvals[1]
+        I3 = sorted_eigvals[2]
+        npr1 = I1 / I3
+        npr2 = I2 / I3
+        pocket_npr1.append(npr1)
+        pocket_npr2.append(npr2)
+
+    # Check if lengths match
+    if len(pocketNT) != len(pc_df.index):
+        raise ValueError("Length of pocketNT does not match length of DataFrame index")
 
     # Add pocketNT and pocket npr data to pc dataframe.
     pc_df['PocketNT'] = pocketNT
-    pc_df['Pocket npr1'] = pocket_npr1
-    pc_df['Pocket npr2'] = pocket_npr2
+    pc_df['Pocket_NPR1'] = pocket_npr1
+    pc_df['Pocket_NPR2'] = pocket_npr2
+    pc_df['Pocket_shape'] = 'Balanced'
+    pc_df.loc[pc_df.eval('Pocket_NPR1 - Pocket_NPR2 + 0.5 < 0'), 'Pocket_shape'] = 'Rod-like'
+    pc_df.loc[pc_df.eval('- Pocket_NPR1 - Pocket_NPR2 + 1.5 < 0'), 'Pocket_shape'] = 'Sphere-like'
+    pc_df.loc[pc_df.eval('Pocket_NPR2 - 0.75 < 0'), 'Pocket_shape'] = 'Disc-like'
 
     # Add pocket filter (Pass or Fail) to pc dataframe.
     pc_df.loc[pc_df['Score'] > qualityfilter, 'Filter'] = 'Pass'
@@ -523,7 +548,6 @@ def add_ligand_characteristics(
     ligand_coords : prody.AtomGroup,
     ligand : str,
     pc_df : pd.DataFrame,
-    knownnt : list[int],
 ) -> None:
     """Adds characteristics to the pocket characteristics DataFrame that
        require the presence of a ligand to calculate.
@@ -608,27 +632,26 @@ def add_ligand_characteristics(
         center_distance_l = calcDistance(pocket_center, ligand_coords)
         center_distance = min(center_distance_l)
         center_criteria.append(center_distance)
-
+        
+        
+    pc_df['Ligand_ID'] = ligand
     # Add Ligand overlap and Center criteria to pc dataframe.
-    pc_df['Pocket overlap'] = pocket_overlap
-    pc_df['Ligand overlap'] = ligand_overlap
-    pc_df['Center criteria'] = center_criteria
+    pc_df['Pocket_overlap'] = pocket_overlap
+    pc_df['Ligand_overlap'] = ligand_overlap
+    pc_df['Center_criteria'] = center_criteria
 
     # Add pocket type (Known or Novel) to pc_df.
     pc_df.loc[
-        (pc_df['Ligand overlap'] >= 0.33) &
-        (pc_df['Pocket overlap'] >= 0.33) &
-        (pc_df['Center criteria'] <= 4), 'Type'
+        (pc_df['Ligand_overlap'] >= 0.33) &
+        (pc_df['Pocket_overlap'] >= 0.33) &
+        (pc_df['Center_criteria'] <= 4), 'Type'
     ] = 'Known'
 
     # Add ligand NPR and QED score to pc_df.
-    pc_df['NPR1'] = np.nan
-    pc_df['NPR2'] = np.nan
-    pc_df['QED score'] = np.nan
-    pc_df.loc[(pc_df['Type'] == 'Known'), 'NPR1'] = ligand_npr1
-    pc_df.loc[(pc_df['Type'] == 'Known'), 'NPR2'] = ligand_npr2
-    pc_df.loc[(pc_df['Type'] == 'Known'), 'Geometry'] = 'Balanced'
-    pc_df.loc[pc_df.eval('NPR1 - NPR2 + 0.5 < 0'), 'Geometry'] = 'Rod-like'
-    pc_df.loc[pc_df.eval('- NPR1 - NPR2 + 1.5 < 0'), 'Geometry'] = 'Sphere-like'
-    pc_df.loc[pc_df.eval('NPR2 - 0.75 < 0'), 'Geometry'] = 'Disc-like'
-    pc_df.loc[(pc_df['Type'] == 'Known'), 'QED score'] = qed
+    pc_df['QED_score'] = qed
+    pc_df['Ligand_NPR1'] = ligand_npr1
+    pc_df['Ligand_NPR2'] = ligand_npr2
+    pc_df['Ligand_shape'] = 'Balanced'
+    pc_df.loc[pc_df.eval('Ligand_NPR1 - Ligand_NPR2 + 0.5 < 0'), 'Ligand_shape'] = 'Rod-like'
+    pc_df.loc[pc_df.eval('- Ligand_NPR1 - Ligand_NPR2 + 1.5 < 0'), 'Ligand_shape'] = 'Sphere-like'
+    pc_df.loc[pc_df.eval('Ligand_NPR2 - 0.75 < 0'), 'Ligand_shape'] = 'Disc-like'

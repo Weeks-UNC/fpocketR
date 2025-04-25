@@ -1,6 +1,6 @@
--pdb 3e5c.pdb -nsd 3e5c.nsd -l SAM
--pdb 2gdi.pdb -nsd 2gdi.nsd -l TPP -c X 
--pdb 1ykv.pdb -nsd 1ykv.nsd -l DAI -c A,B -lc A
--pdb 3e5c.pdb -nsd 3e5c.nsd -l SAM -m 3.4 -M 6.2 -D 2.4 -i 15 -A 3 -p 0
--pdb 6mci.pdb -nsd 6mci.nsd -l no -s 0 -o 7SK_Multistate
--pdb 7ez0.pdb -nsd 7ez0.nsd -l no -c N -cp -o group_I_intron
+-pdb 3e5c.pdb -ss 3e5c.nsd -l SAM
+-pdb 2gdi.pdb -ss 2gdi.nsd -l TPP -c X 
+-pdb 1ykv.pdb -ss 1ykv.nsd -l DAI -c A,B -lc A
+-pdb 3e5c.pdb -ss 3e5c.nsd -l SAM -m 3.4 -M 6.2 -D 2.4 -i 15 -A 3 -p 0
+-pdb 6mci.pdb -ss 6mci.nsd -l no -s 0 -o 7SK_Multistate
+-pdb 7ez0.pdb -ss 7ez0.nsd -l no -c N -cp -o group_I_intron

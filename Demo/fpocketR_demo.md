@@ -14,7 +14,7 @@ Activate the fpocketR virtual enviroment and nagivate directories.
     python -m fpocketR -pdb 7elr.pdb
 
     >Detected heteroatoms: ['GTP', 'XAN'].
-    >Input the target ligand ID or "None" for no ligand:XAN
+    >Input the target ligand ID or "None" for no ligand: b XAN
 
 * The user will be prompted to input a ligand ID since the --ligand option was not used.
 * Input ligand ID: XAN
@@ -100,21 +100,21 @@ Activate the fpocketR virtual enviroment and nagivate directories.
 ## fpocket-R options
 
 
-| Input options                 | Description                                                                                        |
-| :---------------------------- | :------------------------------------------------------------------------------------------------- |
-| -pdb, --pdb STRING (Required) | Specify a path to a .pdb/.cif file, or a 4 charater PDB indentification code.                      |
-| -nsd, --nsd STRING            | Specify an .nsd file or other secondary structure file for generating secondary structure figures. |
+| Input options                 | Description                                                                                  |
+| :---------------------------- | :------------------------------------------------------------------------------------------- |
+| -pdb, --pdb STRING (Required) | Path to a .pdb file, .cif file, or 4 charater PDB indentification code.                      |
+| -ss, --ss STRING              | Path to an .ss or other secondary structure file for generating secondary structure figures. |
 
 
 
-| fpocket parameter options | Description                                                                                                           |
-| :------------------------ | :-------------------------------------------------------------------------------------------------------------------- |
-| -m, --m FLOAT             | Sets fpocket -m flag. Specifies the minimum radius for an a-sphere. (Default: 3.0)                                    |
-| -M, --M FLOAT             | Sets fpocket -M flag. Specifies the maximium radius for an a-sphere. (Default: 5.7)                                   |
-| -i, --i INT               | Sets fpocket -i flag. Specifies the minimum number of a-spheres per pocket. (Default: 42)                             |
-| -D, --D FLOAT             | Sets fpocket -D flag. Specifies the a-sphere clustering distance for forming pockets. (Default: 1.65)                 |
-| -A, --A INT               | Sets fpocket -A flag. Specifies the number of electronegative atoms required to define a polar a-sphere (Deafult: 3). |
-| -p, --p FLOAT             | Sets fpocket -p flag. Speciefies the maximum ratio of apolar a-spheres. (Default: 0)                                  |
+| fpocket parameter options | Description                                                                                   |
+| :------------------------ | :-------------------------------------------------------------------------------------------- |
+| -m, --m FLOAT             | fpocket -m argument. Specifies the minimum radius for an a-sphere (3.0).                      |
+| -M, --M FLOAT             | fpocket -M argument. Specifies the maximium radius for an a-sphere (5.70).                    |
+| -i, --i INT               | fpocket -i argument. Specifies the minimum number of a-spheres per pocket (42).               |
+| -D, --D FLOAT             | fpocket -D argument. Specifies the a-sphere clustering distance for forming pockets (1.65).   |
+| -A, --A INT               | fpocket -A argument. Number of electronegative atoms required to define a polar a-sphere (3). |
+| -p, --p FLOAT             | fpocket -p argument. Maximum ratio of apolar a-spheres in a pocket (0.0).                     |
 
 | Output options    | Description                                                                                         |
 | :---------------- | :-------------------------------------------------------------------------------------------------- |
@@ -122,18 +122,18 @@ Activate the fpocketR virtual enviroment and nagivate directories.
 | -n, --name STRING | Specify name prefix for fpocket_out and analysis_out subdirectories. (Default: None)                |
 | -y, --yes BOOLEAN | Overwrites output files and directories with same name. (Default: False)                            |
 
-| Analysis settings          | Description                                                                                                                                                                |
-| :------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| -s, --state INT            | Specify a particular NMR states/model for analysis. Set to 0 for all. (Default: None)                                                                                      |
-| -c, --chain STING          | Specify the chain(s) IDs conatining RNA (case sensitive). List upto 2 chains seperated by a comma (eg. A,B). (Default: A)                                                  |
-| -l, --ligand STRING        | Specify the PDB ligand identification code (≤ 3 characters).                                                                                                               |
-| -lc, --ligandchain STRING  | Specify the chain containing the ligand of interest. (Default: <first RNA chain>)                                                                                          |
-| -off, -offset INT          | Specify the offset between the structures in the input pdb and nsd files. Manual input is required for use with .cif files. (Default: will gather offset from pdb header.) |
-| -qf, --qualityfilter FLOAT | Specify the minimum fpocket score for a pocket to pass the quality filter. (Default: 0.0)                                                                                  |
+| Analysis settings          | Description                                                                                                                                                                     |
+| :------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| -s, --state INT            | Specify the NMR states/model you would like to analyze. 0 for all (None).                                                                                                       |
+| -c, --chain STING          | Specify the chain(s) IDs containing RNA (case sensitive). List up to 2 chains separated by a comma (eg. A,B). (Default: first detected chain)                                   |
+| -l, --ligand STRING        | PDB ligand identification code (≤ 3 characters).                                                                                                                                |
+| -lc, --ligandchain STRING  | Chain containing ligand the from the input .pdb file (--chain input).                                                                                                           |
+| -off, -offset INT          | Specify an offset between the starting nucleotide of the rna sequence and starting nucleotide of the PDB structure. offset = starting index of the PDB sequence - 1 (automatic) |
+| -qf, --qualityfilter FLOAT | Specify minimum fpocket score for pocket (0.0).                                                                                                                                 |
 
-| Figure settings              | Description                                                                                 |
-| :--------------------------- | :------------------------------------------------------------------------------------------ |
-| -dpi, --dpi INT              | Specify 3D figure resolution (dots per linear inch). (Default: 300)                         |
-| -zoom, --zoom INT            | Specify zoom buffer distance (Å) to set the feild of view for 3D figures. (Default: 10)     |
-| -cp, --connectpocket BOOLEAN | Visually connects pockets in 2D figures. (Default: False)                                   |
-| -al, --alignligand BOOLEAN   | Align output structures to input structure. Useful for multistate analysis. (Default: True) |
+| Figure settings              | Description                                                       |
+| :--------------------------- | :---------------------------------------------------------------- |
+| -dpi, --dpi INT              | Sets figure resolution in dpi (300).                              |
+| -zoom, --zoom INT            | Zoom buffer (Å) for creating 3D figures (5.0).                    |
+| -cp, --connectpocket BOOLEAN | Visually connects pockets in 2D figures (False).                  |
+| -al, --alignligand BOOLEAN   | Aligned RNA structure to output .pse file (Default: <input pdb>). |
