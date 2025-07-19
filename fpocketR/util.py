@@ -3,15 +3,55 @@
 # Utilities functions for fpocket-R
 # Seth Veenbaas
 # Weeks Lab, UNC-CH
-# 2022
+# 2024
 #
-# Version 1.0.1
+# Version 1.3.0
 #
 # -----------------------------------------------------
 import os
+import re
 from glob import glob
 from prody import *
 import numpy as np
+
+
+def fetch_pdb(pdb_id : str) -> str:
+    ''' Downloads structure from the PDB.
+    Fetches .pdb format or .cif format if the .pdb is unavailable.
+    Args:
+        pdb_id: 4-character alphanumeric PDB identifier
+    Returns:
+        str: path to .pdb (or .cif) file
+    '''
+    pdb_id_lower = pdb_id.lower()
+    pdb_filename = fetchPDB(f'{pdb_id_lower}', compressed=False, quiet=False)
+    return pdb_filename
+
+def natsorted(filenames : list) -> list:
+    """ Sorts filenames by digits in the filenames.
+    Supports multiple numbers in a filename.
+    Natsorted example: [
+        'pocket1_atm.pdb',
+        'pocket2_atm.pdb',
+        '2pocket11_atm.pdb',
+        'pocket10_atm.pdb',
+        'pocket11_atm.pdb',
+        'pocket11_atm5.pdb',
+        'pocket20_atm.pdb'
+    ]
+    Args:
+        filenames (list): List of strings to be sorted by digits.
+    Returns:
+        list: Sorted list, ordered by digits.
+    """
+    # return sorted(filenames, key=lambda x: int(re.search(r'\d+', x).group()))
+    
+    def extract_sort_key(filename):
+        # Extract all numbers in the filename as integers, or return the filename as-is for non-numeric parts
+        return [int(num) if num.isdigit() else num.lower() 
+                for num in re.split(r'(\d+)', filename)]
+    
+    return sorted(filenames, key=extract_sort_key)
 
 
 def is_accessible(path : str, file_name : str) -> None:
@@ -52,17 +92,17 @@ def get_first_rna_chain(pdb : str) -> str:
         
     for ch in structure.getHierView():
         chid = ch.getChid()
-        if structure.select(f'chain {chid} nucleic'):
+        if structure.select(f'chain {chid} and nucleotide'):
             print(f'\nAutomatically selecting chain: {chid}\n'
                   'Use --chain to manually specify an RNA chain.\n')
             return chid
-        else:
-            print(f'No RNA chain found in {pdb}.\n'
-                         'Verify that your pdb structure contains RNA.\n'
-                         'Or manually set an RNA chain with (--chain) option.')
-            raise ValueError(f'No RNA chain found in {pdb}.\n'
-                         'Verify that your pdb structure contains RNA.\n'
-                         'Or manually set an RNA chain with (--chain) option.')
+        
+    print(f'No RNA chain found in {pdb}.\n'
+                    'Verify that your pdb structure contains RNA.\n'
+                    'Or manually set an RNA chain with (--chain) option.')
+    raise ValueError(f'No RNA chain found in {pdb}.\n'
+                    'Verify that your pdb structure contains RNA.\n'
+                    'Or manually set an RNA chain with (--chain) option.')
 
 
 def is_rna_chain(pdb : str, chain : str) -> None:
@@ -140,18 +180,15 @@ def get_file_paths(
     is_accessible(info_txt, 'info_txt')
 
     pockets_dir = os.path.join(cwd, analysis, 'pockets')
-    pockets_out = glob(f'{pockets_dir}/pocket*_atm.pdb')
+    
+    # Sort pockets_out filenames naturally (eg: 1,2,3...10,11....20,21)
+    pockets_out = natsorted(glob(f'{pockets_dir}/pocket*_atm.pdb'))
 
     # Get PDB identifiers from the path to the fpocket out.pdb.
     pdb_basename = os.path.basename(pdb)
     pdb_code = pdb_basename[0:4]
-    pdb_name = pdb_basename[0:-4]
 
-    # Creates default name varible for naming output files.
-    if name is None:
-        name = pdb_name
-
-    if state is not None:
+    if state:
         name = f'{name}_state{state}'
 
     return pdb, pdb_out, pqr_out, info_txt, pockets_out, pdb_code, name
@@ -270,9 +307,8 @@ def calc_pmi(inertia_tensor : np.array) -> list:
 
 
 def get_offset(pdb : str, chain : str, offset : int) -> int:
-    """Locates PDB nucleotide offset as documented in the dbrefs section of
-    the input .pdb file. 
-    NOTE: Offset can be reported incorrectly in some .pdb files.
+    """Calculates offset (or difference) between the nucleotide index (start at 1)
+    and residue number for the first nucleotide in the first chain.
 
     Args:
         pdb (str): Path to input .pdb file.
@@ -282,37 +318,46 @@ def get_offset(pdb : str, chain : str, offset : int) -> int:
     Returns:
         int: Nucleotide offset of PDB chain.
     """
- 
-    if pdb.endswith('.pdb'):
-        polymer = parsePDBHeader(pdb, 'polymers')
 
-        if not polymer:
-            print('\n\nTypeError: Unable to read PDB header to automatically generate offset.\n\n'
-                            'You must manually enter a nucleotide offset (--offset <int>) if:\n'
-                            '1) Your PDB does not have a DBREF header.\n'
-                            '2) You are inputting a .cif file.\n\n'
-                            'offset (usually) = starting index of the PDB sequence - 1\n'
-                            'offset is typically: 0')
-            raise TypeError('\n\nUnable to read PDB header to automatically generate offset.\n\n'
-                            'You must manually enter a nucleotide offset (--offset <int>) if:\n'
-                            '1) Your PDB does not have a DBREF header.\n'
-                            '2) You are inputting a .cif file.\n\n'
-                            'offset (usually) = starting index of the PDB sequence - 1\n'
-                            'offset is typically: 0')
-        
-        for idx, ch in enumerate(polymer):
-            if ch.chid == chain[0]:
-                polymer_chain = polymer[idx]
-                dbref = polymer_chain.dbrefs[0]
-                offset = dbref.first[0] - 1
-            
-    else: 
-        print('Automated offset is only supported for .pdb files.\n')
-        while True:
-            input_offset = input('Input offset (INT) between the rna sequence '
-                                'and first nucleotide of the PDB structure:')
-            if input_offset.isdigit():
-                offset = input_offset
-                break
+    if ',' in chain:
+        chain = chain.split(',')[0]
+
+    if pdb.endswith('.pdb'):
+        structure = parsePDB(pdb)
+    elif pdb.endswith('.cif'):
+        structure = parsePDB(pdb)
+    else:
+        print(f'Could not parse structure: {pdb}')
+        return None
+
+    if structure:
+        hv = structure.getHierView()
+        ch = hv[chain]
+
+    else:
+        print(f'Could not parse structure: {pdb}')
+        return None
+    
+    if ch:
+        resn = ch.getResnums().min()
+        offset = resn - 1
+    
+    else:
+        print(f'Chain {chain} not found in structure: {pdb}')
+        return None
     
     return offset
+
+# Function to get the last processed state
+def get_last_processed_state(state_tracker_filename):
+    if os.path.exists(state_tracker_filename):
+        with open(state_tracker_filename, 'r') as f:
+            return int(f.read().strip())  # Read the last state
+    else:
+        return 0  # If no tracker file, start from state 1
+
+# Function to update the state tracker
+def update_last_processed_state(state_tracker_filename, state):
+    with open(state_tracker_filename, 'w') as f:
+        f.write(str(state))  # Write the current state to the file
+        

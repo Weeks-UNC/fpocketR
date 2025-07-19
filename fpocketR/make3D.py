@@ -5,7 +5,7 @@
 # Weeks Lab, UNC-CH
 # 2022
 #
-# Version 1.0.1
+# Version 1.3.0
 #
 # -----------------------------------------------------
 import os
@@ -22,36 +22,27 @@ def load_pdb(pdb: str) -> None:
     cmd.load(f'{pdb}', partial=1)
 
 
-def alignligand(pdb: str, real_sphere_name: str, state: int) -> None:
-    """aligns state specific structure in the output real_sphere.pdb file
-    to the structure in the input pdb file.
+def alignligand(mobile: str, target: str, target_state: int = 0) -> None:
+    """aligns mobile structure to target structure using PyMol align
 
     Args:
-        pdb (str): Path to RNA-ligand complex .pdb file (target_object).
-        real_sphere_name (str): Path to output real_sphere.pdb (mobile_object).
-        state (int): State of structure to align.
+        mobile (str): Path mobile .pdb file.
+        target (str): Path to target .pdb file.
     """
-    pdb_base = os.path.basename(pdb)
-    pdb_selection_name = os.path.splitext(pdb_base)[0]
-    if not state:
-        cmd.load(pdb)
+    target_object = os.path.splitext(os.path.basename(target))[0]
+    objects_list = cmd.get_object_list()
+    loaded = target_object in objects_list
+    if not loaded:
+        cmd.load(target, object=target_object)
+        
+    if target_state is None or \
+        target_state > cmd.count_states(target_object) or \
+        cmd.count_states(target_object) == 1:
+        target_state = 0
 
-        # aligns mobile object to target object
-        cmd.align(f'{real_sphere_name}', f'{pdb_selection_name}')
-        cmd.disable(f'{pdb_selection_name}')
-
-    # Align to the state from the input pdb file that matches
-    # the state of the output real_sphere.pdb file.
-    else:
-        cmd.load(pdb, multiplex='1')
-        state_str = str(state)
-        state_id = state_str.zfill(4)
-        state_object_name = f'{pdb_selection_name}_{state_id}'
-        cmd.delete(f'not {state_object_name} and not {real_sphere_name}')
-
-        # aligns mobile object to target object
-        cmd.align(f'{real_sphere_name}', f'{state_object_name}')
-        cmd.disable(f'{state_object_name}')
+    # aligns mobile object to target object
+    cmd.align(mobile, target_object, cycles=10, target_state=target_state)
+    cmd.disable(f'{target_object}')
 
 
 def set_default() -> None:
@@ -119,7 +110,9 @@ def set_default() -> None:
     cmd.cartoon('automatic', '(byres polymer & name CA)')
 
 
-def color_pockets(pocket_cmap: dict) -> None:
+def color_pockets(
+        pocket_cmap : dict[int, tuple[float, float, float, float]]
+    ) -> None:
     """settings appearance of the a-spheres (STP) that compose pockets:
     -sets a-sphere radius
     -colors a-spheres based on input color map
@@ -144,26 +137,41 @@ def color_pockets(pocket_cmap: dict) -> None:
                   f'resn STP and resi {str(pocket_num)}')
 
 
-def transparent_pocket(object_name : str, pocket_cmap : dict) -> None:
-    cmd.alter(f'{object_name} and resn STP', 'vdw = b - 1.65')
+def color_multistate_pockets(
+        object_name : str,
+        pocket_cmap : dict[int, tuple[float, float, float, float]],
+    ) -> None:
+    cmd.extract(f'{object_name}_pockets', f'{object_name} and resn STP')
+    cmd.alter(f'{object_name}_pockets', 'vdw = b - 1.65')
     for pocket_num in pocket_cmap:
         rgb_tuple = pocket_cmap[pocket_num]
         rgb_list = list(rgb_tuple[0:3])
-        cmd.set_color(f'pocket{str(pocket_num)}_color', rgb_list)
-        cmd.set('surface_color', f'pocket{str(pocket_num)}_color', 
-                f'{object_name} and resn stp and resi {pocket_num}')
-    
-    cmd.extract(f'{object_name}_pockets',
-                f'{object_name} and resn STP')
+        cmd.set_color(f'{object_name}_pocket{str(pocket_num)}_color', rgb_list)
+        cmd.color(
+            f'{object_name}_pocket{str(pocket_num)}_color',
+            f'{object_name}_pockets and resi {str(pocket_num)}'
+        )
+        cmd.set(
+            'surface_color',
+            f'{object_name}_pocket{str(pocket_num)}_color', 
+            f'{object_name}_pockets and resi {str(pocket_num)}'
+        )
+
+
+def transparent_pocket(
+        object_name : str,
+        state : int,
+        multistate_pocket_cmap : dict[int, tuple[float,float,float,float]]
+    ) -> None:
     cmd.hide('sticks', f'{object_name}_pockets')
     cmd.hide('spheres', f'{object_name}_pockets')
-    cmd.show('surface', f'{object_name}_pockets')
+    show_pocket_resi = list(multistate_pocket_cmap[state].keys())
+    for resi in show_pocket_resi:
+        cmd.show('surface', f'{object_name}_pockets and resi {resi}')
     cmd.set('transparency', '0.80', f'{object_name}_pockets')
 
 
 def make_multistate() -> None:
-
-    cmd.alter('resn STP', 'vdw = b - 1.65')
     cmd.set('cartoon_ring_finder', '0')
     cmd.set('cartoon_ring_mode', '1')
     cmd.set('cartoon_transparency', '0.90')
@@ -188,7 +196,7 @@ def save_3D_figure(
     cmd.remove('hydrogens')
     cmd.set('ray_trace_fog', '0')
     cmd.orient()
-    cmd.rotate('z', '90')
+    # cmd.rotate('z', '90')
     cmd.zoom(f'chain {chain} and (byres polymer & name O2)', f'{zoom}', complete=1)
     cmd.save(f'{path}/{name}_out_real_sphere.pse')
     dimension = dpi * 8

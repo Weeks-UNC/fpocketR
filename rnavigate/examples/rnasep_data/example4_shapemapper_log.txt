@@ -1,0 +1,325 @@
+
+################################################################################
+Started ShapeMapper v2.1.5 at 2021-03-26 13:24:41
+Running from directory: /pine/scr/p/s/psirving/20210326-rnasep-acid-resequenced
+args:  --target rnasep.fa --name Acid-API --modified --folder Sample_6 --untreated --folder Sample_10 --amplicon --output-parsed-mutations --overwrite --per-read-histograms
+Created pipeline at 2021-03-26 13:24:41
+Running PrimerLocator at 2021-03-26 13:24:41 . . .
+. . . done at 2021-03-26 13:24:41
+Running FastaFormatChecker at 2021-03-26 13:24:41 . . .
+. . . done at 2021-03-26 13:24:41
+Running BowtieIndexBuilder at 2021-03-26 13:24:41 . . .
+. . . done at 2021-03-26 13:24:42
+Running process group 4 at 2021-03-26 13:24:42 . . .
+  Including these components:
+    ProgressMonitor . . . started at 2021-03-26 13:24:42
+    QualityTrimmer1 . . . started at 2021-03-26 13:24:42
+    QualityTrimmer2 . . . started at 2021-03-26 13:24:42
+    Interleaver . . . started at 2021-03-26 13:24:42
+    Merger . . . started at 2021-03-26 13:24:42
+    Tab6Interleaver . . . started at 2021-03-26 13:24:42
+    BowtieAligner . . . started at 2021-03-26 13:24:42
+    MutationParser_Modified . . . started at 2021-03-26 13:24:42
+    SplitToFile1 . . . started at 2021-03-26 13:24:42
+    MutationCounter_Modified . . . started at 2021-03-26 13:24:42
+  /`````````````````````````````````````````````````````````````````````````````
+  |Merger (sample: Modified) output message: 
+  |----------------------------------------- 
+  | 
+  | java -Djava.library.path=/nas/longleaf/home/psirving/shapemapper-2.1.5/internals/thirdparty/miniconda/opt/bbmap-37.78/jni/ -ea -Xmx1000m -Xmx1000m -cp /nas/longleaf/home/psirving/shapemapper-2.1.5/internals/thirdparty/miniconda/opt/bbmap-37.78/current/ jgi.BBMerge vstrict=t in=stdin out=stdout outu=stdout interleaved=t usejni=t t=4
+  | Executing jgi.BBMerge [vstrict=t, in=stdin, out=stdout, outu=stdout, interleaved=t, usejni=t, t=4]
+  | Version 37.78 [vstrict=t, in=stdin, out=stdout, outu=stdout, interleaved=t, usejni=t, t=4]
+  | 
+  | Revised arguments: [maxbad=4, margin=3, minqo=8, qualiters=2, ratiomode=t, flatmode=f, minentropy=52, minoverlap=12, minoverlap0=4, maxratio=0.05, ratiomargin=12, ratiooffset=0.5, ratiominoverlapreduction=4, efilter=2, pfilter=0.008, minsecondratio=0.16, minapproxoverlap=22, in=stdin, out=stdout, outu=stdout, interleaved=t, usejni=t, t=4]
+  | 
+  | Set INTERLEAVED to true
+  | Set threads to 4
+  | Writing mergable reads merged.
+  | Unspecified format for output stdout; defaulting to fastq.
+  | Unspecified format for output stdout; defaulting to fastq.
+  | Started output threads.
+  | Unspecified format for input stdin; defaulting to fastq.
+  | Total time: 1511.719 seconds.
+  | 
+  | Pairs:               	1024080
+  | Joined:              	864170   	84.385%
+  | Ambiguous:           	155809   	15.215%
+  | No Solution:         	4101       	0.400%
+  | Too Short:           	0       	0.000%
+  | 
+  | Avg Insert:          	322.6
+  | Standard Deviation:  	47.1
+  | Mode:                	335
+  | 
+  | Insert range:        	37 - 558
+  | 90th percentile:     	336
+  | 75th percentile:     	335
+  | 50th percentile:     	334
+  | 25th percentile:     	332
+  | 10th percentile:     	303
+  \_____________________________________________________________________________
+  /`````````````````````````````````````````````````````````````````````````````
+  |BowtieAligner (sample: Modified) output message: 
+  |------------------------------------------------ 
+  | 
+  | 1024080 reads; of these:
+  |   159910 (15.61%) were paired; of these:
+  |     61678 (38.57%) aligned concordantly 0 times
+  |     98095 (61.34%) aligned concordantly exactly 1 time
+  |     137 (0.09%) aligned concordantly >1 times
+  |     ----
+  |     61678 pairs aligned concordantly 0 times; of these:
+  |       245 (0.40%) aligned discordantly 1 time
+  |     ----
+  |     61433 pairs aligned 0 times concordantly or discordantly; of these:
+  |       122866 mates make up the pairs; of these:
+  |         82032 (66.77%) aligned 0 times
+  |         40801 (33.21%) aligned exactly 1 time
+  |         33 (0.03%) aligned >1 times
+  |   864170 (84.39%) were unpaired; of these:
+  |     32378 (3.75%) aligned 0 times
+  |     830063 (96.05%) aligned exactly 1 time
+  |     1729 (0.20%) aligned >1 times
+  | 90.34% overall alignment rate
+  \_____________________________________________________________________________
+  /`````````````````````````````````````````````````````````````````````````````
+  |MutationCounter_Modified (RNA: rnasep) (sample: Modified) output message: 
+  |------------------------------------------------------------------------- 
+  | 
+  | Read lengths
+  | --------------------
+  | bin_range	frequency
+  | [0,49]	0.114126
+  | [50,99]	0.056399
+  | [100,149]	0.041808
+  | [150,199]	0.035825
+  | [200,249]	0.029511
+  | [250,299]	0.028137
+  | [300,349]	0.694194
+  | [350,399]	0.000000
+  | [400,449]	0.000000
+  | [450,499]	0.000000
+  | [500,549]	0.000000
+  | [550,599]	0.000000
+  | [600,649]	0.000000
+  | [650,699]	0.000000
+  | [700,749]	0.000000
+  | [750,799]	0.000000
+  | [800,849]	0.000000
+  | [850,899]	0.000000
+  | [900,949]	0.000000
+  | [950,999]	0.000000
+  | >=1000	0.000000
+  | --------------------
+  | 
+  | Mutations per read
+  | --------------------
+  | bin_left	frequency
+  | 0	0.131544
+  | 1	0.130763
+  | 2	0.156648
+  | 3	0.164545
+  | 4	0.141690
+  | 5	0.105147
+  | 6	0.067949
+  | 7	0.040146
+  | 8	0.023267
+  | 9	0.013789
+  | 10	0.008742
+  | 11	0.005854
+  | 12	0.003752
+  | 13	0.002392
+  | 14	0.001513
+  | 15	0.000949
+  | 16	0.000557
+  | 17	0.000309
+  | 18	0.000188
+  | 19	0.000120
+  | 20	0.000137
+  | --------------------
+  \_____________________________________________________________________________
+. . . done at 2021-03-26 13:49:55
+Running process group 5 at 2021-03-26 13:49:55 . . .
+  Including these components:
+    ProgressMonitor . . . started at 2021-03-26 13:49:55
+    QualityTrimmer1 . . . started at 2021-03-26 13:49:55
+    QualityTrimmer2 . . . started at 2021-03-26 13:49:55
+    Interleaver . . . started at 2021-03-26 13:49:55
+    Merger . . . started at 2021-03-26 13:49:55
+    Tab6Interleaver . . . started at 2021-03-26 13:49:55
+    BowtieAligner . . . started at 2021-03-26 13:49:55
+    MutationParser_Untreated . . . started at 2021-03-26 13:49:55
+    SplitToFile1 . . . started at 2021-03-26 13:49:55
+    MutationCounter_Untreated . . . started at 2021-03-26 13:49:55
+  /`````````````````````````````````````````````````````````````````````````````
+  |Merger (sample: Untreated) output message: 
+  |------------------------------------------ 
+  | 
+  | java -Djava.library.path=/nas/longleaf/home/psirving/shapemapper-2.1.5/internals/thirdparty/miniconda/opt/bbmap-37.78/jni/ -ea -Xmx1000m -Xmx1000m -cp /nas/longleaf/home/psirving/shapemapper-2.1.5/internals/thirdparty/miniconda/opt/bbmap-37.78/current/ jgi.BBMerge vstrict=t in=stdin out=stdout outu=stdout interleaved=t usejni=t t=4
+  | Executing jgi.BBMerge [vstrict=t, in=stdin, out=stdout, outu=stdout, interleaved=t, usejni=t, t=4]
+  | Version 37.78 [vstrict=t, in=stdin, out=stdout, outu=stdout, interleaved=t, usejni=t, t=4]
+  | 
+  | Revised arguments: [maxbad=4, margin=3, minqo=8, qualiters=2, ratiomode=t, flatmode=f, minentropy=52, minoverlap=12, minoverlap0=4, maxratio=0.05, ratiomargin=12, ratiooffset=0.5, ratiominoverlapreduction=4, efilter=2, pfilter=0.008, minsecondratio=0.16, minapproxoverlap=22, in=stdin, out=stdout, outu=stdout, interleaved=t, usejni=t, t=4]
+  | 
+  | Set INTERLEAVED to true
+  | Set threads to 4
+  | Writing mergable reads merged.
+  | Unspecified format for output stdout; defaulting to fastq.
+  | Unspecified format for output stdout; defaulting to fastq.
+  | Started output threads.
+  | Unspecified format for input stdin; defaulting to fastq.
+  | Total time: 1394.516 seconds.
+  | 
+  | Pairs:               	960965
+  | Joined:              	828734   	86.240%
+  | Ambiguous:           	129236   	13.449%
+  | No Solution:         	2995       	0.312%
+  | Too Short:           	0       	0.000%
+  | 
+  | Avg Insert:          	324.8
+  | Standard Deviation:  	51.2
+  | Mode:                	335
+  | 
+  | Insert range:        	35 - 542
+  | 90th percentile:     	336
+  | 75th percentile:     	335
+  | 50th percentile:     	335
+  | 25th percentile:     	335
+  | 10th percentile:     	330
+  \_____________________________________________________________________________
+  /`````````````````````````````````````````````````````````````````````````````
+  |BowtieAligner (sample: Untreated) output message: 
+  |------------------------------------------------- 
+  | 
+  | 960965 reads; of these:
+  |   132231 (13.76%) were paired; of these:
+  |     57231 (43.28%) aligned concordantly 0 times
+  |     74972 (56.70%) aligned concordantly exactly 1 time
+  |     28 (0.02%) aligned concordantly >1 times
+  |     ----
+  |     57231 pairs aligned concordantly 0 times; of these:
+  |       206 (0.36%) aligned discordantly 1 time
+  |     ----
+  |     57025 pairs aligned 0 times concordantly or discordantly; of these:
+  |       114050 mates make up the pairs; of these:
+  |         76067 (66.70%) aligned 0 times
+  |         37979 (33.30%) aligned exactly 1 time
+  |         4 (0.00%) aligned >1 times
+  |   828734 (86.24%) were unpaired; of these:
+  |     39366 (4.75%) aligned 0 times
+  |     789219 (95.23%) aligned exactly 1 time
+  |     149 (0.02%) aligned >1 times
+  | 89.44% overall alignment rate
+  \_____________________________________________________________________________
+  /`````````````````````````````````````````````````````````````````````````````
+  |MutationCounter_Untreated (RNA: rnasep) (sample: Untreated) output message: 
+  |--------------------------------------------------------------------------- 
+  | 
+  | Read lengths
+  | --------------------
+  | bin_range	frequency
+  | [0,49]	0.088702
+  | [50,99]	0.045644
+  | [100,149]	0.033110
+  | [150,199]	0.031036
+  | [200,249]	0.028484
+  | [250,299]	0.027207
+  | [300,349]	0.745816
+  | [350,399]	0.000000
+  | [400,449]	0.000000
+  | [450,499]	0.000000
+  | [500,549]	0.000000
+  | [550,599]	0.000000
+  | [600,649]	0.000000
+  | [650,699]	0.000000
+  | [700,749]	0.000000
+  | [750,799]	0.000000
+  | [800,849]	0.000000
+  | [850,899]	0.000000
+  | [900,949]	0.000000
+  | [950,999]	0.000000
+  | >=1000	0.000000
+  | --------------------
+  | 
+  | Mutations per read
+  | --------------------
+  | bin_left	frequency
+  | 0	0.449604
+  | 1	0.277715
+  | 2	0.139302
+  | 3	0.077432
+  | 4	0.030522
+  | 5	0.013959
+  | 6	0.006524
+  | 7	0.002851
+  | 8	0.001226
+  | 9	0.000544
+  | 10	0.000189
+  | 11	0.000077
+  | 12	0.000026
+  | 13	0.000011
+  | 14	0.000006
+  | 15	0.000002
+  | 16	0.000002
+  | 17	0.000003
+  | 18	0.000002
+  | 19	0.000002
+  | 20	0.000001
+  | --------------------
+  \_____________________________________________________________________________
+. . . done at 2021-03-26 14:13:10
+Running CalcProfile at 2021-03-26 14:13:10 . . .
+. . . done at 2021-03-26 14:13:11
+Running NormProfile at 2021-03-26 14:13:11 . . .
+. . . done at 2021-03-26 14:13:11
+Running TabToShape at 2021-03-26 14:13:11 . . .
+. . . done at 2021-03-26 14:13:11
+Running RenderFigures at 2021-03-26 14:13:11 . . .
+/```````````````````````````````````````````````````````````````````````````````
+|RenderFigures (RNA: rnasep) output message: 
+|------------------------------------------- 
+| 
+| Quality control checks:
+| 
+| (See README.md for explanation)
+| 
+| Read depth check:
+| 100.0% (294/294) nucleotides meet the minimum read depth of 5000
+| PASS
+| 
+| Mutation rate check:
+| 99.3% (292/294) nucleotides have positive mutation rates
+| above background
+| High background check:
+| 0.0% (0/294) nucleotides have high background
+| mutation rates.
+| PASS: Not too many nucleotides with high background mutation rates.
+| 
+| Number highly reactive check:
+| 43.5% (128/294) nucleotides show high apparent reactivity.
+| PASS: The expected number of nucleotides or more are highly
+|       reactive.
+\_______________________________________________________________________________
+. . . done at 2021-03-26 14:13:15
+Running RenderMappedDepths at 2021-03-26 14:13:15 . . .
+/```````````````````````````````````````````````````````````````````````````````
+|RenderMappedDepths (RNA: rnasep) output message: 
+|------------------------------------------------ 
+| 
+| Approximate maximum read depth for reads mapping near each amplicon primer pair
+| (See *_mapped_depths.pdf for plots)
+| (See *_per-amplicon_abundance.txt for exact numbers)
+| 
+| Modified:
+|   pair forward                       left    right   reverse                       left    right   depth  
+|   ---- ----------------------------- ------- ------- ----------------------------- ------- ------- ------ 
+|   1    GGCCTTCGGGCCAA                0       13      GAACCGGACCGAAGCC              309     324     866k   
+| 
+| Untreated:
+|   pair forward                       left    right   reverse                       left    right   depth  
+|   ---- ----------------------------- ------- ------- ----------------------------- ------- ------- ------ 
+|   1    GGCCTTCGGGCCAA                0       13      GAACCGGACCGAAGCC              309     324     831k   
+| 
+\_______________________________________________________________________________
+. . . done at 2021-03-26 14:13:17
+ShapeMapper run successfully completed at 2021-03-26 14:13:17.

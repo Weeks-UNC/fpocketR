@@ -1,0 +1,357 @@
+[
+  { Version:"1.0" Title:null }
+  {
+    Title:"User file #5"
+    Mode:Standard
+    Flip:true
+    Strands:[
+      {
+        Strand:[
+          { ID:1 Base:G HNum:1 X:-188.9 Y:1095.8 }
+          { ID:2 Base:G HNum:2 X:-188.9 Y:1113.4 }
+          { ID:3 Base:U HNum:3 X:-188.9 Y:1131.0 }
+          { ID:4 Base:U HNum:4 X:-188.9 Y:1148.6 }
+          { ID:5 Base:C HNum:5 X:-188.9 Y:1166.2 }
+          { ID:6 Base:G HNum:6 X:-171.3 Y:1166.2 }
+          { ID:7 Base:U HNum:7 X:-153.7 Y:1166.2 }
+          { ID:8 Base:G HNum:8 X:-136.1 Y:1166.2 }
+          { ID:9 Base:C HNum:9 X:-118.5 Y:1166.2 }
+          { ID:10 Base:U HNum:10 X:-100.9 Y:1166.2 }
+          { ID:11 Base:G HNum:11 X:-83.3 Y:1166.2 }
+          { ID:12 Base:A HNum:12 X:-65.7 Y:1166.2 }
+          { ID:13 Base:A HNum:13 X:-50.8 Y:1131.3 }
+          { ID:14 Base:G HNum:14 X:-24.2 Y:1104.6 }
+          { ID:15 Base:G HNum:15 X:10.8 Y:1089.7 }
+          { ID:16 Base:C HNum:16 X:10.8 Y:1072.1 }
+          { ID:17 Base:C HNum:17 X:10.8 Y:1054.5 }
+          { ID:18 Base:U HNum:18 X:10.8 Y:1036.9 }
+          { ID:19 Base:G HNum:19 X:10.8 Y:1019.3 }
+          { ID:20 Base:U HNum:20 X:10.8 Y:1001.7 }
+          { ID:21 Base:A HNum:21 X:-23.7 Y:990.2 }
+          { ID:22 Base:U HNum:22 X:-53.4 Y:969.4 }
+          { ID:23 Base:C HNum:23 X:-75.8 Y:940.8 }
+          { ID:24 Base:C HNum:24 X:-92.4 Y:946.7 }
+          { ID:25 Base:U HNum:25 X:-108.9 Y:952.7 }
+          { ID:26 Base:A HNum:26 X:-125.5 Y:958.6 }
+          { ID:27 Base:G HNum:27 X:-142.1 Y:964.6 }
+          { ID:28 Base:G HNum:28 X:-158.6 Y:970.5 }
+          { ID:29 Base:C HNum:29 X:-175.2 Y:976.5 }
+          { ID:30 Base:U HNum:30 X:-177.0 Y:990.3 }
+          { ID:31 Base:A HNum:31 X:-182.3 Y:1009.7 }
+          { ID:32 Base:C HNum:32 X:-193.4 Y:1026.5 }
+          { ID:33 Base:A HNum:33 X:-209.3 Y:1038.9 }
+          { ID:34 Base:C HNum:34 X:-228.3 Y:1045.8 }
+          { ID:35 Base:A HNum:35 X:-248.5 Y:1046.2 }
+          { ID:36 Base:C HNum:36 X:-267.7 Y:1040.4 }
+          { ID:37 Base:U HNum:37 X:-284.2 Y:1028.7 }
+          { ID:38 Base:G HNum:38 X:-294.4 Y:1019.2 }
+          { ID:39 Base:A HNum:39 X:-310.9 Y:1025.1 }
+          { ID:40 Base:G HNum:40 X:-327.5 Y:1031.1 }
+          { ID:41 Base:G HNum:41 X:-344.1 Y:1037.0 }
+          { ID:42 Base:A HNum:42 X:-360.6 Y:1043.0 }
+          { ID:43 Base:C HNum:43 X:-371.8 Y:1059.1 }
+          { ID:44 Base:U HNum:44 X:-390.9 Y:1063.6 }
+          { ID:45 Base:C HNum:45 X:-408.2 Y:1054.3 }
+          { ID:46 Base:U HNum:46 X:-414.8 Y:1035.8 }
+          { ID:47 Base:G HNum:47 X:-407.4 Y:1017.7 }
+          { ID:48 Base:U HNum:48 X:-389.8 Y:1009.0 }
+          { ID:49 Base:U HNum:49 X:-370.9 Y:1014.4 }
+          { ID:50 Base:C HNum:50 X:-354.3 Y:1008.4 }
+          { ID:51 Base:C HNum:51 X:-337.8 Y:1002.5 }
+          { ID:52 Base:U HNum:52 X:-321.2 Y:996.5 }
+          { ID:53 Base:C HNum:53 X:-304.6 Y:990.6 }
+          { ID:54 Base:C HNum:54 X:-302.9 Y:976.8 }
+          { ID:55 Base:C HNum:55 X:-297.5 Y:957.3 }
+          { ID:56 Base:C HNum:56 X:-286.4 Y:940.5 }
+          { ID:57 Base:U HNum:57 X:-270.5 Y:928.1 }
+          { ID:58 Base:U HNum:58 X:-251.5 Y:921.3 }
+          { ID:59 Base:U HNum:59 X:-231.4 Y:920.8 }
+          { ID:60 Base:C HNum:60 X:-212.1 Y:926.7 }
+          { ID:61 Base:C HNum:61 X:-195.6 Y:938.3 }
+          { ID:62 Base:G HNum:62 X:-185.5 Y:947.8 }
+          { ID:63 Base:C HNum:63 X:-168.9 Y:941.9 }
+          { ID:64 Base:C HNum:64 X:-152.3 Y:936.0 }
+          { ID:65 Base:U HNum:65 X:-135.8 Y:930.0 }
+          { ID:66 Base:A HNum:66 X:-119.2 Y:924.1 }
+          { ID:67 Base:G HNum:67 X:-102.6 Y:918.1 }
+          { ID:68 Base:G HNum:68 X:-86.1 Y:912.2 }
+          { ID:69 Base:G HNum:69 X:-87.2 Y:897.9 }
+          { ID:70 Base:G HNum:70 X:-87.5 Y:883.6 }
+          { ID:71 Base:A HNum:71 X:-86.0 Y:869.4 }
+          { ID:72 Base:A HNum:72 X:-82.8 Y:855.6 }
+          { ID:73 Base:A HNum:73 X:-77.9 Y:842.2 }
+          { ID:74 Base:G HNum:74 X:-71.3 Y:829.5 }
+          { ID:75 Base:U HNum:75 X:-63.2 Y:817.8 }
+          { ID:76 Base:C HNum:76 X:-53.7 Y:807.2 }
+          { ID:77 Base:C HNum:77 X:-42.9 Y:797.9 }
+          { ID:78 Base:C HNum:78 X:-31.1 Y:789.9 }
+          { ID:79 Base:C HNum:79 X:-18.3 Y:783.6 }
+          { ID:80 Base:G HNum:80 X:-4.9 Y:778.8 }
+          { ID:81 Base:G HNum:81 X:8.9 Y:774.8 }
+          { ID:82 Base:A HNum:82 X:8.6 Y:757.2 }
+          { ID:83 Base:C HNum:83 X:8.3 Y:739.6 }
+          { ID:84 Base:C HNum:84 X:-7.8 Y:732.9 }
+          { ID:85 Base:U HNum:85 X:-22.5 Y:724.1 }
+          { ID:86 Base:C HNum:86 X:-34.8 Y:712.0 }
+          { ID:87 Base:G HNum:87 X:-43.9 Y:697.4 }
+          { ID:88 Base:G HNum:88 X:-50.8 Y:681.4 }
+          { ID:89 Base:G HNum:89 X:-68.4 Y:681.4 }
+          { ID:90 Base:C HNum:90 X:-86.0 Y:681.4 }
+          { ID:91 Base:A HNum:91 X:-103.6 Y:681.4 }
+          { ID:92 Base:G HNum:92 X:-120.9 Y:690.6 }
+          { ID:93 Base:A HNum:93 X:-139.3 Y:684.1 }
+          { ID:94 Base:G HNum:94 X:-147.1 Y:666.2 }
+          { ID:95 Base:A HNum:95 X:-139.3 Y:648.4 }
+          { ID:96 Base:G HNum:96 X:-120.9 Y:641.9 }
+          { ID:97 Base:U HNum:97 X:-103.6 Y:651.0 }
+          { ID:98 Base:G HNum:98 X:-86.0 Y:651.0 }
+          { ID:99 Base:C HNum:99 X:-68.4 Y:651.0 }
+          { ID:100 Base:C HNum:100 X:-50.8 Y:651.0 }
+          { ID:101 Base:A HNum:101 X:7.1 Y:593.1 }
+          { ID:102 Base:C HNum:102 X:7.1 Y:575.5 }
+          { ID:103 Base:G HNum:103 X:7.1 Y:557.9 }
+          { ID:104 Base:U HNum:104 X:7.1 Y:540.3 }
+          { ID:105 Base:G HNum:105 X:7.1 Y:522.7 }
+          { ID:106 Base:C HNum:106 X:7.1 Y:505.1 }
+          { ID:107 Base:A HNum:107 X:1.2 Y:486.6 }
+          { ID:108 Base:U HNum:108 X:12.6 Y:471.0 }
+          { ID:109 Base:A HNum:109 X:32.0 Y:471.0 }
+          { ID:110 Base:C HNum:110 X:43.4 Y:486.6 }
+          { ID:111 Base:G HNum:111 X:37.5 Y:505.1 }
+          { ID:112 Base:C HNum:112 X:37.5 Y:522.7 }
+          { ID:113 Base:A HNum:113 X:37.5 Y:540.3 }
+          { ID:114 Base:C HNum:114 X:37.5 Y:557.9 }
+          { ID:115 Base:G HNum:115 X:37.5 Y:575.5 }
+          { ID:116 Base:U HNum:116 X:37.5 Y:593.1 }
+          { ID:117 Base:A HNum:117 X:74.1 Y:614.5 }
+          { ID:118 Base:G HNum:118 X:95.5 Y:651.0 }
+          { ID:119 Base:A HNum:119 X:113.1 Y:651.0 }
+          { ID:120 Base:C HNum:120 X:130.7 Y:651.0 }
+          { ID:121 Base:A HNum:121 X:147.6 Y:642.2 }
+          { ID:122 Base:U HNum:122 X:164.8 Y:642.2 }
+          { ID:123 Base:U HNum:123 X:181.7 Y:651.0 }
+          { ID:124 Base:C HNum:124 X:199.3 Y:651.0 }
+          { ID:125 Base:C HNum:125 X:216.9 Y:651.0 }
+          { ID:126 Base:C HNum:126 X:234.5 Y:651.0 }
+          { ID:127 Base:C HNum:127 X:252.1 Y:651.0 }
+          { ID:128 Base:G HNum:128 X:269.7 Y:651.0 }
+          { ID:129 Base:C HNum:129 X:287.3 Y:651.0 }
+          { ID:130 Base:U HNum:130 X:305.4 Y:639.5 }
+          { ID:131 Base:U HNum:131 X:326.5 Y:635.5 }
+          { ID:132 Base:C HNum:132 X:347.6 Y:639.5 }
+          { ID:133 Base:C HNum:133 X:365.6 Y:651.0 }
+          { ID:134 Base:C HNum:134 X:383.2 Y:651.0 }
+          { ID:135 Base:A HNum:135 X:400.8 Y:651.0 }
+          { ID:136 Base:C HNum:136 X:418.4 Y:651.0 }
+          { ID:137 Base:U HNum:137 X:429.7 Y:638.0 }
+          { ID:138 Base:C HNum:138 X:445.2 Y:630.5 }
+          { ID:139 Base:C HNum:139 X:462.5 Y:629.8 }
+          { ID:140 Base:A HNum:140 X:478.5 Y:636.1 }
+          { ID:141 Base:A HNum:141 X:490.7 Y:648.3 }
+          { ID:142 Base:A HNum:142 X:497.0 Y:664.4 }
+          { ID:143 Base:G HNum:143 X:496.4 Y:681.6 }
+          { ID:144 Base:U HNum:144 X:488.9 Y:697.2 }
+          { ID:145 Base:C HNum:145 X:475.9 Y:708.4 }
+          { ID:146 Base:C HNum:146 X:475.9 Y:726.0 }
+          { ID:147 Base:G HNum:147 X:475.9 Y:743.6 }
+          { ID:148 Base:C HNum:148 X:475.9 Y:761.2 }
+          { ID:149 Base:C HNum:149 X:478.7 Y:778.6 }
+          { ID:150 Base:A HNum:150 X:481.8 Y:792.2 }
+          { ID:151 Base:A HNum:151 X:479.2 Y:806.0 }
+          { ID:152 Base:G HNum:152 X:471.3 Y:817.5 }
+          { ID:153 Base:A HNum:153 X:459.5 Y:825.0 }
+          { ID:154 Base:A HNum:154 X:445.2 Y:835.3 }
+          { ID:155 Base:G HNum:155 X:432.8 Y:847.7 }
+          { ID:156 Base:C HNum:156 X:420.3 Y:860.1 }
+          { ID:157 Base:G HNum:157 X:407.9 Y:872.6 }
+          { ID:158 Base:U HNum:158 X:401.3 Y:893.1 }
+          { ID:159 Base:A HNum:159 X:382.2 Y:906.0 }
+          { ID:160 Base:U HNum:160 X:360.3 Y:898.6 }
+          { ID:161 Base:C HNum:161 X:352.9 Y:876.8 }
+          { ID:162 Base:C HNum:162 X:365.8 Y:857.7 }
+          { ID:163 Base:C HNum:163 X:386.4 Y:851.1 }
+          { ID:164 Base:G HNum:164 X:398.8 Y:838.7 }
+          { ID:165 Base:C HNum:165 X:411.3 Y:826.2 }
+          { ID:166 Base:U HNum:166 X:423.7 Y:813.8 }
+          { ID:167 Base:G HNum:167 X:423.7 Y:795.4 }
+          { ID:168 Base:A HNum:168 X:432.4 Y:774.3 }
+          { ID:169 Base:G HNum:169 X:445.5 Y:761.2 }
+          { ID:170 Base:C HNum:170 X:445.5 Y:743.6 }
+          { ID:171 Base:G HNum:171 X:445.5 Y:726.0 }
+          { ID:172 Base:G HNum:172 X:445.5 Y:708.4 }
+          { ID:173 Base:C HNum:173 X:430.8 Y:696.1 }
+          { ID:174 Base:G HNum:174 X:418.4 Y:681.4 }
+          { ID:175 Base:U HNum:175 X:400.8 Y:681.4 }
+          { ID:176 Base:G HNum:176 X:383.2 Y:681.4 }
+          { ID:177 Base:G HNum:177 X:365.6 Y:681.4 }
+          { ID:178 Base:C HNum:178 X:326.5 Y:705.4 }
+          { ID:179 Base:G HNum:179 X:287.3 Y:681.4 }
+          { ID:180 Base:C HNum:180 X:269.7 Y:681.4 }
+          { ID:181 Base:G HNum:181 X:252.1 Y:681.4 }
+          { ID:182 Base:G HNum:182 X:234.5 Y:681.4 }
+          { ID:183 Base:G HNum:183 X:216.9 Y:681.4 }
+          { ID:184 Base:G HNum:184 X:199.3 Y:681.4 }
+          { ID:185 Base:G HNum:185 X:181.7 Y:681.4 }
+          { ID:186 Base:C HNum:186 X:156.2 Y:691.8 }
+          { ID:187 Base:G HNum:187 X:130.7 Y:681.4 }
+          { ID:188 Base:U HNum:188 X:113.1 Y:681.4 }
+          { ID:189 Base:C HNum:189 X:95.5 Y:681.4 }
+          { ID:190 Base:A HNum:190 X:88.7 Y:697.0 }
+          { ID:191 Base:U HNum:191 X:80.0 Y:711.3 }
+          { ID:192 Base:C HNum:192 X:68.3 Y:723.2 }
+          { ID:193 Base:C HNum:193 X:54.2 Y:732.1 }
+          { ID:194 Base:G HNum:194 X:38.7 Y:739.1 }
+          { ID:195 Base:U HNum:195 X:39.0 Y:756.7 }
+          { ID:196 Base:C HNum:196 X:39.3 Y:774.3 }
+          { ID:197 Base:A HNum:197 X:52.2 Y:777.6 }
+          { ID:198 Base:G HNum:198 X:71.3 Y:784.0 }
+          { ID:199 Base:C HNum:199 X:88.9 Y:793.6 }
+          { ID:200 Base:U HNum:200 X:104.6 Y:806.2 }
+          { ID:201 Base:C HNum:201 X:117.8 Y:821.4 }
+          { ID:202 Base:C HNum:202 X:128.2 Y:838.6 }
+          { ID:203 Base:C HNum:203 X:135.3 Y:857.4 }
+          { ID:204 Base:U HNum:204 X:139.0 Y:877.2 }
+          { ID:205 Base:C HNum:205 X:139.2 Y:897.3 }
+          { ID:206 Base:U HNum:206 X:135.8 Y:917.1 }
+          { ID:207 Base:A HNum:207 X:129.0 Y:936.0 }
+          { ID:208 Base:G HNum:208 X:118.9 Y:953.4 }
+          { ID:209 Base:U HNum:209 X:105.9 Y:968.8 }
+          { ID:210 Base:U HNum:210 X:90.5 Y:981.6 }
+          { ID:211 Base:A HNum:211 X:73.0 Y:991.5 }
+          { ID:212 Base:C HNum:212 X:54.0 Y:998.2 }
+          { ID:213 Base:G HNum:213 X:41.2 Y:1001.7 }
+          { ID:214 Base:C HNum:214 X:41.2 Y:1019.3 }
+          { ID:215 Base:A HNum:215 X:41.2 Y:1036.9 }
+          { ID:216 Base:G HNum:216 X:41.2 Y:1054.5 }
+          { ID:217 Base:G HNum:217 X:41.2 Y:1072.1 }
+          { ID:218 Base:C HNum:218 X:41.2 Y:1089.7 }
+          { ID:219 Base:A HNum:219 X:61.1 Y:1096.7 }
+          { ID:220 Base:G HNum:220 X:80.1 Y:1105.8 }
+          { ID:221 Base:U HNum:221 X:92.5 Y:1093.4 }
+          { ID:222 Base:G HNum:222 X:104.9 Y:1080.9 }
+          { ID:223 Base:C HNum:223 X:117.4 Y:1068.5 }
+          { ID:224 Base:G HNum:224 X:129.8 Y:1056.0 }
+          { ID:225 Base:U HNum:225 X:142.3 Y:1043.6 }
+          { ID:226 Base:G HNum:226 X:151.2 Y:1026.4 }
+          { ID:227 Base:U HNum:227 X:170.3 Y:1023.4 }
+          { ID:228 Base:C HNum:228 X:184.0 Y:1037.1 }
+          { ID:229 Base:C HNum:229 X:181.0 Y:1056.2 }
+          { ID:230 Base:G HNum:230 X:163.8 Y:1065.1 }
+          { ID:231 Base:C HNum:231 X:151.3 Y:1077.5 }
+          { ID:232 Base:G HNum:232 X:138.9 Y:1090.0 }
+          { ID:233 Base:C HNum:233 X:126.4 Y:1102.4 }
+          { ID:234 Base:A HNum:234 X:114.0 Y:1114.9 }
+          { ID:235 Base:C HNum:235 X:101.6 Y:1127.3 }
+          { ID:236 Base:C HNum:236 X:108.5 Y:1141.5 }
+          { ID:237 Base:A HNum:237 X:114.1 Y:1156.2 }
+          { ID:238 Base:A HNum:238 X:117.1 Y:1171.6 }
+          { ID:239 Base:C HNum:239 X:117.5 Y:1187.3 }
+          { ID:240 Base:C HNum:240 X:115.1 Y:1202.8 }
+          { ID:241 Base:A HNum:241 X:110.2 Y:1217.7 }
+          { ID:242 Base:C HNum:242 X:102.7 Y:1231.5 }
+          { ID:243 Base:A HNum:243 X:93.1 Y:1243.9 }
+          { ID:244 Base:C HNum:244 X:81.4 Y:1254.4 }
+          { ID:245 Base:G HNum:245 X:68.2 Y:1262.8 }
+          { ID:246 Base:G HNum:246 X:53.7 Y:1268.8 }
+          { ID:247 Base:G HNum:247 X:38.4 Y:1272.2 }
+          { ID:248 Base:G HNum:248 X:22.7 Y:1273.0 }
+          { ID:249 Base:C HNum:249 X:7.1 Y:1271.1 }
+          { ID:250 Base:U HNum:250 X:-7.9 Y:1266.6 }
+          { ID:251 Base:C HNum:251 X:-21.9 Y:1259.6 }
+          { ID:252 Base:A HNum:252 X:-34.6 Y:1250.3 }
+          { ID:253 Base:U HNum:253 X:-45.4 Y:1238.9 }
+          { ID:254 Base:U HNum:254 X:-54.2 Y:1225.9 }
+          { ID:255 Base:C HNum:255 X:-60.6 Y:1211.6 }
+          { ID:256 Base:U HNum:256 X:-65.7 Y:1196.6 }
+          { ID:257 Base:C HNum:257 X:-83.3 Y:1196.6 }
+          { ID:258 Base:A HNum:258 X:-100.9 Y:1196.6 }
+          { ID:259 Base:G HNum:259 X:-118.5 Y:1196.6 }
+          { ID:260 Base:C HNum:260 X:-136.1 Y:1196.6 }
+          { ID:261 Base:G HNum:261 X:-153.7 Y:1196.6 }
+          { ID:262 Base:C HNum:262 X:-171.3 Y:1196.6 }
+          { ID:263 Base:G HNum:263 X:-188.9 Y:1196.6 }
+          { ID:264 Base:G HNum:264 X:-188.9 Y:1214.2 }
+          { ID:265 Base:C HNum:265 X:-188.9 Y:1231.8 }
+          { ID:266 Base:U HNum:266 X:-188.9 Y:1249.4 }
+          { ID:267 Base:G HNum:267 X:-188.9 Y:1267.0 }
+          { ID:268 Base:U HNum:268 X:-188.9 Y:1284.6 }
+        ]
+      }
+    ]
+    Pairs:[
+      { Pair:"5:263" Type:BP }
+      { Pair:"6:262" Type:BP }
+      { Pair:"7:261" Type:BP }
+      { Pair:"8:260" Type:BP }
+      { Pair:"9:259" Type:BP }
+      { Pair:"10:258" Type:BP }
+      { Pair:"11:257" Type:BP }
+      { Pair:"12:256" Type:BP }
+      { Pair:"15:218" Type:BP }
+      { Pair:"16:217" Type:BP }
+      { Pair:"17:216" Type:BP }
+      { Pair:"18:215" Type:BP }
+      { Pair:"19:214" Type:BP }
+      { Pair:"20:213" Type:BP }
+      { Pair:"23:68" Type:BP }
+      { Pair:"24:67" Type:BP }
+      { Pair:"25:66" Type:BP }
+      { Pair:"26:65" Type:BP }
+      { Pair:"27:64" Type:BP }
+      { Pair:"28:63" Type:BP }
+      { Pair:"29:62" Type:BP }
+      { Pair:"38:53" Type:BP }
+      { Pair:"39:52" Type:BP }
+      { Pair:"40:51" Type:BP }
+      { Pair:"41:50" Type:BP }
+      { Pair:"42:49" Type:BP }
+      { Pair:"74:249" Type:PK }
+      { Pair:"76:248" Type:PK }
+      { Pair:"77:247" Type:PK }
+      { Pair:"78:246" Type:PK }
+      { Pair:"79:245" Type:PK }
+      { Pair:"80:244" Type:PK }
+      { Pair:"81:196" Type:BP }
+      { Pair:"82:195" Type:BP }
+      { Pair:"83:194" Type:BP }
+      { Pair:"88:100" Type:BP }
+      { Pair:"89:99" Type:BP }
+      { Pair:"90:98" Type:BP }
+      { Pair:"91:97" Type:BP }
+      { Pair:"101:116" Type:BP }
+      { Pair:"102:115" Type:BP }
+      { Pair:"103:114" Type:BP }
+      { Pair:"104:113" Type:BP }
+      { Pair:"105:112" Type:BP }
+      { Pair:"106:111" Type:BP }
+      { Pair:"118:189" Type:BP }
+      { Pair:"119:188" Type:BP }
+      { Pair:"120:187" Type:BP }
+      { Pair:"123:185" Type:BP }
+      { Pair:"124:184" Type:BP }
+      { Pair:"125:183" Type:BP }
+      { Pair:"126:182" Type:BP }
+      { Pair:"127:181" Type:BP }
+      { Pair:"128:180" Type:BP }
+      { Pair:"129:179" Type:BP }
+      { Pair:"133:177" Type:BP }
+      { Pair:"134:176" Type:BP }
+      { Pair:"135:175" Type:BP }
+      { Pair:"136:174" Type:BP }
+      { Pair:"145:172" Type:BP }
+      { Pair:"146:171" Type:BP }
+      { Pair:"147:170" Type:BP }
+      { Pair:"148:169" Type:BP }
+      { Pair:"154:166" Type:BP }
+      { Pair:"155:165" Type:BP }
+      { Pair:"156:164" Type:BP }
+      { Pair:"157:163" Type:BP }
+      { Pair:"220:235" Type:BP }
+      { Pair:"221:234" Type:BP }
+      { Pair:"222:233" Type:BP }
+      { Pair:"223:232" Type:BP }
+      { Pair:"224:231" Type:BP }
+      { Pair:"225:230" Type:BP }
+    ]
+  }
+]

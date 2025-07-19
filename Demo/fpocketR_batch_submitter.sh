@@ -1,1 +1,0 @@
-while read line; do echo "$line"; python -m fpocketR $line; done < fpocketR_batch_list.txt
