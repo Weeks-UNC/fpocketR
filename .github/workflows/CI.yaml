@@ -43,7 +43,7 @@ jobs:
       - uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: devtools/conda-envs/test_env.yaml
-          environment-name: test
+          environment-name: fpocketR
           condarc: |
             channels:
               - conda-forge
