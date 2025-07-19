@@ -160,12 +160,13 @@ def multistate_output(tmp_path_factory):
         result = subprocess.run(cmd, check=True, cwd=str(repo_root), capture_output=True, text=True)
         return out_dir
     except subprocess.CalledProcessError as e:
-        print("\n[ERROR] Multistate fpocketR subprocess failed!")
-        print("Command:", e.cmd)
-        print("Return code:", e.returncode)
-        print("Stdout:\n", e.output)
-        print("Stderr:\n", e.stderr)
-        pytest.skip(f"Multistate fpocketR run failed: {e}")
+        import sys
+        sys.stderr.write("\n[ERROR] Multistate fpocketR subprocess failed!\n")
+        sys.stderr.write(f"Command: {e.cmd}\n")
+        sys.stderr.write(f"Return code: {e.returncode}\n")
+        sys.stderr.write(f"Stdout:\n{e.output}\n")
+        sys.stderr.write(f"Stderr:\n{e.stderr}\n")
+        pytest.fail(f"Multistate fpocketR run failed: {e}")
 
 
 # --- Multistate Output Tests ---
