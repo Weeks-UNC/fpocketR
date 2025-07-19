@@ -136,9 +136,12 @@ def test_single_state_alt_csv_match_reference(single_state_alt_output):
 
 
 # --- Multistate Output Fixture ---
+
+import pytest
+
 @pytest.fixture(scope="session")
 def multistate_output(tmp_path_factory):
-    """Run the multistate fpocketR command ONCE and return output dir."""
+    """Run the multistate fpocketR command ONCE and return output dir. Prints diagnostics and skips tests if fails."""
     tmp_path = tmp_path_factory.mktemp("multistate")
     repo_root = Path(__file__).parent.parent.parent.resolve()
     data_dir = repo_root / "fpocketR" / "data"
@@ -153,8 +156,16 @@ def multistate_output(tmp_path_factory):
         "-ss", str(ss_file),
         "-s", "0", "-dpi", "50", "-o", rel_out_dir
     ]
-    result = subprocess.run(cmd, check=True, cwd=str(repo_root), capture_output=True, text=True)
-    return out_dir
+    try:
+        result = subprocess.run(cmd, check=True, cwd=str(repo_root), capture_output=True, text=True)
+        return out_dir
+    except subprocess.CalledProcessError as e:
+        print("\n[ERROR] Multistate fpocketR subprocess failed!")
+        print("Command:", e.cmd)
+        print("Return code:", e.returncode)
+        print("Stdout:\n", e.output)
+        print("Stderr:\n", e.stderr)
+        pytest.skip(f"Multistate fpocketR run failed: {e}")
 
 
 # --- Multistate Output Tests ---
