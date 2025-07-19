@@ -1,5 +1,12 @@
-# fpocketR
-fpocketR is a modified version of [fpocket 4.0](https://github.com/Discngine/fpocket) and is optimized for finding, characterizing, and visulizing drug-like RNA-ligand binding pockets.
+fpocketR
+==============================
+[//]: # (Badges)
+[![GitHub Actions Build Status](https://github.com/weeks-UNC/fpocketR/workflows/CI/badge.svg)](https://github.com/weeks-UNC/fpocketR/actions?query=workflow%3ACI)
+[![PyPI version](https://img.shields.io/pypi/v/fpocketR.svg)](https://pypi.org/project/fpocketR/)
+
+<img src="fpocketR_logo.png" alt="fpocketR logo" width="250" height="250" />
+
+fpocketR is a modified version of [fpocket 4.0](https://github.com/Discngine/fpocket) and is optimized for finding, characterizing, and visualizing drug-like RNA-ligand binding pockets.
 
 ## Installation with Conda
 
@@ -35,7 +42,7 @@ fpocketR is a modified version of [fpocket 4.0](https://github.com/Discngine/fpo
 5. Create fpocketR conda environment and install fpocketR and RNAvigate.
 
         cd fpocketR
-        conda env create --file environment.yml
+        conda env create --file enviroment.yml
         conda activate fpocketR
         conda develop .
 
@@ -48,34 +55,33 @@ fpocketR is a modified version of [fpocket 4.0](https://github.com/Discngine/fpo
 | Input options                 | Description                                                                                      |
 | :---------------------------- | :----------------------------------------------------------------------------------------------- |
 | -pdb, --pdb STRING (Required) | Specify a path to a .pdb/.cif file, or a 4 charater PDB indentification code.                    |
-| -ss, --ss STRING              | Specify an .nsd file or other secondary structure file to generate a secondary structure figure. |
+| -nsd, --nsd STRING            | Specify an .nsd file or other secondary structure file to generate a secondary structure figure. |
 
 
 
-| fpocket parameter options | Description                                                                                             |
-| :------------------------ | :------------------------------------------------------------------------------------------------------ |
-| -m, --m FLOAT             | Sets fpocket -m flag. Minimum radius for an a-sphere. (Default: 3.0)                                    |
-| -M, --M FLOAT             | Sets fpocket -M flag. Maximium radius for an a-sphere. (Default: 5.7)                                   |
-| -i, --i INT               | Sets fpocket -i flag. Minimum number of a-spheres per pocket. (Default: 42)                             |
-| -D, --D FLOAT             | Sets fpocket -D flag. alpha sphere clustering distance for forming pockets. (Default: 1.65)             |
-| -A, --A INT               | Sets fpocket -A flag. Number of electronegative atoms required to define a polar a-sphere (Deafult: 3). |
-| -p, --p FLOAT             | Sets fpocket -p flag. Maximum ratio of apolar a-spheres. (Default: 0)                                   |
+| fpocket parameter options     | Description                                                                                                           |
+| :---------------------------- | :-------------------------------------------------------------------------------------------------------------------- |
+| -m, --m FLOAT                 | Sets fpocket -m flag. Specifies the minimum radius for an a-sphere. (Default: 3.0)                                    |
+| -M, --M FLOAT                 | Sets fpocket -M flag. Specifies the maximium radius for an a-sphere. (Default: 5.7)                                   |
+| -i, --i INT                   | Sets fpocket -i flag. Specifies the minimum number of a-spheres per pocket. (Default: 42)                             |
+| -D, --D FLOAT                 | Sets fpocket -D flag. Specifies the a-sphere clustering distance for forming pockets. (Default: 1.65)                 |
+| -A, --A INT                   | Sets fpocket -A flag. Specifies the number of electronegative atoms required to define a polar a-sphere (Deafult: 3). |
+| -p, --p FLOAT                 | Sets fpocket -p flag. Speciefies the maximum ratio of apolar a-spheres. (Default: 0)                                  |
 
-| Output options    | Description                                                                   |
-| :---------------- | :---------------------------------------------------------------------------- |
-| -o, --out STRING  | Path to output parent directory. (Default: fpocketR_out_<fpocket parameters>) |
-| -n, --name STRING | Output filename prefix and output subdirectory name. (Default: None)          |
-| -y, --yes BOOLEAN | Overwrites output files and directories with same name. (Default: False)      |
+| Output options                | Description                                                                                         |
+| :---------------------------- | :-------------------------------------------------------------------------------------------------- |
+| -o, --out STRING              | Specify name of fpocket output parent directory name. (Default: fpocket-R_out_{fpocket parameters}) |
+| -n, --name STRING             | Specify name prefix for fpocket_out and analysis_out subdirectories. (Default: None)                |
+| -y, --yes BOOLEAN             | Overwrites output files and directories with same name. (Default: False)                            |
 
-| Analysis options           | Description                                                                                                              |
-| :------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
-| -s, --state INT            | PDB states/model for analysis. Set to 0 for all. (Default: None)                                                         |
-| -c, --chain STING          | Chain(s) IDs conatining RNA (case sensitive). List upto 2 chains seperated by a comma (eg. A,B). (Default: A)            |
-| -l, --ligand STRING        | PDB ligand identification code (≤ 3 characters).                                                                         |
-| -lc, --ligandchain STRING  | Chain containing the ligand of interest. (Default: <first RNA chain>)                                                    |
-| -nt, --knownnt PARSE_INT   | List residue indexes of nts in known pocket (e.g. 1,2,3). Known pockets must contact ≥ 3 of the residues. (None).         |
-| -off, -offset INT          | Offset between the RNA sequence and PDB structure. offset  = starting index of the PDB sequence - 1 (Default: automatic) |
-| -qf, --qualityfilter FLOAT | Minimum fpocket score for a pocket to pass the quality filter. (Default: 0.0)                                            |
+| Analysis settings          | Description                                                                                                                                                                                                                        |
+| :------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| -s, --state INT            | Specify a particular NMR states/model for analysis. Set to 0 for all. (Default: None)                                                                                                                                              |
+| -c, --chain STING          | Specify the chain(s) IDs conatining RNA (case sensitive). List upto 2 chains seperated by a comma (eg. A,B). (Default: A)                                                                                                          |
+| -l, --ligand STRING        | Specify the PDB ligand identification code (≤ 3 characters).                                                                                                                                                                       |
+| -lc, --ligandchain STRING  | Specify the chain containing the ligand of interest. (Default: <first RNA chain>)                                                                                                                                                  |
+| -off, -offset INT          | Specify offset between the starting nucleotide of the rna sequence and starting nucleotide of the PDB structure (usually = 0).<br>Manual input is required for use with .cif files. (Default: will gather offset from pdb header.) |
+| -qf, --qualityfilter FLOAT | Specify the minimum fpocket score for a pocket to pass the quality filter. (Default: 0.0)                                                                                                                                          |
 
 | Figure settings               | Description                                                                                 |
 | :---------------------------- | :------------------------------------------------------------------------------------------ |
@@ -84,4 +90,12 @@ fpocketR is a modified version of [fpocket 4.0](https://github.com/Discngine/fpo
 | -cp, --connectpocket BOOLEAN  | Visually connects pockets in 2D figures. (Default: False)                                   |
 | -al, --alignligand BOOLEAN    | Align output structures to input structure. Useful for multistate analysis. (Default: True) |
 
+### Copyright
 
+Copyright (c) 2025, Seth Veenbaas
+
+
+#### Acknowledgements
+ 
+Project based on the 
+[Computational Molecular Science Python Cookiecutter](https://github.com/molssi/cookiecutter-cms) version 1.11.
