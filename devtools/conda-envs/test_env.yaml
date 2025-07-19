@@ -10,7 +10,7 @@ dependencies:
   - pip
   - fpocket=4.0.3
   - pymol-open-source=2.5.0
-  - prody
+  - prody=2.3.0
   - pandas
   - rdkit=2023.09.6
   - seaborn
