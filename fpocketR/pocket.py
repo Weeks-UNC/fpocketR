@@ -117,21 +117,16 @@ def run_fpocket(
     name = os.path.basename(pdb)[0:-4]
     print(f'***** POCKET HUNTING {name} *****')
     # Runs fpocket bash commands
-    
-        
-    bash_command = f'conda run -n fpocketR fpocket -f {pdb} -k {chain} -l {state} -m {m} -M {M} -i {i} -D {D} -A {A} -p {p} -w p'
-            
-    process = subprocess.Popen(bash_command.split(
-    ), stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
-
-    # Prints fpocket communications to console.
-    result = process.communicate()
-  
-    for message in result:
-        print(message)
-        if 'EnvironmentLocationNotFound' in message:
-            raise OSError('Unable to run fpocket because the fpocketR conda enviroment does not exist.\n'
-                                   'Install the fpocketR conda enviroment.')
+    fpocket_path = shutil.which('fpocket')
+    if not fpocket_path:
+        raise FileNotFoundError('fpocket executable not found in PATH. Ensure fpocket is installed and available.')
+    cmd = [fpocket_path, '-f', pdb, '-k', chain, '-l', str(state), '-m', str(m), '-M', str(M), '-i', str(i), '-D', str(D), '-A', str(A), '-p', str(p), '-w', 'p']
+    process = subprocess.Popen(cmd, stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+    stdout, stderr = process.communicate()
+    print(stdout)
+    print(stderr)
+    if 'EnvironmentLocationNotFound' in stdout or 'EnvironmentLocationNotFound' in stderr:
+        raise OSError('Unable to run fpocket because the fpocketR environment does not exist.\nInstall the fpocketR environment.')
 
 
 def file_fpocket(pdb : str, state : int, out : str, yes : bool) -> str:
