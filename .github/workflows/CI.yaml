@@ -61,4 +61,4 @@ jobs:
         # conda setup requires this special shell
         shell: bash -l {0}
         run: |
-          pytest -v --cov=fpocketR --color=yes fpocketR/tests/
+          pytest -v --color=yes fpocketR/tests/
