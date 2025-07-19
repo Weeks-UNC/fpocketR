@@ -10,6 +10,7 @@
 # -----------------------------------------------------------------------------
 
 import os
+import sys
 import subprocess
 import shutil
 import time
@@ -117,9 +118,15 @@ def run_fpocket(
     name = os.path.basename(pdb)[0:-4]
     print(f'***** POCKET HUNTING {name} *****')
     # Runs fpocket bash commands
-    fpocket_path = shutil.which('fpocket')
+    # Try to find fpocket in the current conda/mamba/micromamba environment
+    env_prefix = os.environ.get('CONDA_PREFIX', os.environ.get('MAMBA_ROOT_PREFIX', sys.prefix))
+    fpocket_env_path = os.path.join(env_prefix, 'bin', 'fpocket')
+    if os.path.isfile(fpocket_env_path) and os.access(fpocket_env_path, os.X_OK):
+        fpocket_path = fpocket_env_path
+    else:
+        fpocket_path = shutil.which('fpocket')
     if not fpocket_path:
-        raise FileNotFoundError('fpocket executable not found in PATH. Ensure fpocket is installed and available.')
+        raise FileNotFoundError('fpocket executable not found in current environment or PATH. Ensure fpocket is installed and available.')
     cmd = [fpocket_path, '-f', pdb, '-k', chain, '-l', str(state), '-m', str(m), '-M', str(M), '-i', str(i), '-D', str(D), '-A', str(A), '-p', str(p), '-w', 'p']
     process = subprocess.Popen(cmd, stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
     stdout, stderr = process.communicate()
@@ -129,7 +136,7 @@ def run_fpocket(
         raise OSError('Unable to run fpocket because the fpocketR environment does not exist.\nInstall the fpocketR environment.')
 
 
-def file_fpocket(pdb : str, state : int, out : str, yes : bool) -> str:
+def file_fpocket(pdb : str, state : int, out : str, yes : bool) -> tuple[str, bool]:
     """Moves fpocket outputs into designated output directory.
        Default directory name specifies the fpocket parameters used.
        Manages overwriting files/directories if thet already exist.
