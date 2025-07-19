@@ -19,10 +19,18 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 requires-python = ">=3.8"
-# Declare any run-time dependencies that should be installed with the package.
-#dependencies = [
-#    "importlib-resources;python_version<'3.10'",
-#]
+# Runtime dependencies (see devtools/conda-envs/test_env.yaml)
+dependencies = [
+    "pymol-open-source==2.5.0",
+    "prody==2.3.0",
+    "pandas",
+    "rdkit==2023.9.6",
+    "seaborn",
+    "trimesh==4.2.0",
+    "scipy==1.12.0",
+    "biopython==1.83"
+]
+# NOTE: fpocket must be installed separately via conda-forge (not available on PyPI)
 
 # Update the urls once the hosting is set up.
 #[project.urls]

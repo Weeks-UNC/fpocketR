@@ -8,34 +8,63 @@ fpocketR
 
 fpocketR is a modified version of [fpocket 4.0](https://github.com/Discngine/fpocket) and is optimized for finding, characterizing, and visualizing drug-like RNA-ligand binding pockets.
 
-## Installation with Conda
+## Installation
 
-### Windows Users: guide to install WSL and Ubuntu
+### Recommended: Conda + pip
 
-1. fpocketR requires a Unix/Linux to run properly, this means that Windows users need to activate the Windows Subsystem for Linux (WSL). 
+1. **Install Conda**  
+   If you don’t have conda, follow the [official installation guide](https://conda.io/projects/conda/en/latest/user-guide/install/index.html).
 
-   * [Guide to installing WSL and Ubuntu](https://www.freecodecamp.org/news/how-to-install-wsl2-windows-subsystem-for-linux-2-on-windows-10/)
+2. **Create and activate a new environment with fpocket and Python 3.11**  
+   ```bash
+   conda create -n fpocketR -c conda-forge fpocket=4.0.3 python=3.11
+   conda activate fpocketR
+   ```
 
-### Guide to install conda
-
-2. Follow [guide](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) to install conda.
-
-   * **Windows WSL users:** Use [Linux installation guide](https://conda.io/projects/conda/en/latest/user-guide/install/linux.html).
-
-### Install fpocketR
-
-**NOTE for MacOS users**: fpocketR is not compatible with arm-based M1 or M2 processors (only intel (x86) processors).
-
-3. Open your terminal and navigate to the directory where you would like to install the fpocketR package (optional).
-
-        cd <path-to-GitHub-reposities>
-
-    * **Tip for new Windows WSL users:** You can navigate to your Windows file system in the WSL command line by using the following command:
-
-          cd /mnt/c/Users/<your-user-name>
+3. **Install fpocketR and dependencies from PyPI**  
+   ```bash
+   pip install fpocketR
+   ```
+   This will install all required Python dependencies.  
+   **Note:** The `fpocket` binary is installed via conda, not pip.
 
 
-4. Clone the RNAvigate and fpocketR GitHub repositories.
+### Testing your installation
+
+
+After installing, you can verify your setup by running the test suite:
+
+1. Make sure you have installed the testing tools:
+   ```bash
+   pip install 'fpocketR[test]'
+   ```
+
+2. Find the fpocketR install location:
+   ```bash
+   python -c "import fpocketR; print(fpocketR.__file__)"
+   ```
+
+3. Run `pytest` in the fpocketR source directory:
+   ```bash
+   pytest /path/to/fpocketR/
+   # or, if you are in the source directory:
+   pytest
+   ```
+
+If all tests pass, your installation is working correctly.
+
+---
+
+### Alternative: Conda Constructor Installer
+
+A one-step installer can be provided using [conda constructor](https://github.com/conda/constructor).  
+(Instructions and download link will be added here when available.)
+
+---
+
+**Notes:**
+- For Windows users, use WSL (Windows Subsystem for Linux) for best compatibility. [Guide to installing WSL and Ubuntu](https://www.freecodecamp.org/news/how-to-install-wsl2-windows-subsystem-for-linux-2-on-windows-10/)
+- For MacOS users: fpocketR is not compatible with arm-based M1/M2 processors (only Intel/x86).
 
         git clone https://github.com/Weeks-UNC/fpocketR.git
 
