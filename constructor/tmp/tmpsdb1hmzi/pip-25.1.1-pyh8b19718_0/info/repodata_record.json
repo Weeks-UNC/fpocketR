@@ -1,0 +1,24 @@
+{
+  "build": "pyh8b19718_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch/",
+  "constrains": [],
+  "depends": [
+    "python >=3.9,<3.13.0a0",
+    "setuptools",
+    "wheel"
+  ],
+  "fn": "pip-25.1.1-pyh8b19718_0.conda",
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "32d0781ace05105cc99af55d36cbec7c",
+  "name": "pip",
+  "noarch": "python",
+  "package_type": "noarch_python",
+  "sha256": "ebfa591d39092b111b9ebb3210eb42251be6da89e26c823ee03e5e838655a43e",
+  "size": 1242995,
+  "subdir": "noarch",
+  "timestamp": 1746249983000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/pip-25.1.1-pyh8b19718_0.conda",
+  "version": "25.1.1"
+}

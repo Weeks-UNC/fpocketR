@@ -1,0 +1,24 @@
+{
+  "arch": "x86_64",
+  "build": "hd42ef1d_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [
+    "libwebp 1.6.0"
+  ],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=14"
+  ],
+  "fn": "libwebp-base-1.6.0-hd42ef1d_0.conda",
+  "license": "BSD-3-Clause",
+  "md5": "aea31d2e5b1091feca96fcfe945c3cf9",
+  "name": "libwebp-base",
+  "platform": "linux",
+  "sha256": "3aed21ab28eddffdaf7f804f49be7a7d701e8f0e46c856d801270b470820a37b",
+  "size": 429011,
+  "subdir": "linux-64",
+  "timestamp": 1752159441000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libwebp-base-1.6.0-hd42ef1d_0.conda",
+  "version": "1.6.0"
+}

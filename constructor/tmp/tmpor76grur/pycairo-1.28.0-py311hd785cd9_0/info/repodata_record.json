@@ -1,0 +1,27 @@
+{
+  "arch": "x86_64",
+  "build": "py311hd785cd9_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "cairo >=1.18.4,<2.0a0",
+    "libexpat >=2.7.0,<3.0a0",
+    "libgcc >=13",
+    "libzlib >=1.3.1,<2.0a0",
+    "python >=3.11,<3.12.0a0",
+    "python_abi 3.11.* *_cp311"
+  ],
+  "fn": "pycairo-1.28.0-py311hd785cd9_0.conda",
+  "license": "LGPL-2.1-only OR MPL-1.1",
+  "md5": "25e7689a20f93528204330c11075928b",
+  "name": "pycairo",
+  "platform": "linux",
+  "sha256": "793b7c0ac01659b3c6c94e645af82dfdfdf38362541932a01ad2b89a0599505d",
+  "size": 117823,
+  "subdir": "linux-64",
+  "timestamp": 1744682534000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/pycairo-1.28.0-py311hd785cd9_0.conda",
+  "version": "1.28.0"
+}

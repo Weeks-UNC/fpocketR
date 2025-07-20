@@ -1,0 +1,28 @@
+{
+  "arch": "x86_64",
+  "build": "h5888daf_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "gettext-tools 0.25.1 h5888daf_0",
+    "libasprintf 0.25.1 h8e693c7_0",
+    "libasprintf-devel 0.25.1 h8e693c7_0",
+    "libgcc >=13",
+    "libgettextpo 0.25.1 h5888daf_0",
+    "libgettextpo-devel 0.25.1 h5888daf_0",
+    "libstdcxx >=13"
+  ],
+  "fn": "gettext-0.25.1-h5888daf_0.conda",
+  "license": "LGPL-2.1-or-later AND GPL-3.0-or-later",
+  "md5": "df1ca81a8be317854cb06c22582b731c",
+  "name": "gettext",
+  "platform": "linux",
+  "sha256": "215a1eeafc8b94071c2eda40a580f9076d30d69d63f81340edd1ead156bbe85d",
+  "size": 537887,
+  "subdir": "linux-64",
+  "timestamp": 1751557642000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/gettext-0.25.1-h5888daf_0.conda",
+  "version": "0.25.1"
+}

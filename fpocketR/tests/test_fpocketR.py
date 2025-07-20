@@ -104,7 +104,7 @@ def test_single_state_alt_pdb_match_reference(single_state_alt_output):
     generated_pdbs = list(out_dir.rglob("8f4o_out_real_sphere.pdb"))
     assert generated_pdbs, f"No generated 8f4o_out_real_sphere.pdb file found in {out_dir}"
     generated_pdb = generated_pdbs[0]
-    reference_pdb = data_dir / "8f4o_clean_out" / "8f4o_out_real_sphere.pdb"
+    reference_pdb = data_dir / "TPP_apo_holo" / "8f4o_clean_out" / "8f4o_out_real_sphere.pdb"
     assert reference_pdb.exists(), f"Reference file not found: {reference_pdb}"
     with open(generated_pdb, "r") as f1, open(reference_pdb, "r") as f2:
         gen_lines = [line.strip() for line in f1 if line.strip()]
@@ -130,7 +130,7 @@ def test_single_state_alt_csv_match_reference(single_state_alt_output):
     generated_csvs = list(out_dir.rglob("8f4o_out_pocket_characteristics.csv"))
     assert generated_csvs, f"No generated 8f4o_out_pocket_characteristics.csv file found in {out_dir}"
     generated_csv = generated_csvs[0]
-    reference_csv = data_dir / "8f4o_clean_out" / "8f4o_out_pocket_characteristics.csv"
+    reference_csv = data_dir / "TPP_apo_holo" / "8f4o_clean_out" / "8f4o_out_pocket_characteristics.csv"
     assert reference_csv.exists(), f"Reference file not found: {reference_csv}"
     assert tolerant_csv_compare(generated_csv, reference_csv), f"Generated CSV does not match reference CSV in {out_dir}"
 
@@ -170,7 +170,7 @@ def multistate_output(tmp_path_factory):
 
 
 # --- Multistate Output Tests ---
-MULTISTATE_DIR = Path(__file__).parent.parent.parent / "fpocketR" / "data" / "2l1v_multistate"
+MULTISTATE_DIR = Path(__file__).parent.parent.parent / "fpocketR" / "data" / "preQ1_multistate"
 
 @pytest.mark.parametrize("state_idx", range(1, 4))
 def test_multistate_3d_files_exist(multistate_output, state_idx):
@@ -200,9 +200,10 @@ def test_multistate_1d_csv_match_reference(multistate_output, state_idx):
     gen_dir = out_dir / f"2l1v_clean_state{state_idx}_out"
     ref_dir = MULTISTATE_DIR / f"2l1v_clean_state{state_idx}_out"
     gen_csvs = list(gen_dir.glob("*_pocket_characteristics.csv"))
-    ref_csvs = list(ref_dir.glob("*_pocket_characteristics.csv"))
+    # Reference CSVs are named 2l1v_state{state_idx}_out_pocket_characteristics.csv in new structure
+    ref_csvs = list(ref_dir.glob(f"2l1v_state{state_idx}_out_pocket_characteristics.csv"))
     assert gen_csvs, f"No generated *_pocket_characteristics.csv in {gen_dir}"
-    assert ref_csvs, f"No reference *_pocket_characteristics.csv in {ref_dir}"
+    assert ref_csvs, f"No reference 2l1v_state{state_idx}_out_pocket_characteristics.csv in {ref_dir}"
     gen_csv = gen_csvs[0]
     ref_csv = ref_csvs[0]
     assert tolerant_csv_compare(gen_csv, ref_csv), f"CSV mismatch in {gen_dir}"

@@ -28,9 +28,9 @@ copyright = ("2025, Seth Veenbaas. Project structure based on the "
 author = 'Seth Veenbaas'
 
 # The short X.Y version
-version = ''
+version = '1.3.0'
 # The full version, including alpha/beta/rc tags
-release = ''
+release = '1.3.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -51,7 +51,8 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.extlinks',
     'sphinx_design',
-    'sphinx_copybutton',    
+    'sphinx_copybutton',
+    'myst_parser'
 ]
 
 
@@ -67,7 +68,7 @@ templates_path = ['_templates']
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = ['.rst', '.md']
 
 # The master toctree document.
 master_doc = 'index'
@@ -93,7 +94,9 @@ pygments_style = 'default'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'pydata_sphinx_theme'
+html_theme = 'sphinx_book_theme'
+html_logo = '../images/fpocketR_logo.png'
+html_title = 'fpocketR Documentation'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -175,3 +178,7 @@ texinfo_documents = [
 
 
 # -- Extension configuration -------------------------------------------------
+
+jupyter_book_config = {
+    "toc": "_toc.yml"
+}

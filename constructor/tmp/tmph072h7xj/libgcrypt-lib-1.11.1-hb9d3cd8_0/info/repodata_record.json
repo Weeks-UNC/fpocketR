@@ -1,0 +1,23 @@
+{
+  "arch": "x86_64",
+  "build": "hb9d3cd8_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13",
+    "libgpg-error >=1.55,<2.0a0"
+  ],
+  "fn": "libgcrypt-lib-1.11.1-hb9d3cd8_0.conda",
+  "license": "LGPL-2.1-or-later",
+  "md5": "8504a291085c9fb809b66cabd5834307",
+  "name": "libgcrypt-lib",
+  "platform": "linux",
+  "sha256": "dc9c7d7a6c0e6639deee6fde2efdc7e119e7739a6b229fa5f9049a449bae6109",
+  "size": 590353,
+  "subdir": "linux-64",
+  "timestamp": 1747060639000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libgcrypt-lib-1.11.1-hb9d3cd8_0.conda",
+  "version": "1.11.1"
+}

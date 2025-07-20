@@ -1,0 +1,23 @@
+{
+  "arch": "x86_64",
+  "build": "hb711507_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "libgcc-ng >=12",
+    "libxcb >=1.16,<2.0.0a0"
+  ],
+  "fn": "xcb-util-keysyms-0.4.1-hb711507_0.conda",
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "ad748ccca349aec3e91743e08b5e2b50",
+  "name": "xcb-util-keysyms",
+  "platform": "linux",
+  "sha256": "546e3ee01e95a4c884b6401284bb22da449a2f4daf508d038fdfa0712fe4cc69",
+  "size": 14314,
+  "subdir": "linux-64",
+  "timestamp": 1718846569000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/xcb-util-keysyms-0.4.1-hb711507_0.conda",
+  "version": "0.4.1"
+}

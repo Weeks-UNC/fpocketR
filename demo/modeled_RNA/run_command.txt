@@ -1,0 +1,1 @@
+python -m fpocketR -pdb ZTP_multistate.pdb -ss 9bzc.nsd --state 0 --knownnt 78,85,86,14 -o ZTP_multistate_out

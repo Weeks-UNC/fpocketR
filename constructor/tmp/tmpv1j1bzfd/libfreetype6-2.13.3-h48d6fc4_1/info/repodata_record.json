@@ -1,0 +1,26 @@
+{
+  "arch": "x86_64",
+  "build": "h48d6fc4_1",
+  "build_number": 1,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [
+    "freetype >=2.13.3"
+  ],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13",
+    "libpng >=1.6.47,<1.7.0a0",
+    "libzlib >=1.3.1,<2.0a0"
+  ],
+  "fn": "libfreetype6-2.13.3-h48d6fc4_1.conda",
+  "license": "GPL-2.0-only OR FTL",
+  "md5": "3c255be50a506c50765a93a6644f32fe",
+  "name": "libfreetype6",
+  "platform": "linux",
+  "sha256": "7759bd5c31efe5fbc36a7a1f8ca5244c2eabdbeb8fc1bee4b99cf989f35c7d81",
+  "size": 380134,
+  "subdir": "linux-64",
+  "timestamp": 1745369987000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libfreetype6-2.13.3-h48d6fc4_1.conda",
+  "version": "2.13.3"
+}

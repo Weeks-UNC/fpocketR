@@ -1,0 +1,21 @@
+{
+  "build": "pyhd8ed1ab_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch/",
+  "constrains": [],
+  "depends": [
+    "python >=3.9"
+  ],
+  "fn": "charset-normalizer-3.4.2-pyhd8ed1ab_0.conda",
+  "license": "MIT",
+  "md5": "40fe4284b8b5835a9073a645139f35af",
+  "name": "charset-normalizer",
+  "noarch": "python",
+  "package_type": "noarch_python",
+  "sha256": "535ae5dcda8022e31c6dc063eb344c80804c537a5a04afba43a845fa6fa130f5",
+  "size": 50481,
+  "subdir": "noarch",
+  "timestamp": 1746214981000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/charset-normalizer-3.4.2-pyhd8ed1ab_0.conda",
+  "version": "3.4.2"
+}

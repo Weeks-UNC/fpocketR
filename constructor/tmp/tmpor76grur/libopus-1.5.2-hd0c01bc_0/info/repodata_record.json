@@ -1,0 +1,22 @@
+{
+  "arch": "x86_64",
+  "build": "hd0c01bc_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "libgcc >=13",
+    "__glibc >=2.17,<3.0.a0"
+  ],
+  "fn": "libopus-1.5.2-hd0c01bc_0.conda",
+  "license": "BSD-3-Clause",
+  "md5": "b64523fb87ac6f87f0790f324ad43046",
+  "name": "libopus",
+  "platform": "linux",
+  "sha256": "786d43678d6d1dc5f88a6bad2d02830cfd5a0184e84a8caa45694049f0e3ea5f",
+  "size": 312472,
+  "subdir": "linux-64",
+  "timestamp": 1744330953000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libopus-1.5.2-hd0c01bc_0.conda",
+  "version": "1.5.2"
+}

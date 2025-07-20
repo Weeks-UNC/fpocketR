@@ -1,0 +1,25 @@
+{
+  "arch": "x86_64",
+  "build": "default_ha444ac7_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=14",
+    "libllvm20 >=20.1.8,<20.2.0a0",
+    "libstdcxx >=14"
+  ],
+  "fn": "libclang13-20.1.8-default_ha444ac7_0.conda",
+  "license": "Apache-2.0 WITH LLVM-exception",
+  "license_family": "Apache",
+  "md5": "783f9cdcb0255ed00e3f1be22e16de40",
+  "name": "libclang13",
+  "platform": "linux",
+  "sha256": "39fdf9616df5dd13dee881fc19e8f9100db2319e121d9b673a3fc6a0c76743a3",
+  "size": 12353158,
+  "subdir": "linux-64",
+  "timestamp": 1752223792000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libclang13-20.1.8-default_ha444ac7_0.conda",
+  "version": "20.1.8"
+}

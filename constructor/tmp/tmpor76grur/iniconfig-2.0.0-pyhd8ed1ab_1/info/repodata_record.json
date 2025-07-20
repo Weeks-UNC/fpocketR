@@ -1,0 +1,22 @@
+{
+  "build": "pyhd8ed1ab_1",
+  "build_number": 1,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch/",
+  "constrains": [],
+  "depends": [
+    "python >=3.9"
+  ],
+  "fn": "iniconfig-2.0.0-pyhd8ed1ab_1.conda",
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "6837f3eff7dcea42ecd714ce1ac2b108",
+  "name": "iniconfig",
+  "noarch": "python",
+  "package_type": "noarch_python",
+  "sha256": "0ec8f4d02053cd03b0f3e63168316530949484f80e16f5e2fb199a1d117a89ca",
+  "size": 11474,
+  "subdir": "noarch",
+  "timestamp": 1733223232000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/iniconfig-2.0.0-pyhd8ed1ab_1.conda",
+  "version": "2.0.0"
+}

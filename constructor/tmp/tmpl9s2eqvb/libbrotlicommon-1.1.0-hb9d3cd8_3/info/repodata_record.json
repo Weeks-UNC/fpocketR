@@ -1,0 +1,22 @@
+{
+  "arch": "x86_64",
+  "build": "hb9d3cd8_3",
+  "build_number": 3,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13"
+  ],
+  "fn": "libbrotlicommon-1.1.0-hb9d3cd8_3.conda",
+  "license": "MIT",
+  "md5": "cb98af5db26e3f482bebb80ce9d947d3",
+  "name": "libbrotlicommon",
+  "platform": "linux",
+  "sha256": "462a8ed6a7bb9c5af829ec4b90aab322f8bcd9d8987f793e6986ea873bbd05cf",
+  "size": 69233,
+  "subdir": "linux-64",
+  "timestamp": 1749230099000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libbrotlicommon-1.1.0-hb9d3cd8_3.conda",
+  "version": "1.1.0"
+}

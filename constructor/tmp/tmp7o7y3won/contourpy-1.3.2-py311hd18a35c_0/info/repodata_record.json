@@ -1,0 +1,26 @@
+{
+  "arch": "x86_64",
+  "build": "py311hd18a35c_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13",
+    "libstdcxx >=13",
+    "numpy >=1.23",
+    "python >=3.11,<3.12.0a0",
+    "python_abi 3.11.* *_cp311"
+  ],
+  "fn": "contourpy-1.3.2-py311hd18a35c_0.conda",
+  "license": "BSD-3-Clause",
+  "md5": "f8e440efa026c394461a45a46cea49fc",
+  "name": "contourpy",
+  "platform": "linux",
+  "sha256": "92ec3244ee0b424612025742a73d4728ded5bf6a358301bd005f67e74fec0b21",
+  "size": 278355,
+  "subdir": "linux-64",
+  "timestamp": 1744743253000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/contourpy-1.3.2-py311hd18a35c_0.conda",
+  "version": "1.3.2"
+}

@@ -1,0 +1,29 @@
+{
+  "arch": "x86_64",
+  "build": "py311hfdbb021_1",
+  "build_number": 1,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13",
+    "libstdcxx >=13",
+    "packaging",
+    "python >=3.11,<3.12.0a0",
+    "python_abi 3.11.* *_cp311",
+    "sip",
+    "toml"
+  ],
+  "fn": "pyqt5-sip-12.17.0-py311hfdbb021_1.conda",
+  "license": "GPL-3.0-only",
+  "license_family": "GPL",
+  "md5": "e5dfc88ced7eae4918db0dd17c28633f",
+  "name": "pyqt5-sip",
+  "platform": "linux",
+  "sha256": "f2fbe31a7bd423c2d473516de5a2f648f6cc598350d233d2459390a6da8b15bc",
+  "size": 84215,
+  "subdir": "linux-64",
+  "timestamp": 1749224312000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/pyqt5-sip-12.17.0-py311hfdbb021_1.conda",
+  "version": "12.17.0"
+}

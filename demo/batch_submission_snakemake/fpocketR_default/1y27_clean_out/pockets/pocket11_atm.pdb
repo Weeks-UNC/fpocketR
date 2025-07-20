@@ -1,0 +1,43 @@
+HEADER
+HEADER This is a pdb format file writen by the programm fpocket.                 
+HEADER It represents the atoms contacted by the voronoi vertices of the pocket.  
+HEADER                                                                           
+HEADER Information about the pocket    11:
+HEADER 0  - Pocket Score                      : -0.0268
+HEADER 1  - Drug Score                        : 0.0000
+HEADER 2  - Number of alpha spheres           :    21
+HEADER 3  - Mean alpha-sphere radius          : 4.2739
+HEADER 4  - Mean alpha-sphere Solvent Acc.    : 0.5858
+HEADER 5  - Mean B-factor of pocket residues  : 0.2968
+HEADER 6  - Hydrophobicity Score              : 3.5556
+HEADER 7  - Polarity Score                    :     3
+HEADER 8  - Amino Acid based volume Score     : 1.7778
+HEADER 9  - Pocket volume (Monte Carlo)       : 434.4482
+HEADER 10  -Pocket volume (convex hull)       : 32.6849
+HEADER 11 - Charge Score                      :     0
+HEADER 12 - Local hydrophobic density Score   : 0.0000
+HEADER 13 - Number of apolar alpha sphere     :     0
+HEADER 14 - Proportion of apolar alpha sphere : 0.0000
+ATOM     93  OP2 U   X  17      19.781 -15.860   9.067  0.38  5.36           O 1
+ATOM     90   C5 U   X  17      17.150 -14.878   6.020  0.00  0.00           C 0
+ATOM   1305  OP2 C   X  74      15.664 -15.113  14.448  0.00  0.00           O 1
+ATOM    113  OP2 C   X  18      19.395 -10.368   8.586  0.00  0.00           O 1
+ATOM     89   O4 U   X  17      14.852 -15.049   5.446  0.04  5.36           O 0
+ATOM   1321   O4 U   X  75      10.363 -12.181  12.780  0.29  4.29           O 0
+ATOM    109   N4 C   X  18      13.602 -11.728   5.612  0.00  0.00           N 0
+ATOM    110   C5 C   X  18      15.789 -10.734   5.744  0.00  0.00           C 0
+ATOM    151   O4 U   X  20      10.664  -8.547  10.042  0.00  0.00           O 0
+ATOM    130   N6 A   X  19      10.856 -10.227   7.161  0.42  2.19           N 0
+ATOM   1347  OP2 A   X  76       7.383 -18.144   9.954  0.00  0.00           O 1
+ATOM   1343   N7 A   X  76       7.527 -13.596  10.095  0.26  3.28           N 0
+ATOM   1322   C5 U   X  75       9.815 -14.425  13.336  0.00  0.00           C 0
+ATOM   1325  OP2 U   X  75      11.424 -18.513  12.736  0.00  8.57           O 1
+ATOM   1342   N6 A   X  76       9.334 -11.140   9.807  0.00  0.00           N 0
+ATOM    131   N7 A   X  19      12.890  -8.017   6.680  0.00  0.00           N 0
+ATOM    152   C5 U   X  20      10.770  -6.329   9.182  0.00  0.00           C 0
+ATOM    135  OP2 A   X  19      16.919  -5.712   8.371  0.00  0.00           O 1
+ATOM   1363   O4 U   X  77       8.894 -12.150   6.783  0.59  4.29           O 0
+ATOM   1385   O6 G   X  78      11.176 -11.980   4.293  0.54  7.50           O 0
+ATOM     88   C4 U   X  17      15.966 -14.584   5.244  0.00  0.00           C 0
+TER
+END

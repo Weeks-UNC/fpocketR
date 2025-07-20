@@ -1,0 +1,29 @@
+{
+  "arch": "x86_64",
+  "build": "h332b0f4_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "krb5 >=1.21.3,<1.22.0a0",
+    "libgcc >=13",
+    "libnghttp2 >=1.64.0,<2.0a0",
+    "libssh2 >=1.11.1,<2.0a0",
+    "libzlib >=1.3.1,<2.0a0",
+    "openssl >=3.5.0,<4.0a0",
+    "zstd >=1.5.7,<1.6.0a0"
+  ],
+  "fn": "libcurl-8.14.1-h332b0f4_0.conda",
+  "license": "curl",
+  "license_family": "MIT",
+  "md5": "45f6713cb00f124af300342512219182",
+  "name": "libcurl",
+  "platform": "linux",
+  "sha256": "b6c5cf340a4f80d70d64b3a29a7d9885a5918d16a5cb952022820e6d3e79dc8b",
+  "size": 449910,
+  "subdir": "linux-64",
+  "timestamp": 1749033146000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libcurl-8.14.1-h332b0f4_0.conda",
+  "version": "8.14.1"
+}

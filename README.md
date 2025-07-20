@@ -1,12 +1,40 @@
-fpocketR
-==============================
+# fpocketR
+
 [//]: # (Badges)
 [![GitHub Actions Build Status](https://github.com/weeks-UNC/fpocketR/workflows/CI/badge.svg)](https://github.com/weeks-UNC/fpocketR/actions?query=workflow%3ACI)
 [![PyPI version](https://img.shields.io/pypi/v/fpocketR.svg)](https://pypi.org/project/fpocketR/)
 
-<img src="fpocketR_logo.png" alt="fpocketR logo" width="250" height="250" />
+<img src="images/fpocketR_logo.png" alt="fpocketR logo" width="250" height="250" />
 
-fpocketR is a modified version of [fpocket 4.0](https://github.com/Discngine/fpocket) and is optimized for finding, characterizing, and visualizing drug-like RNA-ligand binding pockets.
+A CLI tool optimized to find, characterize, and visualize drug-like RNA-ligand binding pockets in RNA structures (static or dynamic).
+
+fpocketR is an RNA-specific wrapper for [fpocket 4.0](https://github.com/Discngine/fpocket)
+
+## Contents
+
+- [System Requirements](#system-requirements)
+- [Installation](#installation)
+   - [Recommended: Conda + pip](#recommended-conda--pip)
+   - [Testing your installation](#testing-your-installation)
+   - [Alternative: Conda Constructor Installer](#alternative-conda-constructor-installer)
+- [Quick Start](#quick-start)
+   - [Activate the fpocketR Environment](#activate-the-fpocketr-environment)
+   - [Basic Structure Analysis](#basic-structure-analysis)
+   - [Secondary Structure Visualization](#secondary-structure-visualization)
+   - [Multistate Analysis](#multistate-analysis)
+   - [Apo/Holo Analysis](#apoholo-analysis)
+   - [Additional Arguments](#additional-arguments)
+- [Demonstration Workflows](#demonstration-workflows)
+- [Usage](#usage)
+- [Copyright](#copyright)
+- [Acknowledgements](#acknowledgements)
+
+## System Requirements
+
+- **Supported platforms:** Linux (x86_64), MacOS (Intel/x86_64)
+- **Not supported:** ARM-based MacOS (M1/M2) and native Windows
+- **Experimental:** fpocketR may work on ARM MacOS with fpocket 4.2.1+. **WARNING:** We had observed that newer version of fpocket (>4.0.3) led to changes in predicted pockets which we have not validated.
+- **Windows users:** Use [WSL2 (Windows Subsystem for Linux)](https://learn.microsoft.com/en-us/windows/wsl/install) to run fpocketR. Follow the install instructions using the WSL2 linux terminal.
 
 ## Installation
 
@@ -75,56 +103,167 @@ A one-step installer can be provided using [conda constructor](https://github.co
         conda activate fpocketR
         conda develop .
 
-## Demo / Tutorial
+## Quick Start
 
-[Demonstration of fpocketR usage](https://github.com/Weeks-UNC/fpocketR/blob/main/Demo/fpocketR_demo.md)
+Run fpocketR from the command line to analyze RNA structures and visualize ligand binding pockets.
+
+### Activate the fpocketR Environment
+
+Activate your environment after installing fpocketR and its dependencies:
+
+```bash
+conda activate fpocketR
+```
+
+**Tip:** For a full list of options, run:
+
+```bash
+python -m fpocketR --help
+```
+
+### Basic Structure Analysis
+
+Analyze a local PDB file or fetch by PDB ID using the `-pdb` argument:
+
+```bash
+python -m fpocketR -pdb 3e5c.pdb
+# or
+python -m fpocketR -pdb 3e5c
+```
+
+**Example output:**
+
+| Tertiary structure | Pocket characteristics |
+| :----------------: | :-------------------: |
+| <img src="images/3e5c_3D.png" height="150" /> | <img src="images/3e5c_1D.png" height="30" /> |
+
+**Pocket color legend:**
+
+<img src="images/fpocketR_pocket_color_legend.png" height="60" />
+
+### Secondary Structure Visualization
+
+Add a secondary structure diagram using the `-ss` argument:
+
+```bash
+python -m fpocketR -pdb 2l1v.pdb -ss 2l1v.nsd
+```
+
+**Example output:**
+
+| Tertiary structure | Secondary structure | Pocket characteristics |
+| :----------------: | :-----------------: | :-------------------: |
+| <img src="images/2l1v_3D.png" height="150" /> | <img src="images/2l1v_2D.png" height="150" /> | <img src="images/2l1v_1D.png" height="30" /> |
+
+### Multistate Analysis
+
+Analyze all NMR or Cryo-EM states using the `--state 0` argument:
+
+```bash
+python -m fpocketR -pdb 2l1v.pdb -ss 2l1v.nsd --state 0
+```
+
+**Example output:**
+
+| Tertiary structure<br>(pocket density) | Secondary structure<br>(pocket density) | Pocket summary<br>(all states) |
+| :-----------------------------: | :----------------------------------: | :-------------------------: |
+| <img src="images/2l1v_all_states_3D.png" height="150" /> | <img src="images/2l1v_2D_pocket_density.png" height="150" /> | <img src="images/2l1v_all_states_1D.png" height="70" /> |
+
+### Apo/Holo Analysis
+
+Align ligand-bound (holo) and ligand-free (apo) structures for direct comparison using the `--alignligand` argument:
+
+```bash
+python -m fpocketR -pdb 8f4o_apo.pdb --alignligand 2gdi_holo.pdb --knownnt 19,20,42,43
+```
+
+**Example output:**
+
+| Apo structure and pocket | Apo and holo structures aligned |
+| :----------------------: | :-----------------------------: |
+| <img src="images/8f4o_apo_3D.png" height="150" /> | <img src="images/8f4o_apo_holo.png" height="150" /> |
+
+### Additional Arguments
+
+Customize analysis with optional arguments:
+
+- Select RNA chain: `-c (--chain)`
+- Select ligand: `-l (--ligand)`
+- Set raytracing resolution (lower = faster): `-dpi (--dpi)`
+- Specify output path: `-o (--out)`
+
+```bash
+python -m fpocketR -pdb 2gdi_holo.pdb --chain Y --ligand TPP --dpi 10 --out ./TPP_RS
+```
+
+**Example output:**
+
+* Output files and figures add to custom directory: `./TPP_RS/2gdi_holo_clean_out/`.
+
+| Tertiary structure (low resolution) |
+| :----------------------------------: |
+| <img src="images/2gdi_holo_3D_10.png" height="150" /> |
+
+## Demonstration Workflows
+
+For advanced usage and batch processing, see the example workflows in the `/fpocketR/demo` folder:
+
+- [Batch submission using Bash scripts](./demo/batch_submission_bash/README.md)
+- [Batch submission using Snakemake](./demo/batch_submission_snakemake/README.md)
+- [Multistate analysis on modeled RNA structures from CASP](./demo/modeled_RNA/README.md)
+
+Each demo includes step-by-step instructions and sample files to help you automate fpocketR analyses for large datasets or complex workflows.
 
 ## Usage
 
-| Input options                 | Description                                                                                      |
-| :---------------------------- | :----------------------------------------------------------------------------------------------- |
-| -pdb, --pdb STRING (Required) | Specify a path to a .pdb/.cif file, or a 4 charater PDB indentification code.                    |
-| -nsd, --nsd STRING            | Specify an .nsd file or other secondary structure file to generate a secondary structure figure. |
+Full list of arguments for fpocketR.
+
+| Option / Argument             | Type        | Description                                                                                                                                                                                                                                                           |
+| :---------------------------- | :---------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Input options**             |             |                                                                                                                                                                                                                                                                       |
+| `-pdb`, `--pdb` (Required)    | str         | Path to a .pdb file, .cif file, or 4 character PDB identification code.                                                                                                                                                                                               |
+| `-ss`, `--ss`                 | str         | Path to an .ss or other secondary structure file for generating secondary structure figures.                                                                                                                                                                          |
+| **fpocket parameter options** |             |                                                                                                                                                                                                                                                                       |
+| `-m`                          | float       | Minimum radius for an a-sphere (Default: 3.0).                                                                                                                                                                                                                        |
+| `-M`                          | float       | Maximum radius for an a-sphere (Default: 5.70).                                                                                                                                                                                                                       |
+| `-i`                          | int         | Minimum number of a-spheres per pocket (Default: 42).                                                                                                                                                                                                                 |
+| `-D`                          | float       | A-sphere clustering distance for forming pockets (Default: 1.65).                                                                                                                                                                                                     |
+| `-A`                          | int         | Number of electronegative atoms required to define a polar a-sphere (Default: 3).                                                                                                                                                                                     |
+| `-p`                          | float       | Maximum ratio of apolar a-spheres in a pocket (Default: 0.0).                                                                                                                                                                                                         |
+| **Output options**            |             |                                                                                                                                                                                                                                                                       |
+| `-o`, `--out`                 | str         | Path to the output parent directory (Default: "./fpocketR_out").                                                                                                                                                                                                      |
+| `-n`, `--name`                | str         | Output filename prefix and output subdirectory name (Default: "{PDB}_clean_out").                                                                                                                                                                                     |
+| `-y`, `--yes`                 | bool        | Answers yes to user prompts for overwriting files (Default: False).                                                                                                                                                                                                   |
+| **Analysis settings**         |             |                                                                                                                                                                                                                                                                       |
+| `-s`, `--state`               | int         | Specify the NMR states/model to analyze. 0 for all (Default: None).                                                                                                                                                                                                   |
+| `-c`, `--chain`               | str         | Specify a chain from the input .pdb file (Default: <first_rna_chain>).                                                                                                                                                                                                |
+| `-l`, `--ligand`              | str         | PDB ligand identification code (2-3 characters).                                                                                                                                                                                                                      |
+| `-lc`, `--ligandchain`        | str         | Chain containing ligand from the input .pdb file (Default: <--chain input>).                                                                                                                                                                                          |
+| `-nt`, `--knownnt`            | list[int]   | List residue IDs of nucleotides in known pocket (e.g. 1,2,3) (Default: None).                                                                                                                                                                                         |
+| `-off`, `--offset`            | int         | Offset between starting nucleotide of RNA sequence and starting nucleotide of PDB structure (automatic).                                                                                                                                                              |
+| `-qf`, `--qualityfilter`      | float       | Minimum fpocket score for pocket (Default: 0.0).                                                                                                                                                                                                                      |
+| **Figure settings**           |             |                                                                                                                                                                                                                                                                       |
+| `-dpi`, `--dpi`               | int         | Figure resolution in dpi (Default: 300).                                                                                                                                                                                                                              |
+| `-z`, `--zoom`                | float       | Zoom buffer (Å) for creating 3D figures (Default: 5.0).                                                                                                                                                                                                               |
+| `-cp`, `--connectpocket`      | bool        | Visually connects pockets in 2D figures (Default: False).                                                                                                                                                                                                             |
+| `-al`, `--alignligand`        | str \| bool | Align structure with pocket prediction (target structure) to an RNA structure with a ligand (mobile structure).<br> &nbsp; If `str`: path to a .pdb file, .cif file, or 4 character PDB identification of the mobile structure.<br> &nbsp; If `bool`: input PDB file is used as the mobile structure.|
+|                               |             |                                                                                                                                                                                                                                                                       |
 
 
+### TIP: To see all these options in your terminal, run:
 
-| fpocket parameter options | Description                                                                                                           |
-| :------------------------ | :-------------------------------------------------------------------------------------------------------------------- |
-| -m, --m FLOAT             | Sets fpocket -m flag. Specifies the minimum radius for an a-sphere. (Default: 3.0)                                    |
-| -M, --M FLOAT             | Sets fpocket -M flag. Specifies the maximium radius for an a-sphere. (Default: 5.7)                                   |
-| -i, --i INT               | Sets fpocket -i flag. Specifies the minimum number of a-spheres per pocket. (Default: 42)                             |
-| -D, --D FLOAT             | Sets fpocket -D flag. Specifies the a-sphere clustering distance for forming pockets. (Default: 1.65)                 |
-| -A, --A INT               | Sets fpocket -A flag. Specifies the number of electronegative atoms required to define a polar a-sphere (Deafult: 3). |
-| -p, --p FLOAT             | Sets fpocket -p flag. Speciefies the maximum ratio of apolar a-spheres. (Default: 0)                                  |
+```bash
+python -m fpocketR --help
+```
 
-| Output options    | Description                                                                                         |
-| :---------------- | :-------------------------------------------------------------------------------------------------- |
-| -o, --out STRING  | Specify name of fpocket output parent directory name. (Default: fpocket-R_out_{fpocket parameters}) |
-| -n, --name STRING | Specify name prefix for fpocket_out and analysis_out subdirectories. (Default: None)                |
-| -y, --yes BOOLEAN | Overwrites output files and directories with same name. (Default: False)                            |
-
-| Analysis settings          | Description                                                                                                                                                                                                                        |
-| :------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| -s, --state INT            | Specify a particular NMR states/model for analysis. Set to 0 for all. (Default: None)                                                                                                                                              |
-| -c, --chain STING          | Specify the chain(s) IDs conatining RNA (case sensitive). List upto 2 chains seperated by a comma (eg. A,B). (Default: A)                                                                                                          |
-| -l, --ligand STRING        | Specify the PDB ligand identification code (≤ 3 characters).                                                                                                                                                                       |
-| -lc, --ligandchain STRING  | Specify the chain containing the ligand of interest. (Default: <first RNA chain>)                                                                                                                                                  |
-| -off, -offset INT          | Specify offset between the starting nucleotide of the rna sequence and starting nucleotide of the PDB structure (usually = 0).<br>Manual input is required for use with .cif files. (Default: will gather offset from pdb header.) |
-| -qf, --qualityfilter FLOAT | Specify the minimum fpocket score for a pocket to pass the quality filter. (Default: 0.0)                                                                                                                                          |
-
-| Figure settings              | Description                                                                                 |
-| :--------------------------- | :------------------------------------------------------------------------------------------ |
-| -dpi, --dpi INT              | Specify 3D figure resolution (dots per linear inch). (Default: 300)                         |
-| -zoom, --zoom INT            | Specify zoom buffer distance (Å) to set the feild of view for 3D figures. (Default: 10)     |
-| -cp, --connectpocket BOOLEAN | Visually connects pockets in 2D figures. (Default: False)                                   |
-| -al, --alignligand BOOLEAN   | Align output structures to input structure. Useful for multistate analysis. (Default: True) |
-
-### Copyright
+## Copyright
 
 Copyright (c) 2025, Seth Veenbaas
 
 
-#### Acknowledgements
- 
+## Acknowledgements
+
+Special thanks to [psirving](https://github.com/Psirving) for helpful feedback and contributions.
+
 Project based on the 
 [Computational Molecular Science Python Cookiecutter](https://github.com/molssi/cookiecutter-cms) version 1.11.

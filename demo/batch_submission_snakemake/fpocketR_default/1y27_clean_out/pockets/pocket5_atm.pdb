@@ -1,0 +1,39 @@
+HEADER
+HEADER This is a pdb format file writen by the programm fpocket.                 
+HEADER It represents the atoms contacted by the voronoi vertices of the pocket.  
+HEADER                                                                           
+HEADER Information about the pocket     5:
+HEADER 0  - Pocket Score                      : 0.1596
+HEADER 1  - Drug Score                        : 0.0002
+HEADER 2  - Number of alpha spheres           :    21
+HEADER 3  - Mean alpha-sphere radius          : 3.6379
+HEADER 4  - Mean alpha-sphere Solvent Acc.    : 0.3766
+HEADER 5  - Mean B-factor of pocket residues  : 0.2878
+HEADER 6  - Hydrophobicity Score              : -4.3750
+HEADER 7  - Polarity Score                    :     3
+HEADER 8  - Amino Acid based volume Score     : 1.5000
+HEADER 9  - Pocket volume (Monte Carlo)       : 106.0170
+HEADER 10  -Pocket volume (convex hull)       : 0.8409
+HEADER 11 - Charge Score                      :     0
+HEADER 12 - Local hydrophobic density Score   : 0.0000
+HEADER 13 - Number of apolar alpha sphere     :     0
+HEADER 14 - Proportion of apolar alpha sphere : 0.0000
+ATOM    186  O2' U   X  22       7.179  -6.015  15.523  0.26  2.14           O 0
+ATOM    166   N1 A   X  21       7.474 -10.027  12.798  0.42  1.09           N 0
+ATOM   1280   N6 A   X  73      10.157 -10.227  18.966  0.30  6.56           N 0
+ATOM    190   O2 U   X  22       5.739  -7.303  18.751  0.21  3.21           O 0
+ATOM   1301   N4 C   X  74      10.894 -10.937  15.575  0.50  3.28           N 0
+ATOM   1299   N3 C   X  74       9.809 -12.687  16.554  0.53  2.19           N 0
+ATOM    167   C2 A   X  21       6.175  -9.781  12.607  0.00  0.00           C 0
+ATOM    191   N3 U   X  22       3.503  -7.270  18.451  0.00  0.00           N 0
+ATOM    728   O2 U   X  47       1.198  -8.339  14.465  0.00  0.00           O 0
+ATOM    811   O4 U   X  51       1.369 -11.131  16.056  0.32  1.07           O 0
+ATOM    168   N3 A   X  21       5.585  -8.622  12.307  0.39  1.09           N 0
+ATOM    826   N1 A   X  52       3.369  -9.860  19.305  0.00  0.00           N 0
+ATOM    189   C2 U   X  22       4.761  -6.733  18.298  0.00  0.00           C 0
+ATOM    827   C2 A   X  52       4.576 -10.399  19.532  0.00  0.00           C 0
+ATOM    809   N3 U   X  51       2.589 -13.020  16.339  0.00  0.00           N 0
+ATOM   1318   O2 U   X  75       6.019 -13.030  13.690  0.42  1.07           O 0
+ATOM    828   N3 A   X  52       4.887 -11.672  19.791  0.50  1.09           N 0
+TER
+END

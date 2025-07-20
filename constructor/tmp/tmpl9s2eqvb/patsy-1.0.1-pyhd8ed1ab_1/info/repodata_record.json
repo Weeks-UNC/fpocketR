@@ -1,0 +1,23 @@
+{
+  "build": "pyhd8ed1ab_1",
+  "build_number": 1,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch/",
+  "constrains": [],
+  "depends": [
+    "numpy >=1.4.0",
+    "python >=3.9"
+  ],
+  "fn": "patsy-1.0.1-pyhd8ed1ab_1.conda",
+  "license": "BSD-2-Clause AND PSF-2.0",
+  "license_family": "BSD",
+  "md5": "ee23fabfd0a8c6b8d6f3729b47b2859d",
+  "name": "patsy",
+  "noarch": "python",
+  "package_type": "noarch_python",
+  "sha256": "ab52916f056b435757d46d4ce0a93fd73af47df9c11fd72b74cc4b7e1caca563",
+  "size": 186594,
+  "subdir": "noarch",
+  "timestamp": 1733792482000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/patsy-1.0.1-pyhd8ed1ab_1.conda",
+  "version": "1.0.1"
+}

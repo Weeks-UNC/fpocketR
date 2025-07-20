@@ -1,0 +1,23 @@
+{
+  "arch": "x86_64",
+  "build": "h4833e2c_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13",
+    "libglib 2.84.2 h3618099_0"
+  ],
+  "fn": "glib-tools-2.84.2-h4833e2c_0.conda",
+  "license": "LGPL-2.1-or-later",
+  "md5": "f2ec1facec64147850b7674633978050",
+  "name": "glib-tools",
+  "platform": "linux",
+  "sha256": "eee7655422577df78386513322ea2aa691e7638947584faa715a20488ef6cc4e",
+  "size": 116819,
+  "subdir": "linux-64",
+  "timestamp": 1747836718000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/glib-tools-2.84.2-h4833e2c_0.conda",
+  "version": "2.84.2"
+}

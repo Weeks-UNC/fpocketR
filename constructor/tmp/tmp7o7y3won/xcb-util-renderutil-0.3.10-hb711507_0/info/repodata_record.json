@@ -1,0 +1,23 @@
+{
+  "arch": "x86_64",
+  "build": "hb711507_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "libgcc-ng >=12",
+    "libxcb >=1.16,<2.0.0a0"
+  ],
+  "fn": "xcb-util-renderutil-0.3.10-hb711507_0.conda",
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "0e0cbe0564d03a99afd5fd7b362feecd",
+  "name": "xcb-util-renderutil",
+  "platform": "linux",
+  "sha256": "2d401dadc43855971ce008344a4b5bd804aca9487d8ebd83328592217daca3df",
+  "size": 16978,
+  "subdir": "linux-64",
+  "timestamp": 1718848865000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/xcb-util-renderutil-0.3.10-hb711507_0.conda",
+  "version": "0.3.10"
+}

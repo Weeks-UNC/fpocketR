@@ -1,0 +1,22 @@
+{
+  "arch": "x86_64",
+  "build": "hd0c01bc_1",
+  "build_number": 1,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "libgcc >=13",
+    "__glibc >=2.17,<3.0.a0"
+  ],
+  "fn": "libogg-1.3.5-hd0c01bc_1.conda",
+  "license": "BSD-3-Clause",
+  "md5": "68e52064ed3897463c0e958ab5c8f91b",
+  "name": "libogg",
+  "platform": "linux",
+  "sha256": "ffb066ddf2e76953f92e06677021c73c85536098f1c21fcd15360dbc859e22e4",
+  "size": 218500,
+  "subdir": "linux-64",
+  "timestamp": 1745825989000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libogg-1.3.5-hd0c01bc_1.conda",
+  "version": "1.3.5"
+}

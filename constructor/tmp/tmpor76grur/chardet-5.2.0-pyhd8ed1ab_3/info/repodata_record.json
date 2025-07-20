@@ -1,0 +1,22 @@
+{
+  "build": "pyhd8ed1ab_3",
+  "build_number": 3,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch/",
+  "constrains": [],
+  "depends": [
+    "python >=3.9"
+  ],
+  "fn": "chardet-5.2.0-pyhd8ed1ab_3.conda",
+  "license": "LGPL-2.1-only",
+  "license_family": "GPL",
+  "md5": "56bfd153e523d9b9d05e4cf3c1cfe01c",
+  "name": "chardet",
+  "noarch": "python",
+  "package_type": "noarch_python",
+  "sha256": "cfca3959d2bec9fcfec98350ecdd88b71dac6220d1002c257d65b40f6fbba87c",
+  "size": 132170,
+  "subdir": "noarch",
+  "timestamp": 1741798023000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/chardet-5.2.0-pyhd8ed1ab_3.conda",
+  "version": "5.2.0"
+}

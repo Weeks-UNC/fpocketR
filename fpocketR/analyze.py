@@ -96,6 +96,7 @@ def analyze_pockets(
             ligand_coords = None
             ligand = None
         else:
+            print(f'Ligand: {ligand}')
             ligand_coords, ligand = get_ligand_coords(
                 ligand_rna_structure,
                 ligand,
@@ -238,14 +239,19 @@ def get_ligand_coords(
     """
     if ligand and 2 <= len(ligand) <= 3:
         try:
-            ligand_coords = ligand_rna_structure.select(
-                f'resname {ligand}').copy()
+            ligand_sel = ligand_rna_structure.select(
+                f'chain {ligandchain} and resname {ligand}').copy()
+            if ligand_sel is None:
+                return (None, None)
+            else:
+                ligand_coords = ligand_sel.copy()
+                return (ligand_coords, ligand)
         except AttributeError:
             print(f'Chain {ligandchain} of {name}.pdb does not contain a '
                   f'ligand named: {ligand}\n'
                   'Please provide a valid ligand chain (--ligandchain) '
                   'and ligand residue name (--ligand).')
-            exit()
+            return (None, None)
 
     elif ligand_rna_structure.select(f'chain {ligandchain} and hetatm '
                                  'and not ion and not water') is None:
@@ -261,11 +267,10 @@ def get_ligand_coords(
             for resname in hetatm_resn:
                 try:
                     response = requests.get(
-                        f'https://files.rcsb.org/ligands/download/{resname}_model.sdf')
-                    
-                    with open(f'{analysis}/{resname}_model.sdf', 'wb') as f:
+                        f'https://www.ebi.ac.uk/pdbe/static/files/pdbechem_v2/{resname}_ideal.sdf')
+                    with open(f'{analysis}/{resname}_ideal.sdf', 'wb') as f:
                         f.write(response.content)
-                    mol = Chem.MolFromMolFile(f'{analysis}/{resname}_model.sdf')
+                    mol = Chem.MolFromMolFile(f'{analysis}/{resname}_ideal.sdf')
                     qed = QED.default(mol)
                     mw : float = Chem.rdMolDescriptors.CalcExactMolWt(mol)
                     pat = Chem.MolFromSmarts("[#6]")
@@ -289,6 +294,7 @@ def get_ligand_coords(
                 f'chain {ligandchain} and resname {hetatm_resn[0]}').copy()
             print(f'Using {hetatm_resn[0]} as ligand for analysis.')
             ligand = hetatm_resn[0]
+            print(ligand_coords, ligand)
             return (ligand_coords, ligand)
 
         elif len(hetatm_resn) == 1 and 2 > len(hetatm_resn[0]) > 3:
@@ -573,19 +579,17 @@ def add_ligand_characteristics(
     ligand_npr1, ligand_npr2 = util.calc_npr(ligand_coords)
 
     #Calculate ligand QED score.
-    if not os.path.isfile(f'{analysis}/{ligand}_model.sdf'):
+    if not os.path.isfile(f'{analysis}/{ligand}_ideal.sdf'):
         try:
             response = requests.get(
-                f'https://files.rcsb.org/ligands/download/{ligand}_model.sdf')
-                
-            with open(f'{analysis}/{ligand}_model.sdf', 'wb') as f:
+                f'https://www.ebi.ac.uk/pdbe/static/files/pdbechem_v2/{ligand}_ideal.sdf')
+            with open(f'{analysis}/{ligand}_ideal.sdf', 'wb') as f:
                 f.write(response.content)
         except:
-            print(f'Error: Not able downlaod ligand model for {ligand}.\n')
+            print(f'Error: Not able download ligand ideal structure for {ligand}.\n')
             qed = np.nan
-    
-    try:        
-        mol = Chem.MolFromMolFile(f'{analysis}/{ligand}_model.sdf')
+    try:
+        mol = Chem.MolFromMolFile(f'{analysis}/{ligand}_ideal.sdf')
         qed = QED.default(mol)
     except:
         print(f'Error: Not able calculate qed score for ligand {ligand}.\n')

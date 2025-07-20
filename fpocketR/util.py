@@ -43,9 +43,7 @@ def natsorted(filenames : list) -> list:
         filenames (list): List of strings to be sorted by digits.
     Returns:
         list: Sorted list, ordered by digits.
-    """
-    # return sorted(filenames, key=lambda x: int(re.search(r'\d+', x).group()))
-    
+    """    
     def extract_sort_key(filename):
         # Extract all numbers in the filename as integers, or return the filename as-is for non-numeric parts
         return [int(num) if num.isdigit() else num.lower() 

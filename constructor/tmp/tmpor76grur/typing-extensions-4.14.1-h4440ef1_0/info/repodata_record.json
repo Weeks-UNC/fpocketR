@@ -1,0 +1,21 @@
+{
+  "build": "h4440ef1_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch/",
+  "constrains": [],
+  "depends": [
+    "typing_extensions ==4.14.1 pyhe01879c_0"
+  ],
+  "fn": "typing-extensions-4.14.1-h4440ef1_0.conda",
+  "license": "PSF-2.0",
+  "md5": "75be1a943e0a7f99fcf118309092c635",
+  "name": "typing-extensions",
+  "noarch": "generic",
+  "package_type": "noarch_generic",
+  "sha256": "349951278fa8d0860ec6b61fcdc1e6f604e6fce74fabf73af2e39a37979d0223",
+  "size": 90486,
+  "subdir": "noarch",
+  "timestamp": 1751643513000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/typing-extensions-4.14.1-h4440ef1_0.conda",
+  "version": "4.14.1"
+}

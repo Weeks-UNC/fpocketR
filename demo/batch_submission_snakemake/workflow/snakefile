@@ -1,0 +1,40 @@
+configfile: 'config/config.yaml'
+
+rule all:
+    input: 
+        expand('fpocketR_{parameter}/{sample}_clean_out/{sample}_out_real_sphere.pse', parameter=config['parameter'], sample=config['sample']),
+        expand('fpocketR_{parameter}/{sample}_clean_out/{sample}_out_pocket_characteristics.csv', parameter=config['parameter'], sample=config['sample']),
+        expand('fpocketR_{parameter}/{sample}_clean_out/{sample}_out_real_sphere.pdb', parameter=config['parameter'], sample=config['sample']),
+        expand('fpocketR_{parameter}/all_pocket_characteristics_{parameter}.csv', parameter=config['parameter']),
+rule fpocketR:
+    output:
+        pc='fpocketR_{parameter}/{sample}_clean_out/{sample}_out_pocket_characteristics.csv',
+        pse='fpocketR_{parameter}/{sample}_clean_out/{sample}_out_real_sphere.pse',
+        pdb='fpocketR_{parameter}/{sample}_clean_out/{sample}_out_real_sphere.pdb'
+    log:
+        'logs/fpocketR_{parameter}/{sample}.log'
+    params:
+        pdb='{sample}',
+        ligand=lambda wildcards: config['sample'][wildcards.sample]['ligand'],
+        out=directory('fpocketR_{parameter}'),
+        m=lambda wildcards: config['parameter'][wildcards.parameter]['m'],
+        M=lambda wildcards: config['parameter'][wildcards.parameter]['M'],
+        D=lambda wildcards: config['parameter'][wildcards.parameter]['D'],
+        i=lambda wildcards: config['parameter'][wildcards.parameter]['i']
+    conda: 'fpocketR'
+    threads: 1
+    resources:
+        mem='1G',
+        time='1:00:00'
+    shell:"""
+        python -m fpocketR -pdb {params.pdb} --ligand {params.ligand} -o {params.out} -y -m {params.m} -M {params.M} -D {params.D} -i {params.i} 2>&1 | tee {log} &
+    """
+
+rule all_pc:
+    input: expand('fpocketR_{parameter}/{sample}_clean_out/{sample}_out_pocket_characteristics.csv', parameter=config['parameter'], sample=config['sample']),
+    output: 'fpocketR_{parameter}/all_pocket_characteristics_{parameter}.csv'
+    params:
+        dir=directory('fpocketR_{parameter}')
+    shell:"""
+         awk '(FNR>1) || (NR==1)' {params.dir}/*_out/*pocket_characteristics.csv > {output}
+    """

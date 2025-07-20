@@ -1,0 +1,32 @@
+{
+  "arch": "x86_64",
+  "build": "py311ha362b79_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "biopython",
+    "libgcc-ng >=12",
+    "libstdcxx-ng >=12",
+    "matplotlib-base",
+    "numpy >=1.24.1,<2.0a0",
+    "pyparsing",
+    "python >=3.11,<3.12.0a0",
+    "python_abi 3.11.* *_cp311",
+    "requests",
+    "scipy",
+    "setuptools"
+  ],
+  "fn": "prody-2.3.0-py311ha362b79_0.conda",
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "56be96c546c31cbaa72249385ed70388",
+  "name": "prody",
+  "platform": "linux",
+  "sha256": "0b7e43363cdd2eac530b4793c4d8235d179588f9316e86a654831e23b3c3b5af",
+  "size": 8232278,
+  "subdir": "linux-64",
+  "timestamp": 1675511811000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/prody-2.3.0-py311ha362b79_0.conda",
+  "version": "2.3.0"
+}

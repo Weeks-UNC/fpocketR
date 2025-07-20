@@ -1,0 +1,23 @@
+{
+  "build": "pyhd8ed1ab_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch/",
+  "constrains": [],
+  "depends": [
+    "freetype",
+    "python >=3.7"
+  ],
+  "fn": "freetype-py-2.3.0-pyhd8ed1ab_0.tar.bz2",
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "e4a165cdbbaed5bbb6e653b823156151",
+  "name": "freetype-py",
+  "noarch": "python",
+  "package_type": "noarch_python",
+  "sha256": "bfa5ddb943992643a2ee2e258507beac2bdb17825e74d05f1bb0b79bb2c924fc",
+  "size": 58932,
+  "subdir": "noarch",
+  "timestamp": 1650983451000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/freetype-py-2.3.0-pyhd8ed1ab_0.tar.bz2",
+  "version": "2.3.0"
+}

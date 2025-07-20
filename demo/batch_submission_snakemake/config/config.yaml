@@ -1,0 +1,43 @@
+parameter:
+  default:
+    m: 3.4
+    M: 6.2
+    D: 2.4
+    i: 15
+  optimized:
+    m: 3.0
+    M: 5.7
+    D: 1.65
+    i: 42
+
+sample:
+  1ajf:
+    ligand: NCO
+  1am0:
+    ligand: AMP
+  1c0o:
+    ligand: NCO
+  1duh:
+    ligand: SO4
+  1eht:
+    ligand: TEP
+  1ei2:
+    ligand: NMY
+  1f78:
+    ligand: NCO
+  1lvj:
+    ligand: PMZ
+  1nbk:
+    ligand: GND
+  1q8n:
+    ligand: MGR
+  1raw:
+    ligand: AMP
+  1tob:
+    ligand: TOA
+  1xsu:
+    ligand: NCO
+  1y26:
+    ligand: ADE
+  1y27:
+    ligand: GUN

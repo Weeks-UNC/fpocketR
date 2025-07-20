@@ -1,0 +1,25 @@
+{
+  "arch": "x86_64",
+  "build": "h2a13503_7",
+  "build_number": 7,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "libgcc-ng >=12",
+    "libjpeg-turbo >=3.0.0,<4.0a0",
+    "libstdcxx-ng >=12",
+    "libzlib >=1.2.13,<2.0.0a0"
+  ],
+  "fn": "hdf4-4.2.15-h2a13503_7.conda",
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "bd77f8da987968ec3927990495dc22e4",
+  "name": "hdf4",
+  "platform": "linux",
+  "sha256": "0d09b6dc1ce5c4005ae1c6a19dc10767932ef9a5e9c755cfdbb5189ac8fb0684",
+  "size": 756742,
+  "subdir": "linux-64",
+  "timestamp": 1695661547000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/hdf4-4.2.15-h2a13503_7.conda",
+  "version": "4.2.15"
+}

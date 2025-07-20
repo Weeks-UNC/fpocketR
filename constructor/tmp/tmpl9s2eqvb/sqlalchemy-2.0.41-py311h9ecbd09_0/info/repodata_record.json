@@ -1,0 +1,26 @@
+{
+  "arch": "x86_64",
+  "build": "py311h9ecbd09_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "greenlet !=0.4.17",
+    "libgcc >=13",
+    "python >=3.11,<3.12.0a0",
+    "python_abi 3.11.* *_cp311",
+    "typing-extensions >=4.6.0"
+  ],
+  "fn": "sqlalchemy-2.0.41-py311h9ecbd09_0.conda",
+  "license": "MIT",
+  "md5": "a45573d9f1f67e0865940a5b688a7f9c",
+  "name": "sqlalchemy",
+  "platform": "linux",
+  "sha256": "f56d1873c0184788ff6d03bfd0139aba3343e098fc9110d482aaa72b354ecb25",
+  "size": 3598386,
+  "subdir": "linux-64",
+  "timestamp": 1747298956000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/sqlalchemy-2.0.41-py311h9ecbd09_0.conda",
+  "version": "2.0.41"
+}

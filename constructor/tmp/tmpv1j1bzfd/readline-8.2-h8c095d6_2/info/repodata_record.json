@@ -1,0 +1,22 @@
+{
+  "arch": "x86_64",
+  "build": "h8c095d6_2",
+  "build_number": 2,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "libgcc >=13",
+    "ncurses >=6.5,<7.0a0"
+  ],
+  "fn": "readline-8.2-h8c095d6_2.conda",
+  "license": "GPL-3.0-only",
+  "md5": "283b96675859b20a825f8fa30f311446",
+  "name": "readline",
+  "platform": "linux",
+  "sha256": "2d6d0c026902561ed77cd646b5021aef2d4db22e57a5b0178dfc669231e06d2c",
+  "size": 282480,
+  "subdir": "linux-64",
+  "timestamp": 1740379431000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/readline-8.2-h8c095d6_2.conda",
+  "version": "8.2"
+}

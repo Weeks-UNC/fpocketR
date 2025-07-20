@@ -1,0 +1,30 @@
+{
+  "arch": "x86_64",
+  "build": "nompi_h6e4c0c1_102",
+  "build_number": 102,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libaec >=1.1.4,<2.0a0",
+    "libcurl >=8.14.1,<9.0a0",
+    "libgcc >=14",
+    "libgfortran",
+    "libgfortran5 >=14.3.0",
+    "libstdcxx >=14",
+    "libzlib >=1.3.1,<2.0a0",
+    "openssl >=3.5.1,<4.0a0"
+  ],
+  "fn": "hdf5-1.14.6-nompi_h6e4c0c1_102.conda",
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "ac96ae31a8bd8c30b9c9a9a39b2a0791",
+  "name": "hdf5",
+  "platform": "linux",
+  "sha256": "becd7b9abb364c1f1d15fd650d8a6b18f7366fd556a123eb216d201541a19475",
+  "size": 3718334,
+  "subdir": "linux-64",
+  "timestamp": 1752237211000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/hdf5-1.14.6-nompi_h6e4c0c1_102.conda",
+  "version": "1.14.6"
+}

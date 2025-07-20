@@ -1,0 +1,14 @@
+format: jb-book
+root: index.md
+chapters:
+  - file: installation.md
+  - file: quickstart.md
+  - file: usage.md
+  - file: demos.md
+    sections:
+      - file: demos/demo_bash.md
+      - file: demos/demo_snakemake.md
+      - file: demos/demo_modeled_rna.md
+  - file: how_to_cite.md
+  - file: copyright.md
+  - file: acknowledgements.md

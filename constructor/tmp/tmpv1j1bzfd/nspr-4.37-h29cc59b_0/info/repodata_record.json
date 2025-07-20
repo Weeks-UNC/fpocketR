@@ -1,0 +1,23 @@
+{
+  "arch": "x86_64",
+  "build": "h29cc59b_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=14",
+    "libstdcxx >=14"
+  ],
+  "fn": "nspr-4.37-h29cc59b_0.conda",
+  "license": "MPL-2.0",
+  "md5": "d73ccc379297a67ed921bd55b38a6c6a",
+  "name": "nspr",
+  "platform": "linux",
+  "sha256": "472306630dcd49a221863b91bd89f5b8b81daf1b99adf1968c9f12021176d873",
+  "size": 230951,
+  "subdir": "linux-64",
+  "timestamp": 1752841107000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/nspr-4.37-h29cc59b_0.conda",
+  "version": "4.37"
+}

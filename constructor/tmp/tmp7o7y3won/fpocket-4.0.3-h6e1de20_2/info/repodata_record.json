@@ -1,0 +1,23 @@
+{
+  "arch": "x86_64",
+  "build": "h6e1de20_2",
+  "build_number": 2,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "libgcc-ng >=12",
+    "libnetcdf >=4.9.2,<4.9.3.0a0"
+  ],
+  "fn": "fpocket-4.0.3-h6e1de20_2.conda",
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "48a27cef500a30b088a4b5a8eb4ef8b3",
+  "name": "fpocket",
+  "platform": "linux",
+  "sha256": "8d63b8f68fc3ec24db9dfac394dc7b981b24b8218804f129622470e5e798725b",
+  "size": 1775198,
+  "subdir": "linux-64",
+  "timestamp": 1679604720000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/fpocket-4.0.3-h6e1de20_2.conda",
+  "version": "4.0.3"
+}

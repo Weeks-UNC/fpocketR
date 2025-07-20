@@ -1,0 +1,25 @@
+{
+  "arch": "x86_64",
+  "build": "h717163a_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13",
+    "libjpeg-turbo >=3.0.0,<4.0a0",
+    "libtiff >=4.7.0,<4.8.0a0"
+  ],
+  "fn": "lcms2-2.17-h717163a_0.conda",
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "000e85703f0fd9594c81710dd5066471",
+  "name": "lcms2",
+  "platform": "linux",
+  "sha256": "d6a61830a354da022eae93fa896d0991385a875c6bba53c82263a289deda9db8",
+  "size": 248046,
+  "subdir": "linux-64",
+  "timestamp": 1739160907000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/lcms2-2.17-h717163a_0.conda",
+  "version": "2.17"
+}

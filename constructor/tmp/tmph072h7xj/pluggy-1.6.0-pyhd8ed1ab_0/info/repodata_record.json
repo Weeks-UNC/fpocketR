@@ -1,0 +1,22 @@
+{
+  "build": "pyhd8ed1ab_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch/",
+  "constrains": [],
+  "depends": [
+    "python >=3.9"
+  ],
+  "fn": "pluggy-1.6.0-pyhd8ed1ab_0.conda",
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "7da7ccd349dbf6487a7778579d2bb971",
+  "name": "pluggy",
+  "noarch": "python",
+  "package_type": "noarch_python",
+  "sha256": "a8eb555eef5063bbb7ba06a379fa7ea714f57d9741fe0efdb9442dbbc2cccbcc",
+  "size": 24246,
+  "subdir": "noarch",
+  "timestamp": 1747339794000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/pluggy-1.6.0-pyhd8ed1ab_0.conda",
+  "version": "1.6.0"
+}

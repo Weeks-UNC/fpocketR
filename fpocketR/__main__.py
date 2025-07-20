@@ -248,7 +248,8 @@ def parseArgs():
         type=str,
         required=False,
         default=None,
-        help='Specify name of fpocket output parent directory.',
+        help='Path to the output parent directory \
+            (Default: "./fpocketR_out").',
     )
     prs.add_argument(
         '-n',
@@ -256,7 +257,8 @@ def parseArgs():
         type=str,
         required=False,
         default=None,
-        help='Specify output filename prefix and output subdirectory name.',
+        help='Specify output filename prefix and output subdirectory name \
+            (Default: "{PDB}_clean_out").',
     )
     prs.add_argument(
         '-y',
@@ -281,7 +283,8 @@ def parseArgs():
         type=str,
         required=False,
         default=None,
-        help='Specify a chain from the input .pdb file ("A").',
+        help='Specify a chain from the input .pdb file \
+            (Default: <first_rna_chain>).',
     )
     pocket_type.add_argument(
         '-l',
@@ -289,7 +292,7 @@ def parseArgs():
         type=str,
         required=False,
         default=None,
-        help='PDB ligand identification code (≤ 3 characters).',
+        help='PDB ligand identification code (2-3 characters).',
     )
     prs.add_argument(
         '-lc',
@@ -357,8 +360,11 @@ def parseArgs():
         '--alignligand',
         type=str,
         required=False,
-        # action='store_false',
-        help='Aligned RNA structure to output .pse file (<input pdb>).',
+        help='Align structure with pocket prediction (target structure) \
+            to an RNA structure with a ligand (mobile structure). \
+            If `str`: path to a .pdb file, .cif file, or 4 character \
+            PDB identification of the mobile structure. \
+            If `bool`: input PDB file is used as the mobile structure.',
     )
 
     args = prs.parse_args()
@@ -414,7 +420,7 @@ def main(
         name = os.path.basename(pdb)[0:-4]
 
     # Set structure to align to.
-    if alignligand == 'False':
+    if alignligand == 'False' or alignligand == 'none':
         alignligand = None
     elif alignligand is None or alignligand == 'True':
         alignligand = pdb
@@ -426,7 +432,7 @@ def main(
     # Runs pipeline for a single state of the input structure.
     if state != 0:
         if out is None:
-            out = f'fpocketR_out-m_{m}-M_{M}-i_{i}-D_{D}-A_{A}-p_{p}'
+            out = f'fpocketR_out'
         (_, _, _, _, _) = pipeline(
             pdb,
             ss,

@@ -1,0 +1,24 @@
+{
+  "arch": "x86_64",
+  "build": "hcea5267_3",
+  "build_number": 3,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [
+    "libgfortran 15.1.0"
+  ],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=15.1.0"
+  ],
+  "fn": "libgfortran5-15.1.0-hcea5267_3.conda",
+  "license": "GPL-3.0-only WITH GCC-exception-3.1",
+  "md5": "530566b68c3b8ce7eec4cd047eae19fe",
+  "name": "libgfortran5",
+  "platform": "linux",
+  "sha256": "eea6c3cf22ad739c279b4d665e6cf20f8081f483b26a96ddd67d4df3c88dfa0a",
+  "size": 1565627,
+  "subdir": "linux-64",
+  "timestamp": 1750808236000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libgfortran5-15.1.0-hcea5267_3.conda",
+  "version": "15.1.0"
+}

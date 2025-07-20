@@ -1,0 +1,38 @@
+HEADER
+HEADER This is a pdb format file writen by the programm fpocket.                 
+HEADER It represents the atoms contacted by the voronoi vertices of the pocket.  
+HEADER                                                                           
+HEADER Information about the pocket     4:
+HEADER 0  - Pocket Score                      : 0.2037
+HEADER 1  - Drug Score                        : 0.0000
+HEADER 2  - Number of alpha spheres           :    15
+HEADER 3  - Mean alpha-sphere radius          : 4.0515
+HEADER 4  - Mean alpha-sphere Solvent Acc.    : 0.7845
+HEADER 5  - Mean B-factor of pocket residues  : 0.0000
+HEADER 6  - Hydrophobicity Score              : 49.0000
+HEADER 7  - Polarity Score                    :     0
+HEADER 8  - Amino Acid based volume Score     : 3.0000
+HEADER 9  - Pocket volume (Monte Carlo)       : 284.4411
+HEADER 10  -Pocket volume (convex hull)       : 4.1777
+HEADER 11 - Charge Score                      :     0
+HEADER 12 - Local hydrophobic density Score   : 0.0000
+HEADER 13 - Number of apolar alpha sphere     :     1
+HEADER 14 - Proportion of apolar alpha sphere : 0.0667
+ATOM    471   C6 C   A  15     -16.924   1.809  -3.801  0.00  0.00           C 0
+ATOM    464   N1 C   A  15     -18.151   2.008  -3.238  0.00  0.00           N 0
+ATOM    458  O4' C   A  15     -17.693   4.198  -2.361  0.00  0.00           O 0
+ATOM    472  OP1 C   A  15     -14.508   4.687  -5.658  0.00  0.00           O 0
+ATOM    470   C5 C   A  15     -16.773   0.965  -4.838  0.00  0.00           C 0
+ATOM    468   C4 C   A  15     -17.938   0.290  -5.321  0.00  0.00           C 0
+ATOM    469   N4 C   A  15     -17.834  -0.555  -6.346  0.50  7.66           N 0
+ATOM    430  C2' C   A  14     -12.796   2.138  -6.130  0.00  0.00           C 0
+ATOM    436   N3 C   A  14     -13.449  -1.461  -8.844  0.53  5.47           N 0
+ATOM    438   N4 C   A  14     -15.186  -2.977  -8.782  0.43  7.66           N 0
+ATOM    437   C4 C   A  14     -14.435  -2.063  -8.167  0.00  0.00           C 0
+ATOM    467   N3 C   A  15     -19.136   0.495  -4.758  0.62  6.56           N 0
+ATOM    465   C2 C   A  15     -19.280   1.351  -3.710  0.00  0.00           C 0
+ATOM    433   N1 C   A  14     -12.905  -0.208  -6.917  0.00  0.00           N 0
+ATOM    440   C6 C   A  14     -13.906  -0.815  -6.214  0.00  0.00           C 0
+ATOM    434   C2 C   A  14     -12.661  -0.524  -8.248  0.00  0.00           C 0
+TER
+END

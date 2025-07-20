@@ -42,6 +42,7 @@ def alignligand(mobile: str, target: str, target_state: int = 0) -> None:
 
     # aligns mobile object to target object
     cmd.align(mobile, target_object, cycles=10, target_state=target_state)
+    cmd.set('cartoon_color', 'palecyan', target_object)
     cmd.disable(f'{target_object}')
 
 

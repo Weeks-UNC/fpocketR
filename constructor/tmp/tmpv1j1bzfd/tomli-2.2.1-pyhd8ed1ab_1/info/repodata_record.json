@@ -1,0 +1,21 @@
+{
+  "build": "pyhd8ed1ab_1",
+  "build_number": 1,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch/",
+  "constrains": [],
+  "depends": [
+    "python >=3.9"
+  ],
+  "fn": "tomli-2.2.1-pyhd8ed1ab_1.conda",
+  "license": "MIT",
+  "md5": "ac944244f1fed2eb49bae07193ae8215",
+  "name": "tomli",
+  "noarch": "python",
+  "package_type": "noarch_python",
+  "sha256": "18636339a79656962723077df9a56c0ac7b8a864329eb8f847ee3d38495b863e",
+  "size": 19167,
+  "subdir": "noarch",
+  "timestamp": 1733256819000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/tomli-2.2.1-pyhd8ed1ab_1.conda",
+  "version": "2.2.1"
+}

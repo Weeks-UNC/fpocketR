@@ -1,0 +1,25 @@
+{
+  "arch": "x86_64",
+  "build": "py311h9ecbd09_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13",
+    "python >=3.11,<3.12.0a0",
+    "python_abi 3.11.* *_cp311"
+  ],
+  "fn": "unicodedata2-16.0.0-py311h9ecbd09_0.conda",
+  "license": "Apache-2.0",
+  "license_family": "Apache",
+  "md5": "51a12678b609f5794985fda8372b1a49",
+  "name": "unicodedata2",
+  "platform": "linux",
+  "sha256": "e786fb0925515fffc83e393d2a0e2814eaf9be8a434f1982b399841a2c07980b",
+  "size": 405017,
+  "subdir": "linux-64",
+  "timestamp": 1736692662000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/unicodedata2-16.0.0-py311h9ecbd09_0.conda",
+  "version": "16.0.0"
+}

@@ -1,0 +1,21 @@
+{
+  "arch": "x86_64",
+  "build": "h69a702a_3",
+  "build_number": 3,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "libgfortran 15.1.0 h69a702a_3"
+  ],
+  "fn": "libgfortran-ng-15.1.0-h69a702a_3.conda",
+  "license": "GPL-3.0-only WITH GCC-exception-3.1",
+  "md5": "6e5d0574e57a38c36e674e9a18eee2b4",
+  "name": "libgfortran-ng",
+  "platform": "linux",
+  "sha256": "2d961f9748d994a4dc9891feae60e182ae9cdce4b0780caaa643e9e3757c7b43",
+  "size": 29089,
+  "subdir": "linux-64",
+  "timestamp": 1750808529000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libgfortran-ng-15.1.0-h69a702a_3.conda",
+  "version": "15.1.0"
+}

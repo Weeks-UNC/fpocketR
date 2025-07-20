@@ -1,0 +1,20 @@
+{
+  "build": "h77eed37_3",
+  "build_number": 3,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch/",
+  "constrains": [],
+  "depends": [],
+  "fn": "font-ttf-ubuntu-0.83-h77eed37_3.conda",
+  "license": "LicenseRef-Ubuntu-Font-Licence-Version-1.0",
+  "license_family": "Other",
+  "md5": "49023d73832ef61042f6a237cb2687e7",
+  "name": "font-ttf-ubuntu",
+  "noarch": "generic",
+  "package_type": "noarch_generic",
+  "sha256": "2821ec1dc454bd8b9a31d0ed22a7ce22422c0aef163c59f49dfdf915d0f0ca14",
+  "size": 1620504,
+  "subdir": "noarch",
+  "timestamp": 1727511233000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/font-ttf-ubuntu-0.83-h77eed37_3.conda",
+  "version": "0.83"
+}

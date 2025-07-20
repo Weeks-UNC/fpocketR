@@ -1,0 +1,23 @@
+{
+  "arch": "x86_64",
+  "build": "h434a139_5",
+  "build_number": 5,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc-ng >=12",
+    "libstdcxx-ng >=12"
+  ],
+  "fn": "qhull-2020.2-h434a139_5.conda",
+  "license": "LicenseRef-Qhull",
+  "md5": "353823361b1d27eb3960efb076dfcaf6",
+  "name": "qhull",
+  "platform": "linux",
+  "sha256": "776363493bad83308ba30bcb88c2552632581b143e8ee25b1982c8c743e73abc",
+  "size": 552937,
+  "subdir": "linux-64",
+  "timestamp": 1720813982000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/qhull-2020.2-h434a139_5.conda",
+  "version": "2020.2"
+}

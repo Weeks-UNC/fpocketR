@@ -1,0 +1,24 @@
+{
+  "build": "pyhd8ed1ab_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch/",
+  "constrains": [],
+  "depends": [
+    "freetype-py >=2.3",
+    "pycairo >=1.20.0",
+    "python >=3.7"
+  ],
+  "fn": "rlpycairo-0.2.0-pyhd8ed1ab_0.conda",
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "71d8c309e4e5c13d8f4113b5a394e633",
+  "name": "rlpycairo",
+  "noarch": "python",
+  "package_type": "noarch_python",
+  "sha256": "e5aed96db522f628d89f5a0eaaa31bbbf6b558828b3a9f5e0a79b6236e363ce3",
+  "size": 14943,
+  "subdir": "noarch",
+  "timestamp": 1687519707000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/rlpycairo-0.2.0-pyhd8ed1ab_0.conda",
+  "version": "0.2.0"
+}

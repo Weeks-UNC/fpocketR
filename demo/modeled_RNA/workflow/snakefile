@@ -1,0 +1,39 @@
+configfile: 'config/config.yaml'
+
+rule all:
+    input: 
+        expand('fpocketR_multistate/{sample}_clean_out/{sample}_out_real_sphere.pdb', sample=config['sample']),
+        expand('fpocketR_multistate/{sample}_clean_out/{sample}_out_pocket_characteristics.csv', sample=config['sample']),
+        expand('fpocketR_multistate/all_pocket_characteristics_{parameter}.csv'),
+
+rule fpocketR:
+    input:
+        pdb=lambda wildcards: config['sample'][wildcards.sample],
+    output:
+        pdb='fpocketR_{parameter}/{sample}_clean_out/{sample}_out_real_sphere.pdb',
+        csv='fpocketR_{parameter}/{sample}_clean_out/{sample}_out_pocket_characteristics.csv',
+    log:
+        'logs/fpocketR_{parameter}/{sample}.log'
+    params:
+        ss=lambda wildcards: config['parameter']['ss'],
+        out=directory('fpocketR_{parameter}'),
+        nt=lambda wildcards: config['parameter'][wildcards.parameter]['nt'],
+        dpi=lambda wildcards: config['parameter'][wildcards.parameter]['dpi'],
+    conda: 'fpocketR'
+    threads: 1
+    resources:
+        mem='1G',
+        time='1:00:00'
+    shell:"""
+        python -m fpocketR -pdb {input.pdb} -o {params.out} -y -nt {params.nt} -dpi {params.dpi}
+    """
+
+rule all_pc:
+    input: expand('fpocketR_{parameter}/{sample}_clean_out/{sample}_out_pocket_characteristics.csv', parameter=config['parameter'], sample=config['sample']),
+    output: 'fpocketR_{parameter}/all_pocket_characteristics_{parameter}.csv'
+    params:
+        dir=directory('fpocketR_{parameter}')
+    shell:"""
+         awk '(FNR>1) || (NR==1)' {params.dir}/*_out/*pocket_characteristics.csv > {output}
+    """
+        

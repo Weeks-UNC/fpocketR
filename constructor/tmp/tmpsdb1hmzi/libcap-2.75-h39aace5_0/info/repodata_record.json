@@ -1,0 +1,24 @@
+{
+  "arch": "x86_64",
+  "build": "h39aace5_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "attr >=2.5.1,<2.6.0a0",
+    "libgcc >=13"
+  ],
+  "fn": "libcap-2.75-h39aace5_0.conda",
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "c44c16d6976d2aebbd65894d7741e67e",
+  "name": "libcap",
+  "platform": "linux",
+  "sha256": "9c84448305e7c9cc44ccec7757cf5afcb5a021f4579aa750a1fa6ea398783950",
+  "size": 120375,
+  "subdir": "linux-64",
+  "timestamp": 1741176638000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libcap-2.75-h39aace5_0.conda",
+  "version": "2.75"
+}

@@ -1,0 +1,26 @@
+{
+  "arch": "x86_64",
+  "build": "py311hd18a35c_1",
+  "build_number": 1,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13",
+    "libstdcxx >=13",
+    "python >=3.11,<3.12.0a0",
+    "python_abi 3.11.* *_cp311"
+  ],
+  "fn": "kiwisolver-1.4.8-py311hd18a35c_1.conda",
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "bb17b97b0c0d86e052134bf21af5c03d",
+  "name": "kiwisolver",
+  "platform": "linux",
+  "sha256": "1a1f73000796c0429ecbcc8a869b9f64e6e95baa49233c0777bfab8fb26cd75a",
+  "size": 73699,
+  "subdir": "linux-64",
+  "timestamp": 1751493971000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/kiwisolver-1.4.8-py311hd18a35c_1.conda",
+  "version": "1.4.8"
+}

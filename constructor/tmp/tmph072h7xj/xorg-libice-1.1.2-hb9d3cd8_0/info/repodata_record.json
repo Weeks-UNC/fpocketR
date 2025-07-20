@@ -1,0 +1,23 @@
+{
+  "arch": "x86_64",
+  "build": "hb9d3cd8_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13"
+  ],
+  "fn": "xorg-libice-1.1.2-hb9d3cd8_0.conda",
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "fb901ff28063514abb6046c9ec2c4a45",
+  "name": "xorg-libice",
+  "platform": "linux",
+  "sha256": "c12396aabb21244c212e488bbdc4abcdef0b7404b15761d9329f5a4a39113c4b",
+  "size": 58628,
+  "subdir": "linux-64",
+  "timestamp": 1734227592000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/xorg-libice-1.1.2-hb9d3cd8_0.conda",
+  "version": "1.1.2"
+}

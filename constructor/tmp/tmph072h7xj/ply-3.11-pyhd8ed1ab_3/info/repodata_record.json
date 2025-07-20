@@ -1,0 +1,22 @@
+{
+  "build": "pyhd8ed1ab_3",
+  "build_number": 3,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch/",
+  "constrains": [],
+  "depends": [
+    "python >=3.9"
+  ],
+  "fn": "ply-3.11-pyhd8ed1ab_3.conda",
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "fd5062942bfa1b0bd5e0d2a4397b099e",
+  "name": "ply",
+  "noarch": "python",
+  "package_type": "noarch_python",
+  "sha256": "bae453e5cecf19cab23c2e8929c6e30f4866d996a8058be16c797ed4b935461f",
+  "size": 49052,
+  "subdir": "noarch",
+  "timestamp": 1733239818000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/ply-3.11-pyhd8ed1ab_3.conda",
+  "version": "3.11"
+}

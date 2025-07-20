@@ -1,0 +1,4 @@
+Parameters,Name,PDB,State,Type,Filter,Pocket,Score,Drug_score,a-sphere,SASA,Volume,Hydrophobic_density,Apolar_a-sphere_proportion,Hydrophobicity_score,Polarity_score,PocketNT,Pocket_NPR1,Pocket_NPR2,Pocket_shape,Ligand_ID,Pocket_overlap,Ligand_overlap,Center_criteria,QED_score,Ligand_NPR1,Ligand_NPR2,Ligand_shape
+-m 3.0 -M 5.7 -i 42 -D 1.65 -A 3 -p 0.0,2l1v_state17,2l1v,17,Known,Pass,1,0.36,0.43,91,95,3.3e+02,22,0.25,6.2,3,"[7, 8, 9, 13, 14, 19, 20, 32]",0.4,0.86,Balanced,PRF,1,1,0.55,0.46,0.31,0.71,Disc-like
+-m 3.0 -M 5.7 -i 42 -D 1.65 -A 3 -p 0.0,2l1v_state17,2l1v,17,Novel,Pass,2,0.23,0.002,43,53,1.5e+02,4,0.12,-15,5,"[6, 7, 8, 9, 28, 29, 30]",0.38,0.88,Rod-like,PRF,0,0,8.8,0.46,0.31,0.71,Disc-like
+-m 3.0 -M 5.7 -i 42 -D 1.65 -A 3 -p 0.0,2l1v_state17,2l1v,17,Novel,Pass,3,0.21,0.002,46,84,2.5e+02,5,0.13,-5.8,3,"[10, 11, 12, 14, 35, 36]",0.22,0.91,Rod-like,PRF,0,0,9.7,0.46,0.31,0.71,Disc-like

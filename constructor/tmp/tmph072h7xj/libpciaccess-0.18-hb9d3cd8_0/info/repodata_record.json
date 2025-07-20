@@ -1,0 +1,23 @@
+{
+  "arch": "x86_64",
+  "build": "hb9d3cd8_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13"
+  ],
+  "fn": "libpciaccess-0.18-hb9d3cd8_0.conda",
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "70e3400cbbfa03e96dcde7fc13e38c7b",
+  "name": "libpciaccess",
+  "platform": "linux",
+  "sha256": "0bd91de9b447a2991e666f284ae8c722ffb1d84acb594dbd0c031bd656fa32b2",
+  "size": 28424,
+  "subdir": "linux-64",
+  "timestamp": 1749901812000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libpciaccess-0.18-hb9d3cd8_0.conda",
+  "version": "0.18"
+}

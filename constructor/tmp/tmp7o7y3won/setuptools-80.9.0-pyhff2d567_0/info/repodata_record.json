@@ -1,0 +1,22 @@
+{
+  "build": "pyhff2d567_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch/",
+  "constrains": [],
+  "depends": [
+    "python >=3.9"
+  ],
+  "fn": "setuptools-80.9.0-pyhff2d567_0.conda",
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "4de79c071274a53dcaf2a8c749d1499e",
+  "name": "setuptools",
+  "noarch": "python",
+  "package_type": "noarch_python",
+  "sha256": "972560fcf9657058e3e1f97186cc94389144b46dbdf58c807ce62e83f977e863",
+  "size": 748788,
+  "subdir": "noarch",
+  "timestamp": 1748804951000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/setuptools-80.9.0-pyhff2d567_0.conda",
+  "version": "80.9.0"
+}

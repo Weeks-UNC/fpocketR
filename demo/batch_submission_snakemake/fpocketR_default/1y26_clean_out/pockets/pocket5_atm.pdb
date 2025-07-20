@@ -1,0 +1,35 @@
+HEADER
+HEADER This is a pdb format file writen by the programm fpocket.                 
+HEADER It represents the atoms contacted by the voronoi vertices of the pocket.  
+HEADER                                                                           
+HEADER Information about the pocket     5:
+HEADER 0  - Pocket Score                      : 0.0907
+HEADER 1  - Drug Score                        : 0.0000
+HEADER 2  - Number of alpha spheres           :    16
+HEADER 3  - Mean alpha-sphere radius          : 4.1511
+HEADER 4  - Mean alpha-sphere Solvent Acc.    : 0.7425
+HEADER 5  - Mean B-factor of pocket residues  : 0.0592
+HEADER 6  - Hydrophobicity Score              : -3.4000
+HEADER 7  - Polarity Score                    :     3
+HEADER 8  - Amino Acid based volume Score     : 2.6000
+HEADER 9  - Pocket volume (Monte Carlo)       : 170.1335
+HEADER 10  -Pocket volume (convex hull)       : 2.4279
+HEADER 11 - Charge Score                      :     0
+HEADER 12 - Local hydrophobic density Score   : 0.0000
+HEADER 13 - Number of apolar alpha sphere     :     0
+HEADER 14 - Proportion of apolar alpha sphere : 0.0000
+ATOM    261   O2 U   X  25      28.244 -23.967   6.273  0.00  0.00           O 0
+ATOM    222   N7 A   X  23      27.564 -20.853   9.210  0.00  0.00           N 0
+ATOM    705  O2' G   X  46      24.281 -23.541  10.938  0.00  0.00           O 0
+ATOM    686   C2 A   X  45      26.585 -26.881   7.079  0.00  0.00           C 0
+ATOM    278  C1' C   X  26      31.150 -26.380   6.479  0.00  0.00           C 0
+ATOM    277  O2' C   X  26      32.425 -27.538   8.117  0.00  0.00           O 0
+ATOM    273  O4' C   X  26      31.754 -25.102   6.518  0.57  1.07           O 0
+ATOM    257  O2' U   X  25      31.385 -21.592   6.388  0.52  3.21           O 0
+ATOM    221   N6 A   X  23      25.401 -22.714   8.194  0.00  0.00           N 0
+ATOM    687   N3 A   X  45      26.339 -27.867   7.941  0.35  3.28           N 0
+ATOM    281   O2 C   X  26      29.299 -28.318   6.412  0.39  2.14           O 0
+ATOM    701  O4' G   X  46      24.124 -26.591  10.601  0.54  3.21           O 0
+ATOM    706  C1' G   X  46      23.860 -25.537   9.677  0.00  0.00           C 0
+TER
+END

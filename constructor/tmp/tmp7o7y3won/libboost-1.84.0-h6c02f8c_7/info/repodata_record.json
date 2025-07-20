@@ -1,0 +1,30 @@
+{
+  "arch": "x86_64",
+  "build": "h6c02f8c_7",
+  "build_number": 7,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [
+    "boost-cpp 1.84.0*"
+  ],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "bzip2 >=1.0.8,<2.0a0",
+    "icu >=75.1,<76.0a0",
+    "libgcc >=13",
+    "liblzma >=5.6.3,<6.0a0",
+    "libstdcxx >=13",
+    "libzlib >=1.3.1,<2.0a0",
+    "zstd >=1.5.6,<1.6.0a0"
+  ],
+  "fn": "libboost-1.84.0-h6c02f8c_7.conda",
+  "license": "BSL-1.0",
+  "md5": "ce81535528fbdd5349870048b8b09846",
+  "name": "libboost",
+  "platform": "linux",
+  "sha256": "06b136d254811b18dc8e2d217e88b5a03f3127306e975943ae55e9c869987a00",
+  "size": 2826258,
+  "subdir": "linux-64",
+  "timestamp": 1733502897000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libboost-1.84.0-h6c02f8c_7.conda",
+  "version": "1.84.0"
+}

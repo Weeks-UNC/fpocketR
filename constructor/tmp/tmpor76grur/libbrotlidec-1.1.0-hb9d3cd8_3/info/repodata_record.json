@@ -1,0 +1,23 @@
+{
+  "arch": "x86_64",
+  "build": "hb9d3cd8_3",
+  "build_number": 3,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libbrotlicommon 1.1.0 hb9d3cd8_3",
+    "libgcc >=13"
+  ],
+  "fn": "libbrotlidec-1.1.0-hb9d3cd8_3.conda",
+  "license": "MIT",
+  "md5": "1c6eecffad553bde44c5238770cfb7da",
+  "name": "libbrotlidec",
+  "platform": "linux",
+  "sha256": "3eb27c1a589cbfd83731be7c3f19d6d679c7a444c3ba19db6ad8bf49172f3d83",
+  "size": 33148,
+  "subdir": "linux-64",
+  "timestamp": 1749230111000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libbrotlidec-1.1.0-hb9d3cd8_3.conda",
+  "version": "1.1.0"
+}

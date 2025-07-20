@@ -1,0 +1,24 @@
+{
+  "arch": "x86_64",
+  "build": "py311h459d7ec_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "libgcc-ng >=12",
+    "numpy",
+    "python >=3.11,<3.12.0a0",
+    "python_abi 3.11.* *_cp311"
+  ],
+  "fn": "biopython-1.83-py311h459d7ec_0.conda",
+  "license": "LicenseRef-Biopython",
+  "md5": "6ec8554e179c75be9105c78e3d2a3a5c",
+  "name": "biopython",
+  "platform": "linux",
+  "sha256": "9ea8e0eccbdab64c016f687188056e1458b8f3ce66ddcb3adde970a20fc141e8",
+  "size": 3380578,
+  "subdir": "linux-64",
+  "timestamp": 1704895604000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/biopython-1.83-py311h459d7ec_0.conda",
+  "version": "1.83"
+}

@@ -1,0 +1,23 @@
+{
+  "arch": "x86_64",
+  "build": "ha4b6fd6_2",
+  "build_number": 2,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libglvnd 1.7.0 ha4b6fd6_2",
+    "libglx 1.7.0 ha4b6fd6_2"
+  ],
+  "fn": "libgl-1.7.0-ha4b6fd6_2.conda",
+  "license": "LicenseRef-libglvnd",
+  "md5": "928b8be80851f5d8ffb016f9c81dae7a",
+  "name": "libgl",
+  "platform": "linux",
+  "sha256": "dc2752241fa3d9e40ce552c1942d0a4b5eeb93740c9723873f6fcf8d39ef8d2d",
+  "size": 134712,
+  "subdir": "linux-64",
+  "timestamp": 1731330998000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/libgl-1.7.0-ha4b6fd6_2.conda",
+  "version": "1.7.0"
+}

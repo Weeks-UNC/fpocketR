@@ -1,0 +1,30 @@
+{
+  "arch": "x86_64",
+  "build": "py311hfdbb021_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13",
+    "libstdcxx >=13",
+    "packaging",
+    "ply",
+    "python >=3.11,<3.12.0a0",
+    "python_abi 3.11.* *_cp311",
+    "setuptools",
+    "tomli"
+  ],
+  "fn": "sip-6.10.0-py311hfdbb021_0.conda",
+  "license": "BSD-2-Clause",
+  "license_family": "BSD",
+  "md5": "78e5e37d25d5ab01fb5e91b8653b8f6d",
+  "name": "sip",
+  "platform": "linux",
+  "sha256": "1eae0d5f0152714cdabb5cd3d480080e164b3fb5f7bd8208df7925d8e173d36b",
+  "size": 686578,
+  "subdir": "linux-64",
+  "timestamp": 1745411313000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/sip-6.10.0-py311hfdbb021_0.conda",
+  "version": "6.10.0"
+}

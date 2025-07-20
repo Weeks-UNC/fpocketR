@@ -1,0 +1,22 @@
+{
+  "arch": "x86_64",
+  "build": "h166bdaf_1003",
+  "build_number": 1003,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64/",
+  "constrains": [],
+  "depends": [
+    "libgcc-ng >=12"
+  ],
+  "fn": "lame-3.100-h166bdaf_1003.tar.bz2",
+  "license": "LGPL-2.0-only",
+  "license_family": "LGPL",
+  "md5": "a8832b479f93521a9e7b5b743803be51",
+  "name": "lame",
+  "platform": "linux",
+  "sha256": "aad2a703b9d7b038c0f745b853c6bb5f122988fe1a7a096e0e606d9cbec4eaab",
+  "size": 508258,
+  "subdir": "linux-64",
+  "timestamp": 1664996250000,
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/lame-3.100-h166bdaf_1003.tar.bz2",
+  "version": "3.100"
+}
