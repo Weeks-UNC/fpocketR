@@ -1,22 +1,18 @@
 name: docs_fpocketR
+
 channels:
-
   - conda-forge
-
   - defaults
+
 dependencies:
-    # Base depends
   - python
   - pip
-  
+  - myst-parser
+  - sphinx-book-theme
   - pydata-sphinx-theme
   - sphinx-design
   - sphinx-copybutton
 
-
-
-
-    # Pip-only installs
   - pip:
-    - -e ../
+      - -e ../
 
