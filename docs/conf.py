@@ -86,7 +86,16 @@ html_title = 'fpocketR Documentation'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    "toc_title": "Contents",
+    "show_toc_level": 2,
+    "use_repository_button": True,
+    "use_issues_button": True,
+    "use_download_button": True,
+    "repository_url": "https://github.com/Weeks-UNC/fpocketR",
+    "repository_branch": "main",
+    "path_to_docs": "docs/",
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
