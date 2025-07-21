@@ -11,6 +11,8 @@ A CLI tool optimized to find, characterize, and visualize drug-like RNA-ligand b
 
 fpocketR is an RNA-specific wrapper for [fpocket 4.0](https://github.com/Discngine/fpocket)
 
+[**Documentation**: fpocketR ReadTheDocs](https://fpocketr.readthedocs.io/en/latest/)
+
 ## Contents
 
 - [System Requirements](#system-requirements)
