@@ -18,7 +18,7 @@ license-files = ["LICENSE"]
 classifiers = [
     "Programming Language :: Python :: 3",
 ]
-requires-python = "3.11"
+requires-python = "==3.11.*"
 # Runtime dependencies (see devtools/conda-envs/test_env.yaml)
 dependencies = [
     "pymol-open-source==2.5.0",
