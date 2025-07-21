@@ -14,7 +14,7 @@ fpocketR is an RNA-specific wrapper for [fpocket 4.0](https://github.com/Discngi
 :caption: Contents
 
 installation.md
-quickstart.md
+quickstart.rst
 usage.md
 demos.md
 how_to_cite.md

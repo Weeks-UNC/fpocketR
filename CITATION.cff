@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you use fpocketR, please cite the following article."
+title: "fpocketR"
+version: "1.3.0"
+date-released: "2025-07-21"
+authors:
+  - family-names: Veenbaas
+    given-names: Seth D.
+    orcid: "0009-0003-5786-0407"
+  - family-names: Irving
+    given-names: Patrick S.
+    orcid: "00000-0003-2562-0890"
+license: MIT
+repository-code: "https://github.com/Weeks-UNC/fpocketR"
+preferred-citation:
+  type: article
+  title: "Ligand-binding pockets in RNA and where to find them"
+  authors:
+    - family-names: Veenbaas
+      given-names: Seth D.
+      orcid: "0009-0003-5786-0407"
+    - family-names: Koehn
+      given-names: Jordan T.
+      orcid: "0000-0003-3008-6303"
+    - family-names: Irving
+      given-names: Patrick S.
+      orcid: "00000-0003-2562-0890"
+    - family-names: Lama
+      given-names: Nicole N.
+    - family-names: Weeks
+      given-names: Kevin M.
+      orcid: "0000-0002-6748-9985"
+  journal: "Proceedings of the National Academy of Sciences"
+  year: 2025
+  volume: "122"
+  number: "17"
+  pages: "e2422346122"
+  doi: "10.1073/pnas.2422346122"
+  url: "https://www.pnas.org/doi/abs/10.1073/pnas.2422346122"
+  abstract: "Only a few dozen RNA–ligand complexes, involving small molecules with favorable (drug-like) physicochemical properties, have been visualized at high resolution. Manipulation of RNA biology using small molecule ligands is thus a promising, yet currently elusive, challenge. Progress in targeting RNA would be accelerated by a deeper understanding of the types and prevalence of RNA structures that selectively bind drug-like ligands. Here, we devise independent computational (fpocketR) and experimental (in-cell Frag-MaP) strategies to detect small-molecule ligand-binding sites in RNA tertiary structures. We use these tools to define RNA structure classes best targeted by small molecules. Going forward, fpocketR and Frag-MaP create a powerful framework for understanding the potential of ligands to bind and manipulate cellular transcriptomes. RNAs are critical regulators of gene expression, and their functions are often mediated by complex secondary and tertiary structures. Structured regions in RNA can selectively interact with small molecules—via well-defined ligand-binding pockets—to modulate the regulatory repertoire of an RNA. The broad potential to modulate biological function intentionally via RNA–ligand interactions remains unrealized, however, due to challenges in identifying compact RNA motifs with the ability to bind ligands with good physicochemical properties (often termed drug-like). Here, we devise fpocketR, a computational strategy that accurately detects pockets capable of binding drug-like ligands in RNA structures. Remarkably few, roughly 50, of such pockets have ever been visualized. We experimentally confirmed the ligandability of novel pockets detected with fpocketR using a fragment-based approach introduced here, Frag-MaP, that detects ligand-binding sites in cells. Analysis of pockets detected by fpocketR and validated by Frag-MaP reveals dozens of sites able to bind drug-like ligands, supports a model for RNA secondary structural motifs able to bind quality ligands, and creates a broad framework for understanding the RNA ligand-ome."

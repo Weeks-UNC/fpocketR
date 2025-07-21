@@ -4,7 +4,7 @@
 [![GitHub Actions Build Status](https://github.com/weeks-UNC/fpocketR/workflows/CI/badge.svg)](https://github.com/weeks-UNC/fpocketR/actions?query=workflow%3ACI)
 [![PyPI version](https://img.shields.io/pypi/v/fpocketR.svg)](https://pypi.org/project/fpocketR/)
 
-<img src="docs/images/fpocketR_logo.png" alt="fpocketR logo" width="250" height="250" />
+<img src="docs/_static/images/fpocketR_logo.png" alt="fpocketR logo" width="250" height="250" />
 
 A CLI tool optimized to find, characterize, and visualize drug-like RNA-ligand binding pockets in RNA structures (static or dynamic).
 
@@ -135,11 +135,11 @@ python -m fpocketR -pdb 3e5c
 
 | Tertiary structure | Pocket characteristics |
 | :----------------: | :-------------------: |
-| <img src="docs/images/3e5c_3D.png" height="150" /> | <img src="docs/images/3e5c_1D.png" height="30" /> |
+| <img src="docs/_static/images/3e5c_3D.png" height="150" /> | <img src="docs/_static/images/3e5c_1D.png" height="30" /> |
 
 **Pocket color legend:**
 
-<img src="docs/images/fpocketR_pocket_color_legend.png" height="60" />
+<img src="docs/_static/images/fpocketR_pocket_color_legend.png" height="60" />
 
 ### Secondary Structure Visualization
 
@@ -153,7 +153,7 @@ python -m fpocketR -pdb 2l1v.pdb -ss 2l1v.nsd
 
 | Tertiary structure | Secondary structure | Pocket characteristics |
 | :----------------: | :-----------------: | :-------------------: |
-| <img src="docs/images/2l1v_3D.png" height="150" /> | <img src="docs/images/2l1v_2D.png" height="150" /> | <img src="docs/images/2l1v_1D.png" height="30" /> |
+| <img src="docs/_static/images/2l1v_3D.png" height="150" /> | <img src="docs/_static/images/2l1v_2D.png" height="150" /> | <img src="docs/_static/images/2l1v_1D.png" height="30" /> |
 
 ### Multistate Analysis
 
@@ -167,7 +167,7 @@ python -m fpocketR -pdb 2l1v.pdb -ss 2l1v.nsd --state 0
 
 | Tertiary structure<br>(pocket density) | Secondary structure<br>(pocket density) | Pocket summary<br>(all states) |
 | :-----------------------------: | :----------------------------------: | :-------------------------: |
-| <img src="docs/images/2l1v_all_states_3D.png" height="150" /> | <img src="docs/images/2l1v_2D_pocket_density.png" height="150" /> | <img src="docs/images/2l1v_all_states_1D.png" height="70" /> |
+| <img src="docs/_static/images/2l1v_all_states_3D.png" height="150" /> | <img src="docs/_static/images/2l1v_2D_pocket_density.png" height="150" /> | <img src="docs/_static/images/2l1v_all_states_1D.png" height="70" /> |
 
 ### Apo/Holo Analysis
 
@@ -181,7 +181,7 @@ python -m fpocketR -pdb 8f4o_apo.pdb --alignligand 2gdi_holo.pdb --knownnt 19,20
 
 | Apo structure and pocket | Apo and holo structures aligned |
 | :----------------------: | :-----------------------------: |
-| <img src="docs/images/8f4o_apo_3D.png" height="150" /> | <img src="docs/images/8f4o_apo_holo.png" height="150" /> |
+| <img src="docs/_static/images/8f4o_apo_3D.png" height="150" /> | <img src="docs/_static/images/8f4o_apo_holo.png" height="150" /> |
 
 ### Additional Arguments
 
@@ -202,7 +202,7 @@ python -m fpocketR -pdb 2gdi_holo.pdb --chain Y --ligand TPP --dpi 10 --out ./TP
 
 | Tertiary structure (low resolution) |
 | :----------------------------------: |
-| <img src="docs/images/2gdi_holo_3D_10.png" height="150" /> |
+| <img src="docs/_static/images/2gdi_holo_3D_10.png" height="150" /> |
 
 ## Demonstration Workflows
 
