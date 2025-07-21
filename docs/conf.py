@@ -40,14 +40,9 @@ release = '1.3.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.mathjax',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.napoleon',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.extlinks',
-    'sphinx_design',
-    'sphinx_copybutton',
-    'myst_parser'
+    'myst_parser',
+    'sphinx_book_theme',
+    'sphinx_copybutton'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -107,6 +102,8 @@ html_static_path = ['_static']
 # 'searchbox.html']``.
 #
 # html_sidebars = {}
+
+# Sphinx Book Theme and myst-parser will automatically use _toc.yml for navigation/sidebar if present in docs/
 
 
 # -- Options for HTMLHelp output ---------------------------------------------
@@ -168,6 +165,3 @@ texinfo_documents = [
 
 # -- Extension configuration -------------------------------------------------
 
-jupyter_book_config = {
-    "toc": "_toc.yml"
-}
