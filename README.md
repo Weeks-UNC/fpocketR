@@ -48,7 +48,7 @@ fpocketR is an RNA-specific wrapper for [fpocket 4.0](https://github.com/Discngi
 
 2. **Create and activate a new environment with fpocket and Python 3.11**  
    ```bash
-   conda create -n fpocketR -c conda-forge fpocket=4.0.3 python=3.11
+   conda create -n fpocketR -c conda-forge fpocket=4.0.3 python=3.11 pymol-open-source=2.5
    conda activate fpocketR
    ```
 

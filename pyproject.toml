@@ -21,7 +21,6 @@ classifiers = [
 requires-python = "==3.11.*"
 # Runtime dependencies (see devtools/conda-envs/test_env.yaml)
 dependencies = [
-    "pymol-open-source==2.5.0",
     "prody==2.3.0",
     "pandas",
     "rdkit==2023.9.6",
@@ -29,8 +28,8 @@ dependencies = [
     "trimesh==4.2.0",
     "scipy==1.12.0",
     "biopython==1.83",
-]
-# NOTE: fpocket must be installed separately via conda-forge (not available on PyPI)
+
+# NOTE: fpocket and pymol must be installed separately via conda-forge (not available on PyPI)
 
 # Update the urls once the hosting is set up.
 #[project.urls]
