@@ -40,8 +40,6 @@ release = '1.3.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autosummary',
-    'sphinx.ext.autodoc',
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
@@ -51,12 +49,6 @@ extensions = [
     'sphinx_copybutton',
     'myst_parser'
 ]
-
-
-autosummary_generate = True
-napoleon_google_docstring = False
-napoleon_use_param = False
-napoleon_use_ivar = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
