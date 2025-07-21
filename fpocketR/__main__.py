@@ -5,7 +5,7 @@
 # Weeks Lab, UNC-CH
 # 2-9-2023
 #
-# Version 1.0.0
+# Version 1.3.0
 #
 # -----------------------------------------------------
 import argparse

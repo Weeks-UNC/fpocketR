@@ -54,7 +54,7 @@ fpocketR is an RNA-specific wrapper for [fpocket 4.0](https://github.com/Discngi
 
 3. **Install fpocketR and dependencies from PyPI**  
    ```bash
-   pip install fpocketR
+   pip install fpocketr
    ```
    This will install all required Python dependencies.  
    **Note:** The `fpocket` binary is installed via conda, not pip.
@@ -84,27 +84,9 @@ After installing, you can verify your setup by running the test suite:
 
 If all tests pass, your installation is working correctly.
 
----
-
-### Alternative: Conda Constructor Installer
-
-A one-step installer can be provided using [conda constructor](https://github.com/conda/constructor).  
-(Instructions and download link will be added here when available.)
-
----
-
 **Notes:**
 - For Windows users, use WSL (Windows Subsystem for Linux) for best compatibility. [Guide to installing WSL and Ubuntu](https://www.freecodecamp.org/news/how-to-install-wsl2-windows-subsystem-for-linux-2-on-windows-10/)
 - For MacOS users: fpocketR is not compatible with arm-based M1/M2 processors (only Intel/x86).
-
-        git clone https://github.com/Weeks-UNC/fpocketR.git
-
-5. Create fpocketR conda environment and install fpocketR and RNAvigate.
-
-        cd fpocketR
-        conda env create --file enviroment.yml
-        conda activate fpocketR
-        conda develop .
 
 ## Quick Start
 

@@ -1,6 +1,6 @@
 name: fpocketR
 pkg_name: "linux-sh-fpocketR"
-version: 1.3.0
+version: 1.3.1
 channels:
   - conda-forge
   - defaults
