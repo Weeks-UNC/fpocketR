@@ -1,6 +1,6 @@
 format: jb-book
 root: index.md
-chapters:
+sections:
   - file: installation.md
   - file: quickstart.md
   - file: usage.md

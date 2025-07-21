@@ -10,3 +10,6 @@ sphinx:
 
 conda:
   environment: docs/requirements.yaml
+
+formats:
+  - pdf
