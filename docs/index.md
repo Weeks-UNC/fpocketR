@@ -8,6 +8,20 @@ fpocketR is an RNA-specific wrapper for [fpocket 4.0](https://github.com/Discngi
 
 **For installation, quickstart, usage, demonstration workflows, citation, copyright, and acknowledgements, use the navigation tabs.**
 
+
+```{toctree}
+:maxdepth: 2
+:caption: Contents
+
+installation.md
+quickstart.md
+usage.md
+demos.md
+how_to_cite.md
+copyright.md
+acknowledgements.md
+```
+
 ## Support
 
 For questions, bug reports, or feature requests, please use the [GitHub Issues tab](https://github.com/Weeks-UNC/fpocketR/issues).

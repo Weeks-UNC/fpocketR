@@ -95,10 +95,6 @@ html_theme_options = {
     "repository_url": "https://github.com/Weeks-UNC/fpocketR",
     "repository_branch": "main",
     "path_to_docs": "docs/",
-    "home_page_in_toc": True,
-    "show_navbar_depth": 2,
-    "max_navbar_depth": 4,
-    "collapse_navbar": False,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -106,12 +102,15 @@ html_theme_options = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-
-# Custom sidebar templates, must be a dictionary that maps document names to template names.
-# This ensures the Sphinx Book Theme navigation sidebar is used on all pages.
-html_sidebars = {
-    "**": ["sbt-sidebar-nav.html"]
-}
+# Custom sidebar templates, must be a dictionary that maps document names
+# to template names.
+#
+# The default sidebars (for documents that don't match any pattern) are
+# defined by theme itself.  Builtin themes are using these templates by
+# default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
+# 'searchbox.html']``.
+#
+# html_sidebars = {}
 
 # Sphinx Book Theme and myst-parser will automatically use _toc.yml for navigation/sidebar if present in docs/
 
