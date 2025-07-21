@@ -3,6 +3,7 @@
 [//]: # (Badges)
 [![GitHub Actions Build Status](https://github.com/weeks-UNC/fpocketR/workflows/CI/badge.svg)](https://github.com/weeks-UNC/fpocketR/actions?query=workflow%3ACI)
 [![PyPI version](https://img.shields.io/pypi/v/fpocketR.svg)](https://pypi.org/project/fpocketR/)
+[![Downloads](https://pepy.tech/badge/fpocketR)](https://pepy.tech/project/fpocketR)
 
 <img src="docs/_static/images/fpocketR_logo.png" alt="fpocketR logo" width="250" height="250" />
 
