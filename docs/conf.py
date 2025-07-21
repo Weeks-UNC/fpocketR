@@ -42,7 +42,8 @@ release = '1.3.0'
 extensions = [
     'myst_parser',
     'sphinx_book_theme',
-    'sphinx_copybutton'
+    'sphinx_copybutton',
+    "sphinx_external_toc",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -113,7 +114,8 @@ html_static_path = ['_static']
 # html_sidebars = {}
 
 # Sphinx Book Theme and myst-parser will automatically use _toc.yml for navigation/sidebar if present in docs/
-
+external_toc_path = "_toc.yml"
+external_toc_exclude_missing = False
 
 # -- Options for HTMLHelp output ---------------------------------------------
 

@@ -8,7 +8,7 @@ dependencies:
   - python
   - pip
   - myst-parser
-  - sphinx-book-theme
+  - sphinx-book-theme=1.1.0
   - pydata-sphinx-theme
   - sphinx-design
   - sphinx-copybutton
