@@ -12,7 +12,3 @@ dependencies:
   - pydata-sphinx-theme
   - sphinx-design
   - sphinx-copybutton
-
-  - pip:
-      - -e ../ --no-deps
-
