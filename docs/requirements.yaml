@@ -14,5 +14,5 @@ dependencies:
   - sphinx-copybutton
 
   - pip:
-      - -e ../
+      - -e ../ --no-deps
 
