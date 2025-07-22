@@ -7,7 +7,7 @@
 
 2. **Create and activate a new environment with fpocket and Python 3.11**
    ```bash
-   conda create -n fpocketR -c conda-forge fpocket=4.0.3 python=3.11
+   conda create -n fpocketR -c conda-forge fpocket=4.0.3 python=3.11 pymol-open-source=2.5
    conda activate fpocketR
    ```
 
@@ -40,13 +40,6 @@ After installing, you can verify your setup by running the test suite:
    ```
 
 If all tests pass, your installation is working correctly.
-
----
-
-## Alternative: Conda Constructor Installer
-
-A one-step installer can be provided using [conda constructor](https://github.com/conda/constructor).
-(Instructions and download link will be added here when available.)
 
 ---
 
