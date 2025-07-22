@@ -28,6 +28,7 @@ dependencies = [
     "trimesh==4.2.0",
     "scipy==1.12.0",
     "biopython==1.83",
+]
 
 # NOTE: fpocket and pymol must be installed separately via conda-forge (not available on PyPI)
 
