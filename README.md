@@ -16,10 +16,10 @@ fpocketR is an RNA-specific wrapper for [fpocket 4.0](https://github.com/Discngi
 ## Contents
 
 - [System Requirements](#system-requirements)
-- [Installation](#installation)
-   - [Recommended: Conda + pip](#recommended-conda--pip)
+-- [Installation](#installation)
+   - [Recommended: Bioconda](#recommended-bioconda)
+   - [Alternative: Conda + pip](#alternative-conda--pip)
    - [Testing your installation](#testing-your-installation)
-   - [Alternative: Conda Constructor Installer](#alternative-conda-constructor-installer)
 - [Quick Start](#quick-start)
    - [Activate the fpocketR Environment](#activate-the-fpocketr-environment)
    - [Basic Structure Analysis](#basic-structure-analysis)
@@ -39,29 +39,50 @@ fpocketR is an RNA-specific wrapper for [fpocket 4.0](https://github.com/Discngi
 - **Experimental:** fpocketR may work on ARM MacOS with fpocket 4.2.1+. **WARNING:** We had observed that newer version of fpocket (>4.0.3) led to changes in predicted pockets which we have not validated.
 - **Windows users:** Use [WSL2 (Windows Subsystem for Linux)](https://learn.microsoft.com/en-us/windows/wsl/install) to run fpocketR. Follow the install instructions using the WSL2 linux terminal.
 
+
 ## Installation
 
-### Recommended: Conda + pip
+### Recommended: Bioconda
+
+`fpocketR` is now available on [Bioconda](https://bioconda.github.io/recipes/fpocketr/README.html)!
 
 1. **Install Conda**  
    If you don’t have conda, follow the [official installation guide](https://conda.io/projects/conda/en/latest/user-guide/install/index.html).
 
-2. **Create and activate a new environment with fpocket and Python 3.11**  
+2. **Add the Bioconda channel (if not already added):**
+   ```bash
+   conda config --add channels defaults
+   conda config --add channels bioconda
+   conda config --add channels conda-forge
+   ```
+
+3. **Create and activate a new environment with fpocketR:**
+   ```bash
+   conda create -n fpocketR fpocketr
+   conda activate fpocketR
+   ```
+   This will install all required dependencies, including `fpocket` and `fpocketR`.
+
+---
+
+### Alternative: Conda + pip
+
+If you prefer to install via PyPI, you can use Conda to set up the environment and then install `fpocketR` with pip:
+
+1. **Create and activate a new environment with fpocket and Python 3.11**  
    ```bash
    conda create -n fpocketR -c conda-forge fpocket=4.0.3 python=3.11 pymol-open-source=2.5
    conda activate fpocketR
    ```
 
-3. **Install fpocketR and dependencies from PyPI**  
+2. **Install fpocketR and dependencies from PyPI**  
    ```bash
    pip install fpocketr
    ```
-   This will install all required Python dependencies.  
    **Note:** The `fpocket` binary is installed via conda, not pip.
 
 
 ### Testing your installation
-
 
 After installing, you can verify your setup by running the test suite:
 
@@ -246,6 +267,7 @@ python -m fpocketR --help
 If you use fpocketR in your research, please cite:
 
 1. S.D. Veenbaas, J.T. Koehn, P.S. Irving, N.N. Lama, & K.M. Weeks, Ligand-binding pockets in RNA and where to find them, Proc. Natl. Acad. Sci. U.S.A. 122 (17) e2422346122, https://doi.org/10.1073/pnas.2422346122 (2025).
+
 2. Veenbaas, S. D., Felder, S., & Weeks, K. M. fpocketR: A platform for identification and analysis of ligand-binding pockets in RNA. BioRxiv, 2025.03.25.645323, https://doi.org/10.1101/2025.03.25.645323 (2025).
 
 ## Copyright

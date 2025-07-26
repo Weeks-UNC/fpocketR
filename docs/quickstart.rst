@@ -31,7 +31,7 @@ Outputs pockets in tertiary structure:
 """""""""""""""""""
 
 
-.. figure:: /_static/images/3e5c_3D.png
+.. figure:: https://github.com/Weeks-UNC/fpocketR/raw/main/docs/_static/images/3e5c_3D.png
     :width: 50%
     :align: center
     :alt: Tertiary structure
@@ -40,7 +40,7 @@ Outputs pockets in tertiary structure:
 Pocket color legend:
 """""""""""""""""""
 
-.. figure:: /_static/images/fpocketR_pocket_color_legend.png
+.. figure:: https://github.com/Weeks-UNC/fpocketR/raw/main/docs/_static/images/fpocketR_pocket_color_legend.png
    :width: 40%
    :align: center
    :alt: Pocket color legend
@@ -57,7 +57,7 @@ Add a secondary structure diagram using the ``-ss`` argument:
 Outputs pockets in secondary structure:
 """""""""""""""""""
 
-.. figure:: /_static/images/2l1v_2D.png
+.. figure:: https://github.com/Weeks-UNC/fpocketR/raw/main/docs/_static/images/2l1v_2D.png
     :width: 30%
     :align: center
     :alt: Secondary structure
@@ -75,12 +75,12 @@ Analyze all NMR or Cryo-EM states using the ``--state 0`` argument:
 Outputs pocket density in 3D and 2D:
 """""""""""""""""""
 
-.. figure:: /_static/images/2l1v_all_states_3D.png
+.. figure:: https://github.com/Weeks-UNC/fpocketR/raw/main/docs/_static/images/2l1v_all_states_3D.png
     :width: 50%
     :align: center
     :alt: Tertiary structure (pocket density)
 
-.. figure:: /_static/images/2l1v_2D_pocket_density.png
+.. figure:: https://github.com/Weeks-UNC/fpocketR/raw/main/docs/_static/images/2l1v_2D_pocket_density.png
     :width: 30%
     :align: center
     :alt: Secondary structure (pocket density)
@@ -97,12 +97,12 @@ Align ligand-bound (holo) and ligand-free (apo) structures for direct comparison
 Outputs apo structure and aligned apo/holo structures:
 """""""""""""""""""
 
-.. figure:: /_static/images/8f4o_apo_3D.png
+.. figure:: https://github.com/Weeks-UNC/fpocketR/raw/main/docs/_static/images/8f4o_apo_3D.png
     :width: 50%
     :align: center
     :alt: Apo structure and pocket
 
-.. figure:: /_static/images/8f4o_apo_holo.png
+.. figure:: https://github.com/Weeks-UNC/fpocketR/raw/main/docs/_static/images/8f4o_apo_holo.png
     :width: 50%
     :align: center
     :alt: Apo and holo structures aligned
@@ -126,7 +126,7 @@ Customize analysis with optional arguments:
 Outputs low resolution (fast) tertiary structure:
 """""""""""""""""""
 
-.. figure:: /_static/images/2gdi_holo_3D_10.png
+.. figure:: https://github.com/Weeks-UNC/fpocketR/raw/main/docs/_static/images/2gdi_holo_3D_10.png
    :width: 60%
    :align: center
    :alt: Tertiary structure (low resolution)
