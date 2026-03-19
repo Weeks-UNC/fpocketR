@@ -17,7 +17,7 @@ fpocketR is an RNA-specific wrapper for [fpocket 4.0](https://github.com/Discngi
 ## Contents
 
 - [System Requirements](#system-requirements)
--- [Installation](#installation)
+- [Installation](#installation)
    - [Recommended: Bioconda](#recommended-bioconda)
    - [Alternative: Conda + pip](#alternative-conda--pip)
    - [Testing your installation](#testing-your-installation)
