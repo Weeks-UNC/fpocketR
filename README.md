@@ -6,7 +6,7 @@
 [![Bioconda](https://img.shields.io/conda/vn/bioconda/fpocketr.svg?label=Bioconda)](https://anaconda.org/bioconda/fpocketr)
 [![Downloads](https://pepy.tech/badge/fpocketR)](https://pepy.tech/project/fpocketR)
 
-<img src="docs/_static/images/fpocketR_logo.png" alt="fpocketR logo" width="250" height="250" />
+<img src="https://raw.githubusercontent.com/weeks-UNC/fpocketR/main/docs/_static/images/fpocketR_logo.png" alt="fpocketR logo" width="250" height="250" />
 
 A CLI tool optimized to find, characterize, and visualize drug-like RNA-ligand binding pockets in RNA structures (static or dynamic).
 
@@ -17,7 +17,7 @@ fpocketR is an RNA-specific wrapper for [fpocket 4.0](https://github.com/Discngi
 ## Contents
 
 - [System Requirements](#system-requirements)
-- [Installation](#installation)
+-- [Installation](#installation)
    - [Recommended: Bioconda](#recommended-bioconda)
    - [Alternative: Conda + pip](#alternative-conda--pip)
    - [Testing your installation](#testing-your-installation)
@@ -35,11 +35,22 @@ fpocketR is an RNA-specific wrapper for [fpocket 4.0](https://github.com/Discngi
 
 ## System Requirements
 
-- **Supported platforms:** Linux (x86_64), MacOS (Intel/x86_64)
-- **Not supported:** ARM-based MacOS (M1/M2) and native Windows
-- **Experimental:** fpocketR may work on ARM MacOS with fpocket 4.2.1+. **WARNING:** We had observed that newer version of fpocket (>4.0.3) led to changes in predicted pockets which we have not validated.
-- **Windows users:** Use [WSL2 (Windows Subsystem for Linux)](https://learn.microsoft.com/en-us/windows/wsl/install) to run fpocketR. Follow the install instructions using the WSL2 linux terminal.
+- **Supported platforms:**  
+  - Linux (x86_64)  
+  - macOS (Intel/x86_64)  
 
+- **Not currently supported:**  
+  - macOS on ARM-based systems (Apple Silicon: M1/M2/…)  
+  - Native Windows installations  
+
+- **Windows users:**  
+  - fpocketR can be run on Windows using [WSL2 (Windows Subsystem for Linux)](https://learn.microsoft.com/en-us/windows/wsl/install).  
+  - Follow the Linux installation instructions within the WSL2 terminal.  
+
+- **Experimental ARM support (Apple Silicon: M1/M2/…):**  
+  - fpocketR may run on ARM-based macOS when compiled with **fpocket v4.2.1 or later**.  
+  - **Warning:** fpocket versions newer than v4.0.3 produce differences in predicted pocket outputs that have **not been validated** in our workflow.  
+  - **Recommendation:** For reproducibility, we recommend using fpocketR with **fpocket v4.0.3 (x86_64)**, the version currently validated.  
 
 ## Installation
 
@@ -142,11 +153,11 @@ python -m fpocketR -pdb 3e5c
 
 | Tertiary structure | Pocket characteristics |
 | :----------------: | :-------------------: |
-| <img src="docs/_static/images/3e5c_3D.png" height="150" /> | <img src="docs/_static/images/3e5c_1D.png" height="30" /> |
+| <img src="https://raw.githubusercontent.com/weeks-UNC/fpocketR/main/docs/_static/images/3e5c_3D.png" height="150" /> | <img src="https://raw.githubusercontent.com/weeks-UNC/fpocketR/main/docs/_static/images/3e5c_1D.png" height="30" /> |
 
 **Pocket color legend:**
 
-<img src="docs/_static/images/fpocketR_pocket_color_legend.png" height="60" />
+<img src="https://raw.githubusercontent.com/weeks-UNC/fpocketR/main/docs/_static/images/fpocketR_pocket_color_legend.png" height="60" />
 
 ### Secondary Structure Visualization
 
@@ -160,7 +171,7 @@ python -m fpocketR -pdb 2l1v.pdb -ss 2l1v.nsd
 
 | Tertiary structure | Secondary structure | Pocket characteristics |
 | :----------------: | :-----------------: | :-------------------: |
-| <img src="docs/_static/images/2l1v_3D.png" height="150" /> | <img src="docs/_static/images/2l1v_2D.png" height="150" /> | <img src="docs/_static/images/2l1v_1D.png" height="30" /> |
+| <img src="https://raw.githubusercontent.com/weeks-UNC/fpocketR/main/docs/_static/images/2l1v_3D.png" height="150" /> | <img src="https://raw.githubusercontent.com/weeks-UNC/fpocketR/main/docs/_static/images/2l1v_2D.png" height="150" /> | <img src="https://raw.githubusercontent.com/weeks-UNC/fpocketR/main/docs/_static/images/2l1v_1D.png" height="30" /> |
 
 ### Multistate Analysis
 
@@ -174,7 +185,7 @@ python -m fpocketR -pdb 2l1v.pdb -ss 2l1v.nsd --state 0
 
 | Tertiary structure<br>(pocket density) | Secondary structure<br>(pocket density) | Pocket summary<br>(all states) |
 | :-----------------------------: | :----------------------------------: | :-------------------------: |
-| <img src="docs/_static/images/2l1v_all_states_3D.png" height="150" /> | <img src="docs/_static/images/2l1v_2D_pocket_density.png" height="150" /> | <img src="docs/_static/images/2l1v_all_states_1D.png" height="70" /> |
+| <img src="https://raw.githubusercontent.com/weeks-UNC/fpocketR/main/docs/_static/images/2l1v_all_states_3D.png" height="150" /> | <img src="https://raw.githubusercontent.com/weeks-UNC/fpocketR/main/docs/_static/images/2l1v_2D_pocket_density.png" height="150" /> | <img src="https://raw.githubusercontent.com/weeks-UNC/fpocketR/main/docs/_static/images/2l1v_all_states_1D.png" height="70" /> |
 
 ### Apo/Holo Analysis
 
@@ -188,7 +199,7 @@ python -m fpocketR -pdb 8f4o_apo.pdb --alignligand 2gdi_holo.pdb --knownnt 19,20
 
 | Apo structure and pocket | Apo and holo structures aligned |
 | :----------------------: | :-----------------------------: |
-| <img src="docs/_static/images/8f4o_apo_3D.png" height="150" /> | <img src="docs/_static/images/8f4o_apo_holo.png" height="150" /> |
+| <img src="https://raw.githubusercontent.com/weeks-UNC/fpocketR/main/docs/_static/images/8f4o_apo_3D.png" height="150" /> | <img src="https://raw.githubusercontent.com/weeks-UNC/fpocketR/main/docs/_static/images/8f4o_apo_holo.png" height="150" /> |
 
 ### Additional Arguments
 
@@ -209,7 +220,7 @@ python -m fpocketR -pdb 2gdi_holo.pdb --chain Y --ligand TPP --dpi 10 --out ./TP
 
 | Tertiary structure (low resolution) |
 | :----------------------------------: |
-| <img src="docs/_static/images/2gdi_holo_3D_10.png" height="150" /> |
+| <img src="https://raw.githubusercontent.com/weeks-UNC/fpocketR/main/docs/_static/images/2gdi_holo_3D_10.png" height="150" /> |
 
 ## Demonstration Workflows
 
